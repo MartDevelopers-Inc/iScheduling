@@ -21,10 +21,10 @@
  */
 session_start();
 require_once('../config/config.php');
-require_once('../config/config.php');
+
 if (isset($_POST['Login'])) {
     $Login_email = $_POST['Login_email'];
-    $Login_Rank = $_POST['Login_Rank'];
+    $Login_rank = $_POST['Login_rank'];
     $Login_password = sha1(md5($_POST['Login_password']));
 
     $stmt = $mysqli->prepare("SELECT Login_email, Login_password, Login_rank, Login_id  FROM Login  WHERE Login_email =? AND Login_password =? AND Login_rank = ?");

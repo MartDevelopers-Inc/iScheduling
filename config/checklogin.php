@@ -20,16 +20,14 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-
 function check_login()
 {
-	if ((strlen($_SESSION['id']) == 0) || (strlen($_SESSION['email']) == 0)) {
+	if ((strlen($_SESSION['Login_id']) == 0) || (strlen($_SESSION['Login_rank']) == 0)) {
 		$host = $_SERVER['HTTP_HOST'];
 		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = "admin_index.php";
-		$_SESSION["id"] = "";
-		$_SESSION["email"] = "";
+		$extra = "login";
+		$_SESSION["Login_id"] = "";
+		$_SESSION["Login_rank"] = "";
 		//$_SESSION["name"] = "";
 		header("Location: http://$host$uri/$extra");
 	}
