@@ -1,1 +1,19 @@
-
+<script src="../public/js/bootstrap.bundle.min.js"></script>
+<script src="../public/js/jquery.min.js"></script>
+<script src="../public/js/default/internet-status.js"></script>
+<script src="../public/js/waypoints.min.js"></script>
+<script src="../public/js/jquery.easing.min.js"></script>
+<script src="../public/js/wow.min.js"></script>
+<script src="../public/js/owl.carousel.min.js"></script>
+<script src="../public/js/jquery.counterup.min.js"></script>
+<script src="../public/js/jquery.countdown.min.js"></script>
+<script src="../public/js/imagesloaded.pkgd.min.js"></script>
+<script src="../public/js/isotope.pkgd.min.js"></script>
+<script src="../public/js/jquery.magnific-popup.min.js"></script>
+<script src="../public/js/default/dark-mode-switch.js"></script>
+<script src="../public/js/ion.rangeSlider.min.js"></script>
+<script src="../public/js/jquery.dataTables.min.js"></script>
+<script src="../public/js/default/active.js"></script>
+<script src="../public/js/default/clipboard.js"></script>
+<!-- PWA-->
+<script src="../public/js/pwa.js"></script>

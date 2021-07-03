@@ -19,7 +19,6 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 require_once('../config/config.php');
 require_once('../partials/head.php');
 ?>
@@ -33,37 +32,30 @@ require_once('../partials/head.php');
     </div>
     <!-- Internet Connection Status-->
     <div class="internet-connection-status" id="internetStatus"></div>
-    <!-- Login Wrapper Area-->
+
     <div class="login-wrapper d-flex align-items-center justify-content-center">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-5">
-                    <div class="text-center px-4"><img class="login-intro-img" src="../public/img/bg-img/36.png" alt=""></div>
+                    <div class="text-center px-4"><img class="login-intro-img" src="../public/img/bg-img/37.png" alt=""></div>
                     <!-- Register Form-->
                     <div class="register-form mt-4 px-4">
-                        <h6 class="mb-3 text-center">Log In To Continue To iScheduling.</h6>
-                        <form method="POST">
+                        <form method="Post">
                             <div class="form-group">
-                                <input class="form-control" required name="Login_email" type="text" placeholder="Enter Email">
+                                <input class="form-control" type="password" name="new_password" placeholder="Enter New Password">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="password" name="Login_password" placeholder="Enter Password">
-                                <input class="form-control" type="hidden" name="Login_rank" value="Administrator">
+                                <input class="form-control" type="password" name="confirm_password" placeholder="Confirm New Password">
                             </div>
-                            <button class="btn btn-primary w-100" name="Sign_In" type="submit">Sign In</button>
+                            <button class="btn btn-primary w-100" name="Confirm_Password" type="submit">Confirm Password</button>
                         </form>
-                    </div>
-                    <!-- Login Meta-->
-                    <div class="login-meta-data text-center"><a class="stretched-link forgot-password d-block mt-3 mb-1" href="forget_password">Forgot Password?</a>
-                        <!-- <p class="mb-0">Didn't have an account? <a class="stretched-link" href="page-register.html">Register Now</a></p> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- All JavaScript Files-->
+    <!-- Scripts -->
     <?php require_once('../partials/scripts.php'); ?>
 </body>
-
 
 </html>

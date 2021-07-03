@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="../public/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="../public/css/apexcharts.css">
     <!-- Core Stylesheet-->
-    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <!-- Web App Manifest-->
     <link rel="manifest" href="../public/manifest.json">
 </head>
