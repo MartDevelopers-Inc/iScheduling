@@ -22,21 +22,29 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/config.php');
-if (isset($_POST['Sign_In'])) {
-
+if (isset($_POST['Login'])) {
     $Login_email = $_POST['Login_email'];
+    $Login_Rank = $_POST['Login_Rank'];
     $Login_password = sha1(md5($_POST['Login_password']));
-    $Login_rank = $_POST['Login_rank'];
-    $stmt = $mysqli->prepare("SELECT Login_email, Login_password, Login_Rank, Login_id  FROM Login  WHERE (Login_email =? AND Login_password =?)");
+
+    $stmt = $mysqli->prepare("SELECT Login_email, Login_password, Login_rank, Login_id  FROM Login  WHERE Login_email =? AND Login_password =? AND Login_rank = ?");
     $stmt->bind_param('sss', $Login_email, $Login_password, $Login_rank);
-    $stmt->execute();
-    $stmt->bind_result($Login_email, $Login_password, $Login_rank, $Login_id); //bind result
+    $stmt->execute(); //execute bind
+
+    $stmt->bind_result($Login_email, $Login_password, $Login_rank, $Login_id);
     $rs = $stmt->fetch();
     $_SESSION['Login_id'] = $Login_id;
-    if ($rs) {
-        header("location:home");
+    $_SESSION['Login_rank'] = $Login_rank;
+
+    /* Decide Login User Dashboard Based On User Rank */
+    if ($rs && $Login_rank == 'Administrator') {
+        header("location:dashboard");
+    } else if ($rs && $Login_rank == 'Staff') {
+        header("location:dashboard");
+    } else if ($rs && $Login_rank == 'Client') {
+        header("location:client_dashboard");
     } else {
-        $err = "Access Denied Please Check Your Credentials.";
+        $err = "Login Failed, Please Check Your Credentials And Login Permission ";
     }
 }
 require_once('../partials/head.php');
@@ -62,13 +70,13 @@ require_once('../partials/head.php');
                         <h6 class="mb-3 text-center">Log In To Continue To iScheduling.</h6>
                         <form method="POST">
                             <div class="form-group">
-                                <input class="form-control"  required name="Login_email" type="email" placeholder="Enter Email">
+                                <input class="form-control" required name="Login_email" type="email" placeholder="Enter Email">
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" name="Login_password" placeholder="Enter Password">
                                 <input class="form-control" type="hidden" name="Login_rank" value="Administrator">
                             </div>
-                            <button class="btn btn-primary w-100" name="Sign_In" type="submit">Sign In</button>
+                            <button class="btn btn-primary w-100" name="Login" type="submit">Sign In</button>
                         </form>
                     </div>
                     <!-- Login Meta-->
