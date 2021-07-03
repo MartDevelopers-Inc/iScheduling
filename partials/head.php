@@ -34,4 +34,6 @@
     <link rel="stylesheet" href="../public/css/style.css">
     <!-- Web App Manifest-->
     <link rel="manifest" href="../public/manifest.json">
+    <!-- Alerts CSS -->
+    <link rel="stylesheet" href="../public/plugins/iziToast/iziToast.min.css">
 </head>

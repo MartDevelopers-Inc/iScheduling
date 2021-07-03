@@ -19,8 +19,26 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+session_start();
 require_once('../config/config.php');
+require_once('../config/config.php');
+if (isset($_POST['Sign_In'])) {
+
+    $Login_email = $_POST['Login_email'];
+    $Login_password = sha1(md5($_POST['Login_password']));
+    $Login_rank = $_POST['Login_rank'];
+    $stmt = $mysqli->prepare("SELECT Login_email, Login_password, Login_Rank, Login_id  FROM Login  WHERE (Login_email =? AND Login_password =?)");
+    $stmt->bind_param('sss', $Login_email, $Login_password, $Login_rank);
+    $stmt->execute();
+    $stmt->bind_result($Login_email, $Login_password, $Login_rank, $Login_id); //bind result
+    $rs = $stmt->fetch();
+    $_SESSION['Login_id'] = $Login_id;
+    if ($rs) {
+        header("location:home");
+    } else {
+        $err = "Access Denied Please Check Your Credentials.";
+    }
+}
 require_once('../partials/head.php');
 ?>
 

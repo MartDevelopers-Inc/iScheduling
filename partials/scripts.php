@@ -17,3 +17,59 @@
 <script src="../public/js/default/clipboard.js"></script>
 <!-- PWA-->
 <script src="../public/js/pwa.js"></script>
+<!-- Alerts -->
+<script src="../public/plugins/iziToast/iziToast.min.js"></script>
+<?php if (isset($success)) { ?>
+    <!--This code for injecting success alert-->
+    <script>
+        iziToast.success({
+            title: 'Success',
+            position: 'bottomCenter',
+            transitionIn: 'flipInX',
+            transitionOut: 'flipOutX',
+            transitionInMobile: 'fadeInUp',
+            animateInside: true,
+            transitionOutMobile: 'fadeOutDown',
+            message: '<?php echo $success; ?>',
+        });
+    </script>
+
+<?php } ?>
+
+<?php if (isset($err)) { ?>
+    <!--This code for injecting error alert-->
+    <script>
+        iziToast.error({
+            title: 'Error',
+            timeout: 10000,
+            resetOnHover: true,
+            position: 'bottomCenter',
+            transitionIn: 'flipInX',
+            transitionOut: 'flipOutX',
+            transitionInMobile: 'fadeInUp',
+            transitionOutMobile: 'fadeOutDown',
+            animateInside: true,
+            message: '<?php echo $err; ?>',
+        });
+    </script>
+
+<?php } ?>
+
+<?php if (isset($info)) { ?>
+    <!--This code for injecting info alert-->
+    <script>
+        iziToast.warning({
+            title: 'Warning',
+            position: 'bottomCenter',
+            transitionIn: 'flipInX',
+            transitionOut: 'flipOutX',
+            transitionIn: 'fadeInUp',
+            transitionInMobile: 'fadeInUp',
+            transitionOutMobile: 'fadeOutDown',
+            animateInside: true,
+            message: '<?php echo $info; ?>',
+        });
+    </script>
+
+<?php }
+?>
