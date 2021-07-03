@@ -38,7 +38,7 @@ if (isset($_POST['Login'])) {
 
     /* Decide Login User Dashboard Based On User Rank */
     if ($rs && $Login_rank == 'Administrator') {
-        header("location:dashboard");
+        header("location:home");
     } else if ($rs && $Login_rank == 'Staff') {
         header("location:dashboard");
     } else if ($rs && $Login_rank == 'Client') {
