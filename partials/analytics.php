@@ -21,34 +21,34 @@
  */
 
 
- /* Staffs */
- $query = "SELECT COUNT(*)  FROM `Clinic_Staff` ";
- $stmt = $mysqli->prepare($query);
- $stmt->execute();
- $stmt->bind_result($staff);
- $stmt->fetch();
- $stmt->close();
+/* Staffs */
+$query = "SELECT COUNT(*)  FROM Clinic_Staff ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($staff);
+$stmt->fetch();
+$stmt->close();
 
- /* Doctors */
- $query = "SELECT COUNT(*)  FROM `Doctors` ";
- $stmt = $mysqli->prepare($query);
- $stmt->execute();
- $stmt->bind_result($doc);
- $stmt->fetch();
- $stmt->close();
+/* Doctors */
+$query = "SELECT COUNT(*)  FROM Doctors ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($doc);
+$stmt->fetch();
+$stmt->close();
 
- /* Clients */
- $query = "SELECT COUNT(*)  FROM `Clients` ";
- $stmt = $mysqli->prepare($query);
- $stmt->execute();
- $stmt->bind_result($client);
- $stmt->fetch();
- $stmt->close();
- 
- /* Appointments */
- $query = "SELECT COUNT(*)  FROM `Appointments` ";
- $stmt = $mysqli->prepare($query);
- $stmt->execute();
- $stmt->bind_result($appointments);
- $stmt->fetch();
- $stmt->close();
+/* Clients */
+$query = "SELECT COUNT(*)  FROM Clients ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($client);
+$stmt->fetch();
+$stmt->close();
+
+/* Appointments */
+$query = "SELECT COUNT(*)  FROM Client_Appointments ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($appointments);
+$stmt->fetch();
+$stmt->close();

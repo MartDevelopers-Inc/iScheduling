@@ -64,7 +64,7 @@ while ($user = $res->fetch_object()) {
                     </svg>
                     Staffs
                     <span class="badge bg-danger rounded-pill ms-2">
-                        220+
+                        <?php echo $staff; ?>
                     </span>
                 </a>
             </li>
@@ -76,7 +76,7 @@ while ($user = $res->fetch_object()) {
                     </svg>
                     Doctors
                     <span class="badge bg-success rounded-pill ms-2">
-                        38
+                        <?php echo $doc; ?>
                     </span>
                 </a>
             </li>
@@ -90,7 +90,7 @@ while ($user = $res->fetch_object()) {
                     </svg>
                     Clients
                     <span class="badge bg-success rounded-pill ms-2">
-                        38
+                        <?php echo $client; ?>
                     </span>
                 </a>
             </li>
@@ -104,7 +104,7 @@ while ($user = $res->fetch_object()) {
                     </svg>
                     Appointments
                     <span class="badge bg-success rounded-pill ms-2">
-                        38
+                        <?php echo $appointments; ?>
                     </span>
                 </a>
             </li>

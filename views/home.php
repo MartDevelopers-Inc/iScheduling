@@ -23,6 +23,7 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
+require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -36,11 +37,11 @@ require_once('../partials/head.php');
     <!-- Internet Connection Status-->
     <div class="internet-connection-status" id="internetStatus"></div>
     <!-- Header Area-->
-    <?php require_once('../partials/header.php');?>
+    <?php require_once('../partials/header.php'); ?>
     <!-- Sidenav Black Overlay-->
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
-    <?php require_once('../partials/side_nav.php');?>
+    <?php require_once('../partials/side_nav.php'); ?>
 
     <div class="page-content-wrapper">
         <!-- Hero Slides-->
