@@ -24,9 +24,10 @@
     <script>
         iziToast.success({
             title: 'Success',
-            position: 'bottomCenter',
-            transitionIn: 'flipInX',
-            transitionOut: 'flipOutX',
+            timeout: 1000,
+            position: 'center',
+            transitionIn: 'bounceInLeft',
+            transitionOut: 'fadeOutRight',
             transitionInMobile: 'fadeInUp',
             animateInside: true,
             transitionOutMobile: 'fadeOutDown',
@@ -41,11 +42,11 @@
     <script>
         iziToast.error({
             title: 'Error',
-            timeout: 10000,
+            timeout: 1000,
             resetOnHover: true,
-            position: 'bottomCenter',
-            transitionIn: 'flipInX',
-            transitionOut: 'flipOutX',
+            position: 'center',
+            transitionIn: 'bounceInRigt',
+            transitionOut: 'fadeOutLeft',
             transitionInMobile: 'fadeInUp',
             transitionOutMobile: 'fadeOutDown',
             animateInside: true,
@@ -60,7 +61,7 @@
     <script>
         iziToast.warning({
             title: 'Warning',
-            position: 'bottomCenter',
+            position: 'center',
             transitionIn: 'flipInX',
             transitionOut: 'flipOutX',
             transitionIn: 'fadeInUp',
