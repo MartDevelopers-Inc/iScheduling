@@ -62,7 +62,7 @@ require_once('../partials/head.php');
                         <h6 class="mb-3 text-center">Log In To Continue To iScheduling.</h6>
                         <form method="POST">
                             <div class="form-group">
-                                <input class="form-control" required name="Login_email" type="text" placeholder="Enter Email">
+                                <input class="form-control"  required name="Login_email" type="email" placeholder="Enter Email">
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" name="Login_password" placeholder="Enter Password">

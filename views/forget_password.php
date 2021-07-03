@@ -19,7 +19,31 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+session_start();
 require_once('../config/config.php');
+if (isset($_POST['Reset_Password'])) {
+
+    $Login_email = $_POST['Login_email'];
+    $query = mysqli_query($mysqli, "SELECT * from `Login` WHERE Login_email = '" . $Login_email . "' ");
+    $num_rows = mysqli_num_rows($query);
+
+    if ($num_rows > 0) {
+        $n = date('y');//Load Mumble Jumble
+        $new_password = bin2hex(random_bytes($n));
+        $query = "UPDATE Login SET  Login_password=? WHERE  Login_email =? ";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ss', $new_password, $Login_email);
+        $stmt->execute();
+        if ($stmt) {
+            $_SESSION['Login_email'] = $Login_email;
+            $success = "Password Reset" && header("refresh:1; url=confirm_password");
+        } else {
+            $err = "Password reset failed";
+        }
+    } else {
+        $err = "User Account Does Not Exist";
+    }
+}
 require_once('../partials/head.php');
 
 ?>
@@ -43,7 +67,7 @@ require_once('../partials/head.php');
                     <div class="register-form mt-4 px-4">
                         <form method="Post">
                             <div class="form-group text-start mb-3">
-                                <input class="form-control" type="text" name="Login_email" placeholder="Enter your email address">
+                                <input class="form-control" type="email" required name="Login_email" placeholder="Enter your email address">
                             </div>
                             <button class="btn btn-primary w-100" name="Reset_Password" type="submit">Reset Password</button>
                         </form>
