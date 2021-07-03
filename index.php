@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Fri Jun 11 2021
+ * Created on Sat Jul 03 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -26,6 +26,5 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
     $uri = 'http://';
 }
 $uri .= $_SERVER['HTTP_HOST'];
-/* Redirect To Index Under Views */
-header('Location: ' . $uri . '/Ezana2.0/views/login');
+header('Location: ' . $uri . '/iScheduling/views/login');
 exit;

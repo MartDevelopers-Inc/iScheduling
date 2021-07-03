@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Fri Jun 11 2021
+ * Created on Sat Jul 03 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -20,10 +20,11 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+
 $DB_host = "localhost";
 $DB_user = "root";
 $DB_pass = "";
-$DB_name = "ezana_lms";
+$DB_name = "iScheduling";
 try {
     $DB_con = new PDO("mysql:host={$DB_host};dbname={$DB_name}", $DB_user, $DB_pass);
     $DB_con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Fri Jun 11 2021
+ * Created on Sat Jul 03 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -21,6 +21,7 @@
  */
 
 
+
 function check_login()
 {
 	if ((strlen($_SESSION['id']) == 0) || (strlen($_SESSION['email']) == 0)) {
@@ -30,33 +31,6 @@ function check_login()
 		$_SESSION["id"] = "";
 		$_SESSION["email"] = "";
 		//$_SESSION["name"] = "";
-		header("Location: http://$host$uri/$extra");
-	}
-}
-
-/* Lecturer Check Login */
-function lec_check_login()
-{
-	if ((strlen($_SESSION['id']) == 0) || (strlen($_SESSION['work_email']) == 0)) {
-		$host = $_SERVER['HTTP_HOST'];
-		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = "lec_index.php";
-		$_SESSION["id"] = "";
-		$_SESSION["work_email"] = "";
-		header("Location: http://$host$uri/$extra");
-	}
-}
-
-
-/* Student Check Login */
-function std_check_login()
-{
-	if ((strlen($_SESSION['id']) == 0) || (strlen($_SESSION['email']) == 0)) {
-		$host = $_SERVER['HTTP_HOST'];
-		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = "std_index.php";
-		$_SESSION["id"] = "";
-		$_SESSION["email"] = "";
 		header("Location: http://$host$uri/$extra");
 	}
 }

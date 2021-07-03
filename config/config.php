@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Fri Jun 11 2021
+ * Created on Sat Jul 03 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -20,8 +20,9 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-    $dbuser="root";
-    $dbpass="";
-    $host="localhost";
-    $db="ezana_lms";
-    $mysqli=new mysqli($host,$dbuser, $dbpass, $db);
+
+$dbuser = "root";
+$dbpass = "";
+$host = "localhost";
+$db = "iScheduling";
+$mysqli = new mysqli($host, $dbuser, $dbpass, $db);
