@@ -93,14 +93,23 @@ require_once('../partials/head.php');
                 <div class="card-body">
                     <h2>Recent Clients Bookings</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
-                        <!-- Single Testimonial Slide-->
-                        <div class="single-testimonial-slide">
-                            <div class="text-content">
-                                <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i></span>
-                                <h6 class="mb-2">The code looks clean, and the designs are excellent. I recommend.</h6><span class="d-block">Mrrickez, Themeforest</span>
+                        <?php
+                        $ret = "SELECT * FROM `Bookings`  ORDER BY Booking_Date ASC LIMIT 10   ";
+                        $stmt = $mysqli->prepare($ret);
+                        $stmt->execute(); //ok
+                        $res = $stmt->get_result();
+                        while ($booking = $res->fetch_object()) {
+                        ?>
+                            <div class="single-testimonial-slide">
+                                <div class="text-content">
+                                    <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i>Ref: <?php echo $booking->Booking_Ref;?></span>
+                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Status: <?php echo $booking->Boking_Status;?></span>
+                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Hospital Service: <?php echo $booking->Boking_Status;?></span>
+                                    <span class="d-block">Client Name: <?php echo $booking->Booking_Client_Id;?></span>
+                                </div>
                             </div>
-                        </div>
-
+                        <?php
+                        } ?>
                     </div>
                 </div>
             </div>
