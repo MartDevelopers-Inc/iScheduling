@@ -13,6 +13,7 @@
 <script src="../public/js/default/dark-mode-switch.js"></script>
 <script src="../public/js/ion.rangeSlider.min.js"></script>
 <script src="../public/js/jquery.dataTables.min.js"></script>
+<script src="../public/js/jquery.dataTables.min.js"></script>
 <script src="../public/js/default/active.js"></script>
 <script src="../public/js/default/clipboard.js"></script>
 <!-- PWA-->

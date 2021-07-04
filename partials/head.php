@@ -36,4 +36,6 @@
     <link rel="manifest" href="../public/manifest.json">
     <!-- Alerts CSS -->
     <link rel="stylesheet" href="../public/plugins/iziToast/iziToast.min.css">
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="../public/css/dataTables.bootstrap4.min.css">
 </head>
