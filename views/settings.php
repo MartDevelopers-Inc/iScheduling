@@ -30,7 +30,7 @@ if (isset($_POST['UpdateProfile'])) {
     $Staff_id_no = $_POST['Staff_id_no'];
     $Staff_phone_no = $_POST['Staff_phone_no'];
     $Staff_email  = $_POST['Staff_email'];
-    $Staff_login_id = $_SESSION['Staff_login_id'];
+    $Staff_login_id = $_SESSION['Login_id'];
 
     $query = "UPDATE Clinic_Staff SET Staff_full_name =?, Staff_id_no =?, Staff_phone_no=?, Staff_email =? WHERE Staff_login_id = ? ";
     $stmt = $mysqli->prepare($query);
@@ -50,7 +50,7 @@ if (isset($_POST['UpdateAuth'])) {
     $Login_email = $_POST['Login_email'];
     $Login_password = sha1(md5($_POST['Login_password']));
 
-    $query = "UPDATE Login SET Login_user_name =?, Login_email =?, Login_password=? WHERE Staff_login_id = ? ";
+    $query = "UPDATE Login SET Login_user_name =?, Login_email =?, Login_password=? WHERE Login_id = ? ";
     $stmt = $mysqli->prepare($query);
     $rc = $stmt->bind_param('sss', $Login_user_name, $Login_email, $Login_password, $Staff_login_id);
     $stmt->execute();
