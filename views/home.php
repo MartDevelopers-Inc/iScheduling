@@ -87,104 +87,81 @@ require_once('../partials/head.php');
                 </div>
             </div>
         </div>
-
-        <div class="py-4">
-            <div class="container direction-rtl">
-                <div class="row g-3">
-                    <div class="col-3">
-                        <div class="feature-card text-center">
-                            <div class="card shadow mx-auto"><img src="img/demo-img/bootstrap.png" alt=""></div>
-                            <p class="mb-0">Bootstrap 5</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="feature-card mx-auto text-center">
-                            <div class="card shadow mx-auto"><img src="img/demo-img/pwa.png" alt=""></div>
-                            <p class="mb-0">PWA ready</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="feature-card mx-auto text-center">
-                            <div class="card shadow mx-auto"><img src="img/demo-img/sass.png" alt=""></div>
-                            <p class="mb-0">Sass </p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="feature-card mx-auto text-center">
-                            <div class="card shadow mx-auto"><img src="img/demo-img/pug.png" alt=""></div>
-                            <p class="mb-0">Pug</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="feature-card mx-auto text-center">
-                            <div class="card shadow mx-auto"><img src="img/demo-img/npm.png" alt=""></div>
-                            <p class="mb-0">npm</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="feature-card mx-auto text-center">
-                            <div class="card shadow mx-auto"><img src="img/demo-img/gulp.png" alt=""></div>
-                            <p class="mb-0">gulp.js</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="feature-card mx-auto text-center">
-                            <div class="card shadow mx-auto"><i class="bi bi-box-arrow-left text-primary"></i></div>
-                            <p class="mb-0">RTL ready</p>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="feature-card mx-auto text-center">
-                            <div class="card shadow mx-auto"><i class="bi bi-moon text-dark"></i></div>
-                            <p class="mb-0">Dark mode</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card bg-danger mb-3 shadow-sm bg-gradient direction-rtl">
-                        <div class="card-body">
-                            <h2 class="text-white">Reusable elements</h2>
-                            <p class="text-white mb-4">More than 220+ reusable modern design elements. Just copy the code and paste it on your desired page.</p><a class="btn btn-warning" href="elements.html">All elements</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card bg-primary mb-3 shadow-sm bg-gradient direction-rtl">
-                        <div class="card-body">
-                            <h2 class="text-white">Ready pages</h2>
-                            <p class="text-white mb-4">Already designed more than 35+ pages for your needs. Such as - Authentication, Chats, eCommerce, Blog &amp; Miscellaneous pages.</p><a class="btn btn-info" href="pages.html">All pages</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <br>
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <h2>Customer Review</h2>
+                    <h2>Recent Clients Bookings</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <!-- Single Testimonial Slide-->
                         <div class="single-testimonial-slide">
-                            <div class="text-content"><span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill"></i></span>
+                            <div class="text-content">
+                                <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i></span>
                                 <h6 class="mb-2">The code looks clean, and the designs are excellent. I recommend.</h6><span class="d-block">Mrrickez, Themeforest</span>
                             </div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Avaiable Hospital Services</h2>
+                    <div class="testimonial-slide owl-carousel testimonial-style3">
                         <!-- Single Testimonial Slide-->
                         <div class="single-testimonial-slide">
-                            <div class="text-content"><span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill"></i></span>
-                                <h6 class="mb-2">All complete, <br> great craft.</h6><span class="d-block">Mazatlumm, Themeforest</span>
+                            <div class="text-content">
+                                <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i></span>
+                                <h6 class="mb-2">The code looks clean, and the designs are excellent. I recommend.</h6><span class="d-block">Mrrickez, Themeforest</span>
                             </div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2>My Clinic Staffs</h2>
+                    <div class="testimonial-slide owl-carousel testimonial-style3">
                         <!-- Single Testimonial Slide-->
-                        <div class="single-testimonial-slide">
-                            <div class="text-content"><span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill me-1"></i><i class="bi bi-star-fill"></i></span>
-                                <h6 class="mb-2">Awesome template! <br> Excellent support!</h6><span class="d-block">Vguntars, Themeforest</span>
-                            </div>
-                        </div>
+                        <?php
+                        $ret = "SELECT * FROM `Clinic_Staff`  ORDER BY `Clinic_Staff`.`Staff_full_name` ASC   ";
+                        $stmt = $mysqli->prepare($ret);
+                        $stmt->execute(); //ok
+                        $res = $stmt->get_result();
+                        while ($staff = $res->fetch_object()) {
+                        ?>
+                            <a href="staff?view=<?php echo $staff->Staff_id; ?>">
+                                <div class="single-testimonial-slide">
+                                    <div class="text-content">
+                                        <div class="col-12">
+                                            <div class="card team-member-card shadow">
+                                                <div class="card-body">
+                                                    <!-- Member Image-->
+                                                    <div class="team-member-img shadow-sm"><img src="../public/img/bg-img/profile.svg" alt=""></div>
+                                                    <!-- Team Info-->
+                                                    <div class="team-info">
+                                                        <h6 class="mb-0"><?php echo $staff->Staff_full_name; ?></h6>
+                                                        <p class="mb-0">Contacts: <?php echo $staff->Staff_phone_no; ?></p>
+                                                        <p class="mb-0">ID No: <?php echo $staff->Staff_id_no; ?></p>
+                                                    </div>
+                                                </div>
+                                                <!-- Contact Info-->
+                                                <div class="contact-info bg-info">
+                                                    <p class="mb-0 text-truncate"><?php echo $staff->Staff_email; ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
