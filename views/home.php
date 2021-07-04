@@ -102,10 +102,10 @@ require_once('../partials/head.php');
                         ?>
                             <div class="single-testimonial-slide">
                                 <div class="text-content">
-                                    <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i>Ref: <?php echo $booking->Booking_Ref;?></span>
-                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Status: <?php echo $booking->Boking_Status;?></span>
-                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Hospital Service: <?php echo $booking->Boking_Status;?></span>
-                                    <span class="d-block">Client Name: <?php echo $booking->Booking_Client_Id;?></span>
+                                    <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i>Ref: <?php echo $booking->Booking_Ref; ?></span>
+                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Status: <?php echo $booking->Boking_Status; ?></span>
+                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Hospital Service: <?php echo $booking->Boking_Status; ?></span>
+                                    <span class="d-block">Client Name: <?php echo $booking->Booking_Client_Id; ?></span>
                                 </div>
                             </div>
                         <?php
@@ -145,7 +145,7 @@ require_once('../partials/head.php');
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <h2>My Clinic Staffs</h2>
+                    <h2>Clinic Staffs</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <!-- Single Testimonial Slide-->
                         <?php
@@ -173,6 +173,52 @@ require_once('../partials/head.php');
                                                 <!-- Contact Info-->
                                                 <div class="contact-info bg-info">
                                                     <p class="mb-0 text-truncate"><?php echo $staff->Staff_email; ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Doctors</h2>
+                    <div class="testimonial-slide owl-carousel testimonial-style3">
+                        <!-- Single Testimonial Slide-->
+                        <?php
+                        $ret = "SELECT * FROM `Doctors`  ORDER BY RAND() ASC LIMIT 10   ";
+                        $stmt = $mysqli->prepare($ret);
+                        $stmt->execute(); //ok
+                        $res = $stmt->get_result();
+                        while ($staff = $res->fetch_object()) {
+                        ?>
+                            <a href="doctor?view=<?php echo $staff->Staff_id; ?>">
+                                <div class="single-testimonial-slide">
+                                    <div class="text-content">
+                                        <div class="col-12">
+                                            <div class="card team-member-card shadow">
+                                                <div class="card-body">
+                                                    <!-- Member Image-->
+                                                    <div class="team-member-img shadow-sm"><img src="../public/img/bg-img/profile.svg" alt=""></div>
+                                                    <!-- Team Info-->
+                                                    <div class="team-info">
+                                                        <h6 class="mb-0"><?php echo $staff->Doctor_full_name; ?></h6>
+                                                        <p class="mb-0">Contacts: <?php echo $staff->Doctor_phone_no; ?></p>
+                                                        <hr>
+                                                        <small>
+                                                            <?php echo $staff->Doctor_specialization; ?>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <!-- Contact Info-->
+                                                <div class="contact-info bg-info">
+                                                    <p class="mb-0 text-truncate"><?php echo $staff->Doctor_email; ?></p>
                                                 </div>
                                             </div>
                                         </div>
