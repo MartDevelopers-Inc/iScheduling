@@ -28,12 +28,18 @@ check_login();
 /* Delete Staff */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
+    $login = $_GET['login'];
     $adn = "DELETE FROM Clinic_Staff WHERE Staff_id=?";
+    $delete_auth = "DELETE FROM Login WHERE Login_id = ?";
     $stmt = $mysqli->prepare($adn);
+    $auth_stmt = $mysqli->prepare($delete_auth);
     $stmt->bind_param('s', $delete);
+    $auth_stmt->bind_param('s', $login);
     $stmt->execute();
+    $auth_stmt->execute();
     $stmt->close();
-    if ($stmt) {
+    $auth_stmt->close();
+    if ($stmt && $auth_stmt) {
         $success = "Deleted" && header("refresh:1; url=staffs");
     } else {
         $info = "Please Try Again Or Try Later";
@@ -122,7 +128,7 @@ require_once('../partials/head.php');
                                     <td>
                                         <a href="staff?view=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-warning">Update</a>
                                         <br>
-                                        <a href="staffs?delete=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-danger">Delete</a>
+                                        <a href="staffs?delete=<?php echo $staff->Staff_id; ?>&login=<?php echo $staff->Staff_login_id; ?>" class="badge rounded-pill bg-danger">Delete</a>
                                     </td>
                                 </tr>
                             <?php } ?>
