@@ -140,9 +140,11 @@ require_once('../partials/head.php');
                                 <tr>
                                     <td><?php echo $staff->Staff_full_name; ?></td>
                                     <td><?php echo $staff->Staff_id_no; ?></td>
+                                    <td><?php echo $staff->Staff_phone_no; ?></td>
                                     <td><?php echo $staff->Staff_email; ?></td>
                                     <td>
                                         <a href="staff?view=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-warning">Update</a>
+                                        <br>
                                         <a href="staffs?delete=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-primary">Delete</a>
                                     </td>
                                 </tr>
