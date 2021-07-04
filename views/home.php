@@ -111,13 +111,22 @@ require_once('../partials/head.php');
                 <div class="card-body">
                     <h2>Avaiable Hospital Services</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
-                        <!-- Single Testimonial Slide-->
-                        <div class="single-testimonial-slide">
-                            <div class="text-content">
-                                <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i></span>
-                                <h6 class="mb-2">The code looks clean, and the designs are excellent. I recommend.</h6><span class="d-block">Mrrickez, Themeforest</span>
-                            </div>
-                        </div>
+                        <?php
+                        $ret = "SELECT * FROM `Hospital_Services`  ORDER BY RAND() ASC LIMIT 10   ";
+                        $stmt = $mysqli->prepare($ret);
+                        $stmt->execute(); //ok
+                        $res = $stmt->get_result();
+                        while ($service = $res->fetch_object()) {
+                        ?>
+                            <a href="hospital_service?view=<?php echo $service->Service_id; ?>">
+                                <div class="single-testimonial-slide">
+                                    <div class="text-content">
+                                        <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-check"></i> <?php echo $service->Service_name; ?></span>
+                                        <h6 class="mb-2"><?php echo substr($service->Service_desc, 0, 50); ?>...</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php } ?>
 
                     </div>
                 </div>
@@ -131,7 +140,7 @@ require_once('../partials/head.php');
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <!-- Single Testimonial Slide-->
                         <?php
-                        $ret = "SELECT * FROM `Clinic_Staff`  ORDER BY `Clinic_Staff`.`Staff_full_name` ASC   ";
+                        $ret = "SELECT * FROM `Clinic_Staff`  ORDER BY RAND() ASC LIMIT 10   ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
                         $res = $stmt->get_result();
