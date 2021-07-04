@@ -98,8 +98,58 @@ require_once('../partials/head.php');
         </div>
     </div>
 
+    <!-- Add Staff Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="staticBackdropLabel">Add Staff</h6>
+                    <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="fullname">Full Name</label>
+                            <input class="form-control" required name="Staff_full_name" type="text">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input class="form-control" required name="Staff_email" type="email">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="job">ID Number</label>
+                            <input class="form-control" required type="text" name="Staff_id_no">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="job">Phone Number</label>
+                            <input class="form-control" required name="Staff_phone_no" type="text">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="Username">Login Username</label>
+                            <input class="form-control" required name="Login_user_name">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="Username">Login Email</label>
+                            <input class="form-control" required name="Login_email" type="email">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="fullname">Login Password</label>
+                            <input class="form-control" required name="Login_password" type="password">
+                        </div>
+                        <button class="btn btn-success w-100" name="AddStaff" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
     <div class="page-content-wrapper py-3">
         <div class="container">
+            <div class="text-center">
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Staff</button>
+            </div>
+            <br>
             <div class="card">
                 <div class="card-body p-3">
                     <table class="data-table w-100" id="dataTable">
