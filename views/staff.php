@@ -30,14 +30,14 @@ if (isset($_POST['UpdateProfile'])) {
     $Staff_id_no = $_POST['Staff_id_no'];
     $Staff_phone_no = $_POST['Staff_phone_no'];
     $Staff_email  = $_POST['Staff_email'];
-    $Staff_login_id = $_SESSION['Login_id'];
+    $Staff_id = $_GET['view'];
 
-    $query = "UPDATE Clinic_Staff SET Staff_full_name =?, Staff_id_no =?, Staff_phone_no=?, Staff_email =? WHERE Staff_login_id = ? ";
+    $query = "UPDATE Clinic_Staff SET Staff_full_name =?, Staff_id_no =?, Staff_phone_no=?, Staff_email =? WHERE Staff_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_phone_no, $Staff_email, $Staff_login_id);
+    $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_phone_no, $Staff_email, $Staff_id);
     $stmt->execute();
     if ($stmt) {
-        $success = "Profile Updated";
+        $success = "$Staff_full_name Profile Updated";
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -49,13 +49,14 @@ if (isset($_POST['UpdateAuth'])) {
     $Login_user_name = $_POST['Login_user_name'];
     $Login_email = $_POST['Login_email'];
     $Login_password = sha1(md5($_POST['Login_password']));
+    $Login_id = $_POST['Login_id'];
 
     $query = "UPDATE Login SET Login_user_name =?, Login_email =?, Login_password=? WHERE Login_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sss', $Login_user_name, $Login_email, $Login_password, $Staff_login_id);
+    $rc = $stmt->bind_param('ssss', $Login_user_name, $Login_email, $Login_password, $Login_id);
     $stmt->execute();
     if ($stmt) {
-        $success = "Auth Details Updated";
+        $success = "$Login_user_name Login  Details Updated";
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -81,8 +82,8 @@ require_once('../partials/head.php');
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/side_nav.php');
-    $Login_id = $_SESSION['Login_id'];
-    $ret = "SELECT *  FROM Clinic_Staff WHERE Staff_login_id = '$Login_id' ";
+    $view = $_GET['view'];
+    $ret = "SELECT *  FROM Clinic_Staff WHERE Staff_id = '$view' ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
@@ -98,7 +99,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="user-info">
                             <div class="d-flex align-items-center">
-                                <h5 class="mb-1"><?php echo $user->Staff_full_name; ?></h5><span class="badge bg-warning ms-2 rounded-pill"><?php echo $_SESSION['Login_rank']; ?></span>
+                                <h5 class="mb-1"><?php echo $user->Staff_full_name; ?> Profile</h5></span>
                             </div>
                         </div>
                     </div>
@@ -114,15 +115,15 @@ require_once('../partials/head.php');
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="email">Email Address</label>
-                                <input class="form-control" required name="Staff_email" type="email" value="<?php echo $user->Staff_email; ?>">
+                                <input class="form-control" required  name="Staff_email" type="email" value="<?php echo $user->Staff_email; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">ID Number</label>
-                                <input class="form-control" required type="text" value="<?php echo $user->Staff_id_no; ?>" name="Staff_id_no">
+                                <input class="form-control"  required type="text" value="<?php echo $user->Staff_id_no; ?>" name="Staff_id_no">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">Phone Number</label>
-                                <input class="form-control"  required name="Staff_phone_no" type="text" value="<?php echo $user->Staff_phone_no; ?>">
+                                <input class="form-control" required name="Staff_phone_no" type="text" value="<?php echo $user->Staff_phone_no; ?>">
                             </div>
 
                             <button class="btn btn-success w-100" name="UpdateProfile" type="submit">Update Now</button>
@@ -131,19 +132,21 @@ require_once('../partials/head.php');
                 </div>
                 <br>
                 <?php
-                $ret = "SELECT *  FROM Login WHERE Login_id = '$Login_id' ";
+                $ret = "SELECT *  FROM Login WHERE Login_id = '$user->Staff_login_id' ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
                 while ($login = $res->fetch_object()) {
                 ?>
                     <div class="card user-data-card">
-                        <h5 class="text-center"> Authentication Details</h5>
+                        <h5 class="text-center">Staff Authentication Details</h5>
                         <div class="card-body">
                             <form method="POST">
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Username</label>
                                     <input class="form-control" required value="<?php echo $login->Login_user_name; ?>" name="Login_user_name">
+                                    <input class="form-control" required value="<?php echo $user->Staff_login_id; ?>" type="hidden" name="Login_id">
+
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Email</label>
