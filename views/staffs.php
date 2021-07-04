@@ -24,40 +24,17 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
-/* Update Profile */
-if (isset($_POST['UpdateProfile'])) {
 
-    $Staff_full_name = $_POST['Staff_full_name'];
-    $Staff_id_no = $_POST['Staff_id_no'];
-    $Staff_phone_no = $_POST['Staff_phone_no'];
-    $Staff_email  = $_POST['Staff_email'];
-    $Staff_id = $_GET['view'];
-
-    $query = "UPDATE Clinic_Staff SET Staff_full_name =?, Staff_id_no =?, Staff_phone_no=?, Staff_email =? WHERE Staff_id = ? ";
-    $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_phone_no, $Staff_email, $Staff_id);
+/* Delete Staff */
+if (isset($_GET['delete'])) {
+    $delete = $_GET['delete'];
+    $adn = "DELETE FROM Clinic_Staff WHERE Staff_id=?";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('s', $delete);
     $stmt->execute();
+    $stmt->close();
     if ($stmt) {
-        $success = "$Staff_full_name Profile Updated";
-    } else {
-        $info = "Please Try Again Or Try Later";
-    }
-}
-
-/* Update Login Details */
-if (isset($_POST['UpdateAuth'])) {
-
-    $Login_user_name = $_POST['Login_user_name'];
-    $Login_email = $_POST['Login_email'];
-    $Login_password = sha1(md5($_POST['Login_password']));
-    $Login_id = $_POST['Login_id'];
-
-    $query = "UPDATE Login SET Login_user_name =?, Login_email =?, Login_password=? WHERE Login_id = ? ";
-    $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssss', $Login_user_name, $Login_email, $Login_password, $Login_id);
-    $stmt->execute();
-    if ($stmt) {
-        $success = "$Login_user_name Login  Details Updated";
+        $success = "Deleted" && header("refresh:1; url=staffs");
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -145,7 +122,7 @@ require_once('../partials/head.php');
                                     <td>
                                         <a href="staff?view=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-warning">Update</a>
                                         <br>
-                                        <a href="staffs?delete=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-primary">Delete</a>
+                                        <a href="staffs?delete=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-danger">Delete</a>
                                     </td>
                                 </tr>
                             <?php } ?>
