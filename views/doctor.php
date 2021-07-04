@@ -123,7 +123,7 @@ require_once('../partials/head.php');
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">Doctor Specialization</label>
-                                <textarea rows="5" class="form-control" required name="Doctor_specialization" type="text" value="<?php echo $user->Doctor_specialization; ?>">
+                                <textarea rows="5" class="form-control" required name="Doctor_specialization" type="text" value=""><?php echo $user->Doctor_specialization; ?></textarea>
                             </div>
 
                             <button class="btn btn-success w-100" name="UpdateProfile" type="submit">Update Now</button>

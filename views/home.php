@@ -198,7 +198,7 @@ require_once('../partials/head.php');
                         $res = $stmt->get_result();
                         while ($staff = $res->fetch_object()) {
                         ?>
-                            <a href="doctor?view=<?php echo $staff->Staff_id; ?>">
+                            <a href="doctor?view=<?php echo $staff->Doctor_id; ?>">
                                 <div class="single-testimonial-slide">
                                     <div class="text-content">
                                         <div class="col-12">
