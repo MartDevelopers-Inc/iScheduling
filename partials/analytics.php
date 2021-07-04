@@ -45,10 +45,19 @@ $stmt->bind_result($client);
 $stmt->fetch();
 $stmt->close();
 
-/* Appointments */
-$query = "SELECT COUNT(*)  FROM Client_Appointments ";
+/* Bookings */
+$query = "SELECT COUNT(*)  FROM Bookings ";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
-$stmt->bind_result($appointments);
+$stmt->bind_result($Bookings);
+$stmt->fetch();
+$stmt->close();
+
+
+/* Hospital Services */
+$query = "SELECT COUNT(*)  FROM Hospital_Services ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($Hospital_Services);
 $stmt->fetch();
 $stmt->close();
