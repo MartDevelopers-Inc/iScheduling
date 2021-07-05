@@ -28,7 +28,7 @@ require_once('../config/codeGen.php');
 check_login();
 
 /* Add Client */
-if (isset($_POST['AddStaff'])) {
+if (isset($_POST['AddClient'])) {
     $Client_full_name = $_POST['Client_full_name'];
     $Client_login_id = $_POST['Login_id'];
     $Client_phone_no = $_POST['Client_phone_no'];
@@ -57,7 +57,7 @@ if (isset($_POST['AddStaff'])) {
             $auth_qry_stmt = $mysqli->prepare($auth_querry);
             $stmt = $mysqli->prepare($query);
 
-            $rc = $auth_qry_stmt->bind_param('sssss', $Staff_login_id, $Staff_full_name, $Staff_email, $Login_password, $Login_rank);
+            $rc = $auth_qry_stmt->bind_param('sssss', $Client_login_id, $Client_full_name, $Client_email, $Login_password, $Login_rank);
             $rc = $stmt->bind_param('ssssss', $Client_full_name, $Client_gender, $Client_login_id, $Client_phone_no, $Client_email, $Client_location);
 
             $auth_qry_stmt->execute();
@@ -208,7 +208,7 @@ require_once('../partials/head.php');
                     <div class="chat-search-box">
                         <form action="client_search_result" method="GET">
                             <div class="input-group"><span class="input-group-text" id="searchbox"><i class="bi bi-search"></i></span>
-                                <input class="form-control" name="search_query" type="text" placeholder="Search Staffs" aria-describedby="searchbox">
+                                <input class="form-control" name="search_query" type="text" placeholder="Search Clients" aria-describedby="searchbox">
                             </div>
                         </form>
                     </div>
