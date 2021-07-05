@@ -205,7 +205,7 @@ require_once('../partials/head.php');
                                             <div class="card team-member-card shadow">
                                                 <div class="card-body">
                                                     <!-- Member Image-->
-                                                    <div class="team-member-img shadow-sm"><img src="../public/img/bg-img/profile.svg" alt=""></div>
+                                                    <div class="team-member-img shadow-sm"><img src="../public/img/bg-img/doctor.svg" alt=""></div>
                                                     <!-- Team Info-->
                                                     <div class="team-info">
                                                         <h6 class="mb-0"><?php echo $staff->Doctor_full_name; ?></h6>
