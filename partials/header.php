@@ -3,7 +3,11 @@
         <!-- Header Content-->
         <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
             <!-- Logo Wrapper-->
-            <div class="logo-wrapper"><a href="home"><img src="../public/img/core-img/logo.png" alt=""></a></div>
+            <div class="logo-wrapper">
+                <a href="home">
+                    <h3 class="text-primary font-weight-bold">iScheduling</h3>
+                </a>
+            </div>
             <!-- Navbar Toggler-->
             <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
         </div>
