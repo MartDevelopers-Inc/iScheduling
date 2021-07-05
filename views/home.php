@@ -94,19 +94,28 @@ require_once('../partials/head.php');
                     <h2>Recent Clients Bookings</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <?php
-                        $ret = "SELECT * FROM `Bookings`  ORDER BY Booking_Date ASC LIMIT 10   ";
+                        $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
+                        Bookings.Booking_Date, Bookings.Boking_Status, Bookings.Booking_id
+                         FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
+                         WHERE Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id
+                        ORDER BY Booking_Date ASC LIMIT 10   ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
                         $res = $stmt->get_result();
                         while ($booking = $res->fetch_object()) {
                         ?>
+
                             <div class="single-testimonial-slide">
-                                <div class="text-content">
-                                    <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-star-fill"></i>Ref: <?php echo $booking->Booking_Ref; ?></span>
-                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Status: <?php echo $booking->Boking_Status; ?></span>
-                                    <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-star-fill"></i>Booking Hospital Service: <?php echo $booking->Boking_Status; ?></span>
-                                    <span class="d-block">Client Name: <?php echo $booking->Booking_Client_Id; ?></span>
-                                </div>
+                                <a href="booking?view=<?php echo $booking->Booking_id; ?>">
+                                    <div class="text-content text-white">
+                                        <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->Booking_Ref; ?></span>
+                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-bookmark-star"></i> Booking Status: <?php echo $booking->Boking_Status; ?></span>
+                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-person-bounding-box"></i> Booked Hospital Service: <?php echo $booking->Service_name; ?></span>
+                                        <span class="d-block">Client Name : <?php echo $booking->Client_full_name; ?></span>
+                                        <span class="d-block">Client Phone : <?php echo $booking->Client_phone_no; ?></span>
+                                        <span class="d-block">Booking Date : <?php echo date('d-M-Y', strtotime($booking->Booking_Date)); ?></span>
+                                    </div>
+                                </a>
                             </div>
                         <?php
                         } ?>
