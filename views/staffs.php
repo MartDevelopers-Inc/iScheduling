@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Sun Jul 04 2021
+ * Created on Mon Jul 05 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,7 +19,6 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
@@ -49,7 +48,7 @@ if (isset($_GET['delete'])) {
 require_once('../partials/head.php');
 ?>
 
-<body>
+<body class="pe-0">
     <!-- Preloader-->
     <div class="preloader d-flex align-items-center justify-content-center" id="preloader">
         <div class="spinner-grow text-primary" role="status">
@@ -58,6 +57,28 @@ require_once('../partials/head.php');
     </div>
     <!-- Internet Connection Status-->
     <div class="internet-connection-status" id="internetStatus"></div>
+    <!-- Header Area-->
+    <div class="header-area" id="headerArea">
+        <div class="container">
+            <!-- Header Content-->
+            <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
+                <!-- Back Button-->
+                <div class="back-button">
+                    <a href="home">
+                        <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
+                        </svg>
+                    </a>
+                </div>
+                <!-- Page Title-->
+                <div class="page-heading">
+                    <h6 class="mb-0">Clinic Staffs</h6>
+                </div>
+                <!-- Navbar Toggler-->
+                <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
+            </div>
+        </div>
+    </div>
     <!-- Dark mode switching-->
     <div class="dark-mode-switching">
         <div class="d-flex w-100 h-100 align-items-center justify-content-center">
@@ -73,40 +94,20 @@ require_once('../partials/head.php');
             </div>
         </div>
     </div>
+    <!-- Sidenav Black Overlay-->
+    <div class="sidenav-black-overlay"></div>
+    <!-- Side Nav Wrapper-->
+    <?php require_once('../partials/side_nav.php'); ?>
 
-    <!-- Header Area-->
-    <div class="header-area" id="headerArea">
-        <div class="container">
-            <!-- Header Content-->
-            <div class="header-content position-relative d-flex align-items-center justify-content-between">
-                <!-- Back Button-->
-                <div class="back-button">
-                    <a href="home">
-                        <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
-                        </svg>
-                    </a>
-                </div>
-                <!-- Page Title-->
-                <div class="page-heading">
-                    <h6 class="mb-0">Staffs</h6>
-                </div>
-                <!-- Settings-->
-                <div class="setting-wrapper">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Staff Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Add new Staff modal-->
+    <div class="add-new-contact-modal modal fade px-0" id="addnewcontact" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addnewcontactlabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="staticBackdropLabel">Add Staff</h6>
-                    <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="modal-title" id="addnewcontactlabel">New Staff</h6>
+                        <button class="btn btn-close p-1 ms-auto me-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
                     <form method="POST">
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Full Name</label>
@@ -142,50 +143,60 @@ require_once('../partials/head.php');
             </div>
         </div>
     </div>
-    <!-- End Modal -->
-
     <div class="page-content-wrapper py-3">
+        <!-- Add New Staff-->
+        <div class="add-new-contact-wrap"><a class="shadow" href="#" data-bs-toggle="modal" data-bs-target="#addnewcontact"><i class="bi bi-plus"></i></a></div>
         <div class="container">
-            <div class="text-center">
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Staff</button>
-            </div>
-            <br>
-            <div class="card">
-                <div class="card-body p-3">
-                    <table class="data-table w-100" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>ID No</th>
-                                <th>Phone No</th>
-                                <th>Email</th>
-                                <th>Manage</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $ret = "SELECT * FROM `Clinic_Staff`";
-                            $stmt = $mysqli->prepare($ret);
-                            $stmt->execute(); //ok
-                            $res = $stmt->get_result();
-                            while ($staff = $res->fetch_object()) {
-                            ?>
-                                <tr>
-                                    <td><?php echo $staff->Staff_full_name; ?></td>
-                                    <td><?php echo $staff->Staff_id_no; ?></td>
-                                    <td><?php echo $staff->Staff_phone_no; ?></td>
-                                    <td><?php echo $staff->Staff_email; ?></td>
-                                    <td>
-                                        <a href="staff?view=<?php echo $staff->Staff_id; ?>" class="badge rounded-pill bg-warning">Update</a>
-                                        <br>
-                                        <a href="staffs?delete=<?php echo $staff->Staff_id; ?>&login=<?php echo $staff->Staff_login_id; ?>" class="badge rounded-pill bg-danger">Delete</a>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+            <div class="card mb-2">
+                <div class="card-body p-2">
+                    <div class="chat-search-box">
+                        <form action="#">
+                            <div class="input-group"><span class="input-group-text" id="searchbox"><i class="bi bi-search"></i></span>
+                                <input class="form-control" type="search" placeholder="Search Staffs" aria-describedby="searchbox">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <!-- Element Heading-->
+            <div class="element-heading">
+                <h6 class="ps-1">Clinic Staffs</h6>
+            </div>
+            <!-- Chat User List-->
+            <ul class="ps-0 chat-user-list">
+                <?php
+                $ret = "SELECT * FROM `Clinic_Staff`";
+                $stmt = $mysqli->prepare($ret);
+                $stmt->execute(); //ok
+                $res = $stmt->get_result();
+                while ($staff = $res->fetch_object()) {
+                ?>
+                    <li class="p-3 chat-unread"><a class="d-flex" href="staff?view=<?php echo $staff->Staff_id;?>">
+                            <!-- Thumbnail-->
+                            <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/profile.svg" alt=""><span class="active-status"></span></div>
+                            <!-- Info-->
+                            <div class="chat-user-info">
+                                <h6 class="text-truncate mb-0"><?php echo $staff->Staff_full_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Email: <?php echo $staff->Staff_email; ?></h6>
+                                <h6 class="text-truncate mb-0">Phone: <?php echo $staff->Staff_phone_no; ?></h6>
+                                <h6 class="text-truncate mb-0">ID NO: <?php echo $staff->Staff_id_no; ?></h6>
+
+                            </div>
+                        </a>
+                        <!-- Options-->
+                        <div class="dropstart chat-options-btn">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="bi bi-mic-mute"></i>Mute</a></li>
+                                <li><a href="#"><i class="bi bi-slash-circle"></i>Ban</a></li>
+                                <li><a href="#"><i class="bi bi-trash"></i>Remove</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                <?php
+                } ?>
+
+            </ul>
         </div>
     </div>
     <!-- Footer Nav-->
@@ -193,6 +204,5 @@ require_once('../partials/head.php');
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
 </body>
-
 
 </html>
