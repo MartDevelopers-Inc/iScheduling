@@ -56,7 +56,7 @@ if (isset($_POST['AddStaff'])) {
             $stmt = $mysqli->prepare($query);
 
             $rc = $auth_qry_stmt->bind_param('sssss', $Staff_login_id, $Staff_full_name, $Staff_email, $Login_password, $Login_rank);
-            $rc = $stmt->bind_param('ssssss', $Staff_full_name, $Staff_id_no, $Staff_login_id, $Staff_phone_no, $Staff_email);
+            $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_login_id, $Staff_phone_no, $Staff_email);
             
             $auth_qry_stmt->execute();
             $stmt->execute();
@@ -233,7 +233,7 @@ require_once('../partials/head.php');
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu">
-                                <li><a href="staffs?delete=<?php echo $staff->Staff_id; ?>"><i class="bi bi-trash"></i>Remove</a></li>
+                                <li><a href="staffs?delete=<?php echo $staff->Staff_id; ?>&login=<?php echo $staff->Staff_login_id;?>"><i class="bi bi-trash"></i>Remove</a></li>
                             </ul>
                         </div>
                     </li>
