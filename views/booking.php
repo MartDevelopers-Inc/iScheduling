@@ -24,6 +24,26 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
+
+/* Submit Review */
+if (isset($_POST['SubmitReview'])) {
+    $Booking_Review_Date = $_POST['Booking_Review_Date'];
+    $Booking_id = $_POST['Booking_id'];
+    $Booking_Reviewd_By_Login_Id = $_POST['Booking_Reviewd_By_Login_Id'];
+    $Boking_Status = $_POST['Boking_Status'];
+    if (!$error) {
+        $query = 'UPDATE Bookings SET Booking_Review_Date=?, Booking_Reviewd_By_Login_Id=?, Boking_Status=? WHERE  Booking_id =? ';
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ssss', $Booking_Review_Date, $Booking_Reviewd_By_Login_Id, $Boking_Status, $Booking_id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "Booking Review Submitted";
+        } else {
+            $info = 'Please Try Again Or Try Later';
+        }
+    }
+}
+
 require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 
@@ -96,12 +116,10 @@ while ($booking = $res->fetch_object()) {
             <?php require_once('../partials/side_nav.php'); ?>
 
             <div class="page-content-wrapper py-3">
-                <!--                 <div class="add-new-contact-wrap"><a class="shadow" href="edit_hospital_service?view=<?php echo $service->Service_id; ?>"><i class="bi bi-pencil-square"></i></a></div>
- -->
                 <div class="container">
                     <div class="card product-details-card mb-3 direction-rtl">
                         <div class="card-body">
-                            <h3>Client Name: <?php echo $booked_client->Client_full_name; ?> Booking</h3>
+                            <h3><?php echo $booked_client->Client_full_name; ?> Booking</h3>
                         </div>
                     </div>
 
@@ -157,6 +175,28 @@ while ($booking = $res->fetch_object()) {
                                 <p>Reviewed By Name: <?php echo $user->Login_user_name; ?> </p>
                                 <p>Reviewed By Email: <?php echo $user->Login_email; ?> </p>
                             <?php } ?>
+                        </div>
+                    </div>
+                    <div class="card product-details-card mb-3 direction-rtl">
+                        <div class="card-body">
+                            <h5>Review Status</h5>
+                            <form method="POST">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="fullname">Review Date</label>
+                                    <input class="form-control" required name="Booking_Review_Date" type="date">
+                                    <input class="form-control" value="<?php echo $service->Booking_id; ?>" required name="Booking_id" type="hidden">
+                                    <input class="form-control" value="<?php echo $_SESSION['Login_id']; ?>" required name="Booking_Reviewd_By_Login_Id" type="hidden">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="fullname">Booking Review Status</label>
+                                    <select class="form-control" required name="Boking_Status">
+                                        <option>New</option>
+                                        <option>Authorized</option>
+                                        <option>Rejected</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-success w-100" name="SubmitReview" type="submit">Submit Review</button>
+                            </form>
                         </div>
                     </div>
                 </div>

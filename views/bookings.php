@@ -30,13 +30,12 @@ check_login();
 /* Delete Bookings */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $login = $_GET['login'];
     $adn = "DELETE FROM Bookings WHERE Booking_id=?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $delete);
     $stmt->execute();
     $stmt->close();
-    if ($stmt && $auth_stmt) {
+    if ($stmt) {
         $success = "Deleted" && header("refresh:1; url=bookings");
     } else {
         $info = "Please Try Again Or Try Later";
