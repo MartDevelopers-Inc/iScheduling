@@ -19,6 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
@@ -26,43 +27,43 @@ require_once('../partials/analytics.php');
 require_once('../config/codeGen.php');
 check_login();
 
-/* Add Staff */
-if (isset($_POST['AddStaff'])) {
-    $Staff_full_name = $_POST['Staff_full_name'];
-    $Staff_id_no = $_POST['Staff_id_no'];
-    $Staff_login_id = $_POST['Login_id'];
-    $Staff_phone_no = $_POST['Staff_phone_no'];
-    $Staff_email = $_POST['Staff_email'];
+/* Add Doc */
+if (isset($_POST['AddDoctor'])) {
+    $Doctor_full_name = $_POST['Doctor_full_name'];
+    $Doctor_specialization = $_POST['Doctor_specialization'];
+    $Doctor_login_id = $_POST['Login_id'];
+    $Doctor_phone_no = $_POST['Doctor_phone_no'];
+    $Doctor_email = $_POST['Doctor_email'];
     $Login_password = sha1(md5($_POST['Login_password']));
     $Login_rank = $_POST['Login_rank'];
     if (!$error) {
         /* Prevent Double Entries */
-        $sql = "SELECT * FROM  Clinic_Staff WHERE  Staff_phone_no = '$Staff_phone_no' || Staff_login_id = $Staff_login_id || Staff_email  = $Staff_email  ";
+        $sql = "SELECT * FROM  Doctors WHERE  Doctor_phone_no = '$Doctor_phone_no' || Doctor_login_id = $Doctor_login_id || Doctor_email  = $Doctor_email  ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
-            if ($Staff_phone_no == $row['Staff_phone_no']) {
+            if ($Doctor_phone_no == $row['Doctor_phone_no']) {
                 $err = 'Phone Number Already Exists';
-            } else if ($Staff_login_id == $row['Staff_login_id']) {
+            } else if ($Doctor_login_id == $row['Doctor_login_id']) {
                 $err = 'Login ID Already Exists';
             } else {
                 $err = 'Email Address Already Exists';
             }
         } else {
             $auth_querry = 'INSERT INTO Login (Login_id, Login_user_name, Login_email, Login_password, Login_Rank) VALUES(?,?,?,?,?)';
-            $query = 'INSERT INTO Clinic_Staff  (Staff_full_name, Staff_id_no,  Staff_login_id, Staff_phone_no, Staff_email) VALUES(?,?,?,?,?)';
+            $query = 'INSERT INTO Doctors  (Doctor_full_name, Doctor_specialization,  Doctor_login_id, Doctor_phone_no, Doctor_email) VALUES(?,?,?,?,?)';
 
             $auth_qry_stmt = $mysqli->prepare($auth_querry);
             $stmt = $mysqli->prepare($query);
 
-            $rc = $auth_qry_stmt->bind_param('sssss', $Staff_login_id, $Staff_full_name, $Staff_email, $Login_password, $Login_rank);
-            $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_login_id, $Staff_phone_no, $Staff_email);
+            $rc = $auth_qry_stmt->bind_param('sssss', $Doctor_login_id, $Doctor_full_name, $Doctor_email, $Login_password, $Login_rank);
+            $rc = $stmt->bind_param('sssss', $Doctor_full_name, $Doctor_specialization, $Doctor_login_id, $Doctor_phone_no, $Doctor_email);
 
             $auth_qry_stmt->execute();
             $stmt->execute();
 
             if ($auth_qry_stmt &&  $stmt) {
-                $success = "$Staff_full_name Account Created";
+                $success = "$Doctor_full_name Account Created";
             } else {
                 $info = 'Please Try Again Or Try Later';
             }
@@ -74,7 +75,7 @@ if (isset($_POST['AddStaff'])) {
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
     $login = $_GET['login'];
-    $adn = "DELETE FROM Clinic_Staff WHERE Staff_id=?";
+    $adn = "DELETE FROM Doctors WHERE Doctor_id=?";
     $delete_auth = "DELETE FROM Login WHERE Login_id = ?";
     $stmt = $mysqli->prepare($adn);
     $auth_stmt = $mysqli->prepare($delete_auth);
@@ -85,7 +86,7 @@ if (isset($_GET['delete'])) {
     $stmt->close();
     $auth_stmt->close();
     if ($stmt && $auth_stmt) {
-        $success = "Deleted" && header("refresh:1; url=staffs");
+        $success = "Deleted" && header("refresh:1; url=doctors");
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -118,7 +119,7 @@ require_once('../partials/head.php');
                 </div>
                 <!-- Page Title-->
                 <div class="page-heading">
-                    <h6 class="mb-0">Clinic Staffs</h6>
+                    <h6 class="mb-0">Doctors</h6>
                 </div>
                 <!-- Navbar Toggler-->
                 <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
@@ -151,39 +152,38 @@ require_once('../partials/head.php');
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="modal-title" id="addnewcontactlabel">New Staff</h6>
+                        <h6 class="modal-title" id="addnewcontactlabel">New Doctor</h6>
                         <button class="btn btn-close p-1 ms-auto me-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="POST">
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Full Name</label>
-                            <input class="form-control" required name="Staff_full_name" type="text">
+                            <input class="form-control" required name="Doctor_full_name" type="text">
                             <input class="form-control" value="<?php echo $ID; ?>" required name="Login_id" type="hidden">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="email">Email Address</label>
-                            <input class="form-control" required name="Staff_email" type="email">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="form-label" for="job">ID Number</label>
-                            <input class="form-control" required type="text" name="Staff_id_no">
+                            <input class="form-control" required name="Doctor_email" type="email">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="job">Phone Number</label>
-                            <input class="form-control" required name="Staff_phone_no" type="text">
+                            <input class="form-control" required name="Doctor_phone_no" type="text">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Login Password</label>
                             <input class="form-control" required name="Login_password" type="password">
                         </div>
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-3" style="display:none">
                             <label class="form-label" for="fullname">Login Rank</label>
                             <select class="form-control" required name="Login_rank">
-                                <option>Administrator</option>
-                                <option>Staff</option>
+                                <option>Doctor</option>
                             </select>
                         </div>
-                        <button class="btn btn-success w-100" name="AddStaff" type="submit">Submit</button>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="job">Doctor Specialization</label>
+                            <textarea rows="4" class="form-control" required type="text" name="Doctor_specialization"></textarea>
+                        </div>
+                        <button class="btn btn-success w-100" name="AddDoctor" type="submit">Submit</button>
                     </form>
                 </div>
             </div>
@@ -196,9 +196,9 @@ require_once('../partials/head.php');
             <div class="card mb-2">
                 <div class="card-body p-2">
                     <div class="chat-search-box">
-                        <form action="staff_search_result" method="GET">
+                        <form action="doctor_search_result" method="GET">
                             <div class="input-group"><span class="input-group-text" id="searchbox"><i class="bi bi-search"></i></span>
-                                <input class="form-control" name="search_query" type="text" placeholder="Search Staffs" aria-describedby="searchbox">
+                                <input class="form-control" name="search_query" type="text" placeholder="Search Doctors " aria-describedby="searchbox">
                             </div>
                         </form>
                     </div>
@@ -210,29 +210,31 @@ require_once('../partials/head.php');
             <!-- Chat User List-->
             <ul class="ps-0 chat-user-list">
                 <?php
-                $ret = "SELECT * FROM `Clinic_Staff`";
+                $ret = "SELECT * FROM `Doctors`";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
-                while ($staff = $res->fetch_object()) {
+                while ($doc = $res->fetch_object()) {
                 ?>
-                    <li class="p-3 chat-unread"><a class="d-flex" href="staff?view=<?php echo $staff->Staff_id; ?>">
+                    <li class="p-3 chat-unread"><a class="d-flex" href="doctor?view=<?php echo $doc->Doctor_id; ?>">
                             <!-- Thumbnail-->
-                            <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/profile.svg" alt=""><span class="active-status"></span></div>
+                            <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/doctor.svg" alt=""><span class="active-status"></span></div>
                             <!-- Info-->
                             <div class="chat-user-info">
-                                <h6 class="text-truncate mb-0"><?php echo $staff->Staff_full_name; ?></h6>
-                                <h6 class="text-truncate mb-0">Email: <?php echo $staff->Staff_email; ?></h6>
-                                <h6 class="text-truncate mb-0">Phone: <?php echo $staff->Staff_phone_no; ?></h6>
-                                <h6 class="text-truncate mb-0">ID NO: <?php echo $staff->Staff_id_no; ?></h6>
-
+                                <h6 class="text-truncate mb-0"><?php echo $doc->Doctor_full_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Email: <?php echo $doc->Doctor_email; ?></h6>
+                                <h6 class="text-truncate mb-0">Phone: <?php echo $doc->Doctor_phone_no; ?></h6>
+                                <div class="last-chat">
+                                    <p class="text-truncate mb-0"><?php echo $doc->Doctor_specialization; ?></p>
+                                </div>
                             </div>
+
                         </a>
                         <!-- Options-->
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu">
-                                <li><a href="staffs?delete=<?php echo $staff->Staff_id; ?>&login=<?php echo $staff->Staff_login_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
+                                <li><a href="doctors?delete=<?php echo $doc->Doctor_id; ?>&login=<?php echo $doc->Doctor_login_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
                             </ul>
                         </div>
                     </li>
