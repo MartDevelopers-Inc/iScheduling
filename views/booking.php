@@ -30,11 +30,11 @@ if (isset($_POST['SubmitReview'])) {
     $Booking_Review_Date = $_POST['Booking_Review_Date'];
     $Booking_id = $_POST['Booking_id'];
     $Booking_Reviewd_By_Login_Id = $_POST['Booking_Reviewd_By_Login_Id'];
-    $Boking_Status = $_POST['Boking_Status'];
+    $Booking_Status = $_POST['Booking_Status'];
     if (!$error) {
-        $query = 'UPDATE Bookings SET Booking_Review_Date=?, Booking_Reviewd_By_Login_Id=?, Boking_Status=? WHERE  Booking_id =? ';
+        $query = 'UPDATE Bookings SET Booking_Review_Date=?, Booking_Reviewd_By_Login_Id=?, Booking_Status=? WHERE  Booking_id =? ';
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssss', $Booking_Review_Date, $Booking_Reviewd_By_Login_Id, $Boking_Status, $Booking_id);
+        $rc = $stmt->bind_param('ssss', $Booking_Review_Date, $Booking_Reviewd_By_Login_Id, $Booking_Status, $Booking_id);
         $stmt->execute();
         if ($stmt) {
             $success = "Booking Review Submitted";
@@ -128,7 +128,7 @@ while ($booking = $res->fetch_object()) {
                             <h5>Booking Details</h5>
                             <p>Ref # : <?php echo $booking->Booking_Ref; ?></p>
                             <p>Date Created: <?php echo $booking->Booking_Date; ?></p>
-                            <p>Booking Status: <?php echo $booking->Boking_Status; ?></p>
+                            <p>Booking Status: <?php echo $booking->Booking_Status; ?></p>
                             <p>Service Date: <?php echo $booking->Booking_Service_Date; ?></p>
                         </div>
                     </div>
@@ -184,12 +184,12 @@ while ($booking = $res->fetch_object()) {
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="fullname">Review Date</label>
                                     <input class="form-control" required name="Booking_Review_Date" type="date">
-                                    <input class="form-control" value="<?php echo $service->Booking_id; ?>" required name="Booking_id" type="hidden">
+                                    <input class="form-control" value="<?php echo $booking->Booking_id; ?>" required name="Booking_id" type="hidden">
                                     <input class="form-control" value="<?php echo $_SESSION['Login_id']; ?>" required name="Booking_Reviewd_By_Login_Id" type="hidden">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="fullname">Booking Review Status</label>
-                                    <select class="form-control" required name="Boking_Status">
+                                    <select class="form-control" required name="Booking_Status">
                                         <option>New</option>
                                         <option>Authorized</option>
                                         <option>Rejected</option>
