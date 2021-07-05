@@ -83,71 +83,32 @@ require_once('../partials/head.php');
                     <div class="col-6 col-sm-4 col-lg-3">
                         <div class="card single-product-card">
                             <div class="card-body p-3">
-                                <!-- Product Thumbnail--><a class="product-thumbnail d-block" href="page-shop-details.html"><img src="img/bg-img/p1.jpg" alt="">
-                                    <!-- Badge--><span class="badge bg-warning">Sale</span></a>
-                                <!-- Product Title--><a class="product-title d-block text-truncate" href="page-shop-details.html">Wooden Tool</a>
-                                <!-- Product Price-->
-                                <p class="sale-price">$9.89<span>$13.42</span></p><a class="btn btn-primary btn-sm" href="#">Add to Cart</a>
+                                <a class="product-thumbnail d-block" href="report_staffs"><img src="../public/img/bg-img/Clinic_staffs.svg" alt="">
+                                    <a class="product-title d-block text-truncate" href="report_staffs">Clinic Staffs</a>
                             </div>
                         </div>
                     </div>
-                    <!-- Single Top Product Card-->
                     <div class="col-6 col-sm-4 col-lg-3">
                         <div class="card single-product-card">
                             <div class="card-body p-3">
-                                <!-- Product Thumbnail--><a class="product-thumbnail d-block" href="page-shop-details.html"><img src="img/bg-img/p2.jpg" alt="">
-                                    <!-- Badge--><span class="badge bg-primary">-10%</span></a>
-                                <!-- Product Title--><a class="product-title d-block text-truncate" href="page-shop-details.html">Atoms Musk</a>
-                                <!-- Product Price-->
-                                <p class="sale-price">$3.36<span>$5.99</span></p><a class="btn btn-primary btn-sm" href="#">Add to Cart</a>
+                                <a class="product-thumbnail d-block" href="report_doctors"><img src="../public/img/bg-img/doctors.svg" alt="">
+                                    <a class="product-title d-block text-truncate" href="report_doctors">Doctors</a>
                             </div>
                         </div>
                     </div>
-                    <!-- Single Top Product Card-->
                     <div class="col-6 col-sm-4 col-lg-3">
                         <div class="card single-product-card">
                             <div class="card-body p-3">
-                                <!-- Product Thumbnail--><a class="product-thumbnail d-block" href="page-shop-details.html"><img src="img/bg-img/p3.jpg" alt="">
-                                    <!-- Badge--><span class="badge bg-info">-15%</span></a>
-                                <!-- Product Title--><a class="product-title d-block text-truncate" href="page-shop-details.html">Black T-shirt</a>
-                                <!-- Product Price-->
-                                <p class="sale-price">$10.99<span>$12</span></p><a class="btn btn-primary btn-sm" href="#">Add to Cart</a>
+                                <a class="product-thumbnail d-block" href="report_clients"><img src="../public/img/bg-img/users.svg" alt="">
+                                    <a class="product-title d-block text-truncate" href="report_clients">Clients</a>
                             </div>
                         </div>
                     </div>
-                    <!-- Single Top Product Card-->
                     <div class="col-6 col-sm-4 col-lg-3">
                         <div class="card single-product-card">
                             <div class="card-body p-3">
-                                <!-- Product Thumbnail--><a class="product-thumbnail d-block" href="page-shop-details.html"><img src="img/bg-img/p4.jpg" alt="">
-                                    <!-- Badge--><span class="badge bg-primary">Sale</span></a>
-                                <!-- Product Title--><a class="product-title d-block text-truncate" href="page-shop-details.html">Headphone</a>
-                                <!-- Product Price-->
-                                <p class="sale-price">$2.99<span>$4</span></p><a class="btn btn-danger btn-sm disabled" href="#">Out of Stock</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Top Product Card-->
-                    <div class="col-6 col-sm-4 col-lg-3">
-                        <div class="card single-product-card">
-                            <div class="card-body p-3">
-                                <!-- Product Thumbnail--><a class="product-thumbnail d-block" href="page-shop-details.html"><img src="img/bg-img/p5.jpg" alt="">
-                                    <!-- Badge--><span class="badge bg-danger">Sale</span></a>
-                                <!-- Product Title--><a class="product-title d-block text-truncate" href="page-shop-details.html">Crispy Biscuit</a>
-                                <!-- Product Price-->
-                                <p class="sale-price">$0.78<span>$1.12</span></p><a class="btn btn-primary btn-sm" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Top Product Card-->
-                    <div class="col-6 col-sm-4 col-lg-3">
-                        <div class="card single-product-card">
-                            <div class="card-body p-3">
-                                <!-- Product Thumbnail--><a class="product-thumbnail d-block" href="page-shop-details.html"><img src="img/bg-img/p6.jpg" alt="">
-                                    <!-- Badge--><span class="badge bg-primary">Hot</span></a>
-                                <!-- Product Title--><a class="product-title d-block text-truncate" href="page-shop-details.html">Sports Shoes</a>
-                                <!-- Product Price-->
-                                <p class="sale-price">$110<span>$128</span></p><a class="btn btn-danger btn-sm disabled" href="#">Out of Stock</a>
+                                <a class="product-thumbnail d-block" href="reports_bookings"><img src="../public/img/bg-img/bookings.svg" alt="">
+                                    <a class="product-title d-block text-truncate" href="reports_bookings">Bookings</a>
                             </div>
                         </div>
                     </div>
