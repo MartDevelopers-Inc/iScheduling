@@ -19,6 +19,8 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
@@ -51,7 +53,7 @@ require_once('../partials/head.php');
                 </div>
                 <!-- Page Title-->
                 <div class="page-heading">
-                    <h6 class="mb-0">Clinic Staffs Search Results</h6>
+                    <h6 class="mb-0">Doctor Search Results</h6>
                 </div>
                 <!-- Navbar Toggler-->
                 <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
@@ -84,9 +86,9 @@ require_once('../partials/head.php');
             <div class="card mb-2">
                 <div class="card-body p-2">
                     <div class="chat-search-box">
-                        <form action="staff_search_result" method="GET">
+                        <form action="doctor_search_result" method="GET">
                             <div class="input-group"><span class="input-group-text" id="searchbox"><i class="bi bi-search"></i></span>
-                                <input class="form-control" name="search_query" type="text" placeholder="Search Staffs" aria-describedby="searchbox">
+                                <input class="form-control" name="search_query" type="text" placeholder="Search Doctors" aria-describedby="searchbox">
                             </div>
                         </form>
                     </div>
@@ -99,26 +101,28 @@ require_once('../partials/head.php');
                 $min_length = 0;
                 if (strlen($search_query) >= $min_length) {
                     $search_query = mysqli_real_escape_string($mysqli, $search_query);
-                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Clinic_Staff WHERE (`Staff_full_name` LIKE '%" . $search_query . "%')  ");
+                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Doctors WHERE (`Doctor_full_name` LIKE '%" . $search_query . "%') || `Doctor_specialization`  LIKE '%" . $search_query . "%' ");
                     if (mysqli_num_rows($raw_results) > 0) {
                         while ($results = mysqli_fetch_array($raw_results)) {
                 ?>
-                            <li class="p-3 chat-unread"><a class="d-flex" href="staff?view=<?php echo $results['Staff_id']; ?>">
+                            <li class="p-3 chat-unread"><a class="d-flex" href="doctor?view=<?php echo $results['Doctor_id']; ?>">
                                     <!-- Thumbnail-->
-                                    <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/profile.svg" alt=""><span class="active-status"></span></div>
+                                    <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/doctor.svg" alt=""><span class="active-status"></span></div>
                                     <!-- Info-->
                                     <div class="chat-user-info">
-                                        <h6 class="text-truncate mb-0"><?php echo $results['Staff_full_name']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['Staff_email']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['Staff_phone_no']; ?></h6>
-                                        <h6 class="text-truncate mb-0">ID NO: <?php echo $results['Staff_id_no']; ?></h6>
+                                        <h6 class="text-truncate mb-0"><?php echo $results['Doctor_full_name']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['Doctor_email']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['Doctor_phone_no']; ?></h6>
+                                        <div class="last-chat">
+                                            <p class="text-truncate mb-0"><?php echo $results['Doctor_specialization']; ?></p>
+                                        </div>
                                     </div>
                                 </a>
                                 <!-- Options-->
                                 <div class="dropstart chat-options-btn">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="staffs?delete=<?php echo $results['Staff_id']; ?>&login=<?php echo $results['Staff_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
+                                        <li><a href="doctors?delete=<?php echo $results['Doctor_id']; ?>&login=<?php echo $results['Doctor_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
                                     </ul>
                                 </div>
                             </li>
