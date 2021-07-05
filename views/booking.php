@@ -26,18 +26,20 @@ require_once('../config/checklogin.php');
 check_login();
 require_once('../partials/analytics.php');
 require_once('../partials/head.php');
+
 $view = $_GET['view'];
-$ret = "SELECT * FROM `Bookings`  WHERE Bookings_id = '$view'  ";
+$ret = "SELECT * FROM `Bookings`  WHERE Booking_id = '$view'  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($booking = $res->fetch_object()) {
-    $client = $booking->Booking_Client_Id;
+
+    $client_id = $booking->Booking_Client_Id;
     $ret = "SELECT * FROM `Clients`  WHERE Client_id = '$client_id'  ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
-    while ($client = $res->fetch_object()) {
+    while ($booked_client = $res->fetch_object()) {
 
 
 ?>
@@ -58,7 +60,7 @@ while ($booking = $res->fetch_object()) {
                     <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
                         <!-- Back Button-->
                         <div class="back-button">
-                            <a href="hospital_services">
+                            <a href="bookings">
                                 <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                                 </svg>
@@ -99,7 +101,7 @@ while ($booking = $res->fetch_object()) {
                 <div class="container">
                     <div class="card product-details-card mb-3 direction-rtl">
                         <div class="card-body">
-                            <h3>Client Name: <?php echo $client->Client_name; ?> Booking</h3>
+                            <h3>Client Name: <?php echo $booked_client->Client_full_name; ?> Booking</h3>
                         </div>
                     </div>
 
@@ -115,11 +117,11 @@ while ($booking = $res->fetch_object()) {
                     <div class="card product-details-card mb-3 direction-rtl">
                         <div class="card-body">
                             <h5>Client Details</h5>
-                            <p>Name:<?php echo $client->Client_full_name; ?></p>
-                            <p>Email:<?php echo $client->Client_email; ?></p>
-                            <p>Phone No:<?php echo $client->Client_phone_no; ?></p>
-                            <p>Gender:<?php echo $client->Client_gender; ?></p>
-                            <p>Address:<?php echo $client->Client_location; ?></p>
+                            <p>Name: <?php echo $booked_client->Client_full_name; ?></p>
+                            <p>Email: <?php echo $booked_client->Client_email; ?></p>
+                            <p>Phone No: <?php echo $booked_client->Client_phone_no; ?></p>
+                            <p>Gender: <?php echo $booked_client->Client_gender; ?></p>
+                            <p>Address: <?php echo $booked_client->Client_location; ?></p>
                         </div>
                     </div>
                     <?php
@@ -143,7 +145,7 @@ while ($booking = $res->fetch_object()) {
                     <div class="card product-details-card mb-3 direction-rtl">
                         <div class="card-body">
                             <h5>Booking Review Details</h5>
-                            <p>Review Date: <?php echo date('d-M-Y', strtotime($booking->Booking_Review_Date)); ?></p>
+                            <p>Review Date: <?php echo $booking->Booking_Review_Date; ?></p>
                             <?php
                             $reveiewby = $booking->Booking_Reviewd_By_Login_Id;
                             $ret = "SELECT * FROM `Login`  WHERE Login_id = '$reveiewby'  ";
