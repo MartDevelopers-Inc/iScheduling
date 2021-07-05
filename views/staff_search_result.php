@@ -22,6 +22,7 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
+require_once('../partials/analytics.php');
 check_login();
 require_once('../partials/head.php');
 ?>
@@ -42,7 +43,7 @@ require_once('../partials/head.php');
             <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
                 <!-- Back Button-->
                 <div class="back-button">
-                    <a href="home">
+                    <a href="staffs">
                         <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                         </svg>
@@ -50,7 +51,7 @@ require_once('../partials/head.php');
                 </div>
                 <!-- Page Title-->
                 <div class="page-heading">
-                    <h6 class="mb-0">Clinic Staffs</h6>
+                    <h6 class="mb-0">Clinic Staffs Search Results</h6>
                 </div>
                 <!-- Navbar Toggler-->
                 <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
@@ -79,22 +80,17 @@ require_once('../partials/head.php');
 
     <div class="page-content-wrapper py-3">
         <!-- Add New Staff-->
-        <div class="add-new-contact-wrap"><a class="shadow" href="#" data-bs-toggle="modal" data-bs-target="#addnewcontact"><i class="bi bi-plus"></i></a></div>
         <div class="container">
             <div class="card mb-2">
                 <div class="card-body p-2">
                     <div class="chat-search-box">
                         <form action="staff_search_result" method="GET">
                             <div class="input-group"><span class="input-group-text" id="searchbox"><i class="bi bi-search"></i></span>
-                                <input class="form-control" type="search" placeholder="Search Staffs" aria-describedby="searchbox">
+                                <input class="form-control" name="search_query" type="text" placeholder="Search Staffs" aria-describedby="searchbox">
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-            <!-- Element Heading-->
-            <div class="element-heading">
-                <h6 class="ps-1">Clinic Staffs Search Results </h6>
             </div>
             <!-- Chat User List-->
             <ul class="ps-0 chat-user-list">

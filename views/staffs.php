@@ -22,6 +22,7 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
+require_once('../partials/analytics.php');
 check_login();
 
 /* Delete Staff */
@@ -152,7 +153,7 @@ require_once('../partials/head.php');
                     <div class="chat-search-box">
                         <form action="staff_search_result" method="GET">
                             <div class="input-group"><span class="input-group-text" id="searchbox"><i class="bi bi-search"></i></span>
-                                <input class="form-control" name="querry" type="text" placeholder="Search Staffs" aria-describedby="searchbox">
+                                <input class="form-control" name="search_query" type="text" placeholder="Search Staffs" aria-describedby="searchbox">
                             </div>
                         </form>
                     </div>
