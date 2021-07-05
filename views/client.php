@@ -36,7 +36,7 @@ if (isset($_POST['UpdateProfile'])) {
 
     $query = "UPDATE Clients SET Client_full_name =?,  Client_phone_no =?, Client_gender =?, Client_email =?, Client_location=? WHERE Client_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssssss', $Client_full_name, $Client_phone_no, $Client_gender, $Client_email, $Client_location, $view);
+    $rc = $stmt->bind_param('ssssss', $Client_full_name, $Client_phone_no, $Client_gender, $Client_email, $Client_location, $Client_id);
     $stmt->execute();
     if ($stmt) {
         $success = "$Client_full_name Profile Updated";
@@ -154,7 +154,7 @@ require_once('../partials/head.php');
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Username</label>
                                     <input class="form-control" required value="<?php echo $login->Login_user_name; ?>" name="Login_user_name">
-                                    <input class="form-control" required value="<?php echo $$user->Client_login_id; ?>" type="hidden" name="Login_id">
+                                    <input class="form-control" required value="<?php echo $user->Client_login_id; ?>" type="hidden" name="Login_id">
 
                                 </div>
                                 <div class="form-group mb-3">
