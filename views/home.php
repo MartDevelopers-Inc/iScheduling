@@ -46,43 +46,43 @@ require_once('../partials/head.php');
     <div class="page-content-wrapper">
         <!-- Hero Slides-->
         <div class="owl-carousel-one owl-carousel">
-            <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/31.jpg')">
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/clinic_staff.jpg')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="500ms">Clinic Staffs</h4>
-                        <a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $staff; ?></a>
+                        <a class="btn btn-creative btn-warning" href="staffs" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $staff; ?></a>
                     </div>
                 </div>
             </div>
-            <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/32.jpg')">
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/doctors.png')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Qualified Doctors</h4>
-                        <a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $doc; ?></a>
+                        <a class="btn btn-creative btn-warning" href="doctors" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $doc; ?></a>
                     </div>
                 </div>
             </div>
-            <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/33.jpg')">
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/clients.jpeg')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Registered Clients</h4>
-                        <a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $client; ?></a>
+                        <a class="btn btn-creative btn-warning" href="clients" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $client; ?></a>
                     </div>
                 </div>
             </div>
-            <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/1.jpg')">
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital_services.webp')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Hospital Services</h4>
-                        <a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Services; ?></a>
+                        <a class="btn btn-creative btn-warning" href="hospital_services" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Services; ?></a>
                     </div>
                 </div>
             </div>
-            <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/1.jpg')">
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/booking.jpg')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Client Bookings</h4>
-                        <a class="btn btn-creative btn-warning" href="#" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Bookings; ?></a>
+                        <a class="btn btn-creative btn-warning" href="bookings" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Bookings; ?></a>
                     </div>
                 </div>
             </div>
