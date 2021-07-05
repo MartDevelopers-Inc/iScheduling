@@ -38,4 +38,11 @@
     <link rel="stylesheet" href="../public/plugins/iziToast/iziToast.min.css">
     <!-- Data Tables -->
     <link rel="stylesheet" href="../public/css/dataTables.bootstrap4.min.css">
+    <!-- Responsive Data Tables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+    <!-- Export Data Tables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
 </head>
