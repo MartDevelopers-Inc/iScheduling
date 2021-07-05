@@ -88,7 +88,7 @@ require_once('../partials/head.php');
                     <div class="chat-search-box">
                         <form action="client_search_result" method="GET">
                             <div class="input-group"><span class="input-group-text" id="searchbox"><i class="bi bi-search"></i></span>
-                                <input class="form-control" name="search_query" type="text" placeholder="Search Doctors" aria-describedby="searchbox">
+                                <input class="form-control" name="search_query" type="text" placeholder="Search Clients" aria-describedby="searchbox">
                             </div>
                         </form>
                     </div>
