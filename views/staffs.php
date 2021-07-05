@@ -23,7 +23,52 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../partials/analytics.php');
+require_once('../config/codeGen.php');
 check_login();
+
+/* Add Staff */
+if (isset($_POST['AddStaff'])) {
+    $Staff_full_name = $_POST['Staff_full_name'];
+    $Staff_id_no = $_POST['Staff_id_no'];
+    $Staff_login_id = $_POST['Login_id'];
+    $Staff_phone_no = $_POST['Staff_phone_no'];
+    $Staff_email = $_POST['Staff_email'];
+    $Login_password = sha1(md5($_POST['Login_password']));
+    $Login_rank = $_POST['Login_rank'];
+    if (!$error) {
+        /* Prevent Double Entries */
+        $sql = "SELECT * FROM  Clinic_Staff WHERE  Staff_phone_no = '$Staff_phone_no' || Staff_login_id = $Staff_login_id || Staff_email  = $Staff_email  ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($Staff_phone_no == $row['Staff_phone_no']) {
+                $err = 'Phone Number Already Exists';
+            } else if ($Staff_login_id == $row['Staff_login_id']) {
+                $err = 'Login ID Already Exists';
+            } else {
+                $err = 'Email Address Already Exists';
+            }
+        } else {
+            $auth_querry = 'INSERT INTO Login (Login_id, Login_user_name, Login_email, Login_password, Login_Rank) VALUES(?,?,?,?,?)';
+            $query = 'INSERT INTO Clinic_Staff  (Staff_full_name, Staff_id_no,  Staff_login_id, Staff_phone_no, Staff_email) VALUES(?,?,?,?,?)';
+            
+            $auth_qry_stmt = $mysqli->prepare($auth_querry);
+            $stmt = $mysqli->prepare($query);
+
+            $rc = $auth_qry_stmt->bind_param('sssss', $Staff_login_id, $Staff_full_name, $Staff_email, $Login_password, $Login_rank);
+            $rc = $stmt->bind_param('ssssss', $Staff_full_name, $Staff_id_no, $Staff_login_id, $Staff_phone_no, $Staff_email);
+            
+            $auth_qry_stmt->execute();
+            $stmt->execute();
+
+            if ($auth_qry_stmt &&  $stmt) {
+                $success = "$Staff_full_name Account Created";
+            } else {
+                $info = 'Please Try Again Or Try Later';
+            }
+        }
+    }
+}
 
 /* Delete Staff */
 if (isset($_GET['delete'])) {
@@ -113,6 +158,7 @@ require_once('../partials/head.php');
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Full Name</label>
                             <input class="form-control" required name="Staff_full_name" type="text">
+                            <input class="form-control" value="<?php echo $ID; ?>" required name="Login_id" type="hidden">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="email">Email Address</label>
@@ -127,16 +173,15 @@ require_once('../partials/head.php');
                             <input class="form-control" required name="Staff_phone_no" type="text">
                         </div>
                         <div class="form-group mb-3">
-                            <label class="form-label" for="Username">Login Username</label>
-                            <input class="form-control" required name="Login_user_name">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="form-label" for="Username">Login Email</label>
-                            <input class="form-control" required name="Login_email" type="email">
-                        </div>
-                        <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Login Password</label>
                             <input class="form-control" required name="Login_password" type="password">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="fullname">Login Rank</label>
+                            <select class="form-control" required name="Login_rank">
+                                <option>Administrator</option>
+                                <option>Staff</option>
+                            </select>
                         </div>
                         <button class="btn btn-success w-100" name="AddStaff" type="submit">Submit</button>
                     </form>
