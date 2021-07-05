@@ -27,7 +27,7 @@ check_login();
 require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 $view = $_GET['view'];
-$ret = "SELECT * FROM `Hospital_Services`  ORDER BY RAND() ASC LIMIT 10   ";
+$ret = "SELECT * FROM `Hospital_Services`  WHERE Service_id = '$view'  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
@@ -86,12 +86,14 @@ while ($service = $res->fetch_object()) {
         <?php require_once('../partials/side_nav.php'); ?>
 
         <div class="page-content-wrapper py-3">
+            <div class="add-new-contact-wrap"><a class="shadow" href="edit_hospital_service?view=<?php echo $service->Service_id; ?>"><i class="bi bi-pencil-square"></i></a></div>
             <div class="container">
                 <div class="card product-details-card mb-3 direction-rtl">
                     <div class="card-body">
                         <h3><?php echo $service->Service_name; ?></h3>
                     </div>
                 </div>
+
                 <div class="card product-details-card mb-3 direction-rtl">
                     <div class="card-body">
                         <h5>Description</h5>

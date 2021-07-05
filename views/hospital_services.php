@@ -55,24 +55,6 @@ if (isset($_POST['AddHospitalService'])) {
     }
 }
 
-/* Update Service */
-if (isset($_POST['UpdateHospitalService'])) {
-    $Service_name = $_POST['Service_name'];
-    $Service_desc = $_POST['Service_desc'];
-    $Service_id  = $_POST['Service_id'];
-    if (!$error) {
-        $query = 'UPDATE Hospital_Services  SET Service_name =?, Service_desc =? WHERE Service_id = ?';
-        $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('sss', $Service_name, $Service_desc, $Service_id);
-        $stmt->execute();
-
-        if ($stmt) {
-            $success = "$Service_name Updated";
-        } else {
-            $info = 'Please Try Again Or Try Later';
-        }
-    }
-}
 
 /* Delete Service */
 if (isset($_GET['delete'])) {
@@ -198,35 +180,6 @@ require_once('../partials/head.php');
                         <!-- Options-->
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
-                            <ul class="dropdown-menu">
-                                <li><a data-bs-toggle="modal" data-bs-target="#update-<?php echo $service->Service_id; ?>" href=""><i class="bi bi-edit"></i>Update</a></li>
-                            </ul>
-                            <!-- Update Modal -->
-                            <div class="add-new-contact-modal modal fade px-0" id="update-<?php echo $service->Service_id; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addnewcontactlabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                                <h6 class="modal-title" id="addnewcontactlabel">Update Modal</h6>
-                                                <button class="btn btn-close p-1 ms-auto me-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form method="POST">
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label" for="fullname">Service Name</label>
-                                                    <input class="form-control" value="<?php echo $service->Service_name; ?>" required name="Service_name" type="text">
-                                                    <input class="form-control" value="<?php echo $service->Service_id; ?>" required name="Service_id" type="hidden">
-                                                </div>
-                                                <div class="form-group mb-3">
-                                                    <label class="form-label" for="email">Service Details</label>
-                                                    <textarea class="form-control" required name="Service_desc"><?php echo $service->Service_desc; ?></textarea>
-                                                </div>
-                                                <button class="btn btn-success w-100" name="UpdateHospitalService" type="submit">Submit</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Update Modal -->
                             <ul class="dropdown-menu">
                                 <li><a href="hospital_services?delete=<?php echo $service->Service_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
                             </ul>
