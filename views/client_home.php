@@ -76,7 +76,7 @@ require_once('../partials/head.php');
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <h2>Recent Clients Bookings</h2>
+                    <h2>My Recent Bookings</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <?php
                         $Login_id = $_SESSION['Login_id'];
@@ -93,12 +93,10 @@ require_once('../partials/head.php');
 
                             <div class="single-testimonial-slide">
                                 <a href="client_booking?view=<?php echo $booking->Booking_id; ?>">
-                                    <div class="text-content text-white">
+                                    <div class="text-content">
                                         <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->Booking_Ref; ?></span>
-                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-bookmark-star"></i> Booking Status: <?php echo $booking->Booking_Status; ?></span>
-                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-person-bounding-box"></i> Booked Hospital Service: <?php echo $booking->Service_name; ?></span>
-                                        <span class="d-block">Client Name : <?php echo $booking->Client_full_name; ?></span>
-                                        <span class="d-block">Client Phone : <?php echo $booking->Client_phone_no; ?></span>
+                                        <span class="d-block">Booking Status : <?php echo $booking->Booking_Status; ?></span>
+                                        <span class="d-block">Booked Hospital Service : <?php echo $booking->Service_name; ?></span>
                                         <span class="d-block">Booking Date : <?php echo date('d-M-Y', strtotime($booking->Booking_Date)); ?></span>
                                     </div>
                                 </a>

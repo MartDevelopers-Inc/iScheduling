@@ -26,6 +26,26 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 check_login();
 /* Add Booking */
+if (isset($_POST['AddBooking'])) {
+    $Booking_date = $_POST['Booking_date'];
+    $Booking_Ref = $_POST['Booking_Ref'];
+    $Booking_Service_Date = $_POST['Booking_Service_Date'];
+    $Booking_Service_Id = $_POST['Booking_Service_Id'];
+    $Booking_Client_Id = $_POST['Booking_Client_Id'];
+    $Booking_Status = $_POST['Booking_Status'];
+    if (!$error) {
+        $query = 'INSERT INTO Bookings  (Booking_date, Booking_Ref, Booking_Service_Date, Booking_Service_Id, Booking_Client_Id, Booking_Status) VALUES(?,?,?,?,?,?)';
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ssssss', $Booking_date, $Booking_Ref, $Booking_Service_Date, $Booking_Service_Id, $Booking_Client_Id, $Booking_Status);
+        $stmt->execute();
+
+        if ($stmt) {
+            $success = "Booking Submitted";
+        } else {
+            $info = 'Please Try Again Or Try Later';
+        }
+    }
+}
 
 /* Delete Bookings */
 if (isset($_GET['delete'])) {
@@ -61,7 +81,7 @@ require_once('../partials/head.php');
             <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
                 <!-- Back Button-->
                 <div class="back-button">
-                    <a href="home">
+                    <a href="client_home">
                         <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                         </svg>
@@ -155,7 +175,7 @@ require_once('../partials/head.php');
                 <!-- Chat User List-->
                 <ul class="ps-0 chat-user-list">
                     <?php
-                    $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
+                    $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Clients.Client_gender, Hospital_Services.Service_name, Bookings.Booking_Ref,
                         Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
                          FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
                          WHERE Clients.Client_login_id = '$Login_id' AND Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id

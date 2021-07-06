@@ -107,7 +107,7 @@ require_once('../partials/head.php');
 
                             <div class="single-testimonial-slide">
                                 <a href="booking?view=<?php echo $booking->Booking_id; ?>">
-                                    <div class="text-content text-white">
+                                    <div class="text-content">
                                         <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->Booking_Ref; ?></span>
                                         <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-bookmark-star"></i> Booking Status: <?php echo $booking->Booking_Status; ?></span>
                                         <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-person-bounding-box"></i> Booked Hospital Service: <?php echo $booking->Service_name; ?></span>

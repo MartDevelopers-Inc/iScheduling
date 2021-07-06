@@ -108,7 +108,7 @@ require_once('../partials/head.php');
                         Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
                          FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
                          WHERE Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id
-                        ORDER BY Booking_Date ASC LIMIT 10   ";
+                        ORDER BY Booking_Date ASC  ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
