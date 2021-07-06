@@ -21,7 +21,7 @@
  */
 $Login_id = $_SESSION['Login_id'];
 $Login_Rank = $_SESSION['Login_rank'];
-$ret = "SELECT *  FROM Clinic_Staff WHERE Staff_login_id = '$Login_id' ";
+$ret = "SELECT *  FROM Login WHERE Login_id = '$Login_id' ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
@@ -42,7 +42,7 @@ while ($user = $res->fetch_object()) {
             <div class="user-profile"><img src="../public/img/bg-img/profile.svg" alt=""></div>
             <!-- User Info-->
             <div class="user-info">
-                <h6 class="user-name mb-0"><?php echo $user->Staff_full_name; ?></h6><span>iScheduling <?php echo $_SESSION['Login_rank']; ?> </span>
+                <h6 class="user-name mb-0"><?php echo $user->Login_user_name; ?></h6><span>iScheduling <?php echo $user->Login_rank; ?> </span>
             </div>
         </div>
         <!-- Sidenav Nav-->
