@@ -24,11 +24,10 @@ require_once('../config/config.php');
 
 if (isset($_POST['Login'])) {
     $Login_email = $_POST['Login_email'];
-    $Login_rank = $_POST['Login_rank'];
     $Login_password = sha1(md5($_POST['Login_password']));
 
-    $stmt = $mysqli->prepare("SELECT Login_email, Login_password, Login_rank, Login_id  FROM Login  WHERE Login_email =? AND Login_password =? AND Login_rank = ?");
-    $stmt->bind_param('sss', $Login_email, $Login_password, $Login_rank);
+    $stmt = $mysqli->prepare("SELECT Login_email, Login_password, Login_rank, Login_id  FROM Login  WHERE Login_email =? AND Login_password =?");
+    $stmt->bind_param('ss', $Login_email, $Login_password);
     $stmt->execute(); //execute bind
 
     $stmt->bind_result($Login_email, $Login_password, $Login_rank, $Login_id);
@@ -74,7 +73,6 @@ require_once('../partials/head.php');
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="password" name="Login_password" placeholder="Enter Password">
-                                <input class="form-control" type="hidden" name="Login_rank" value="Administrator">
                             </div>
                             <button class="btn btn-primary w-100" name="Login" type="submit">Sign In</button>
                         </form>
