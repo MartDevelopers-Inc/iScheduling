@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">iSheduling</string>
+    <string name="title_activity_web_view">FullscreenActivity</string>
+    <string name="image_chooser">Choose Image</string>
+    <string name="no_internet">Offline. No Internet Connection.</string>
+    <string name="try_again">Reload</string>
+</resources>
