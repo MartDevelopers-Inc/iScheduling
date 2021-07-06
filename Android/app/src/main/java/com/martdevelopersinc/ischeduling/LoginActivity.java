@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         public void logInDoctor(){
-            Intent intent = new Intent(this, WebViewActivity.class);
+            Intent intent = new Intent(this, DoctorLogin.class);
             startActivity(intent);
         }
 
