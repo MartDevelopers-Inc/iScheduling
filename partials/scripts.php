@@ -41,6 +41,19 @@
             ]
         });
     });
+    /* Ajax Scripts */
+    function GetServiceDetails(val) {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'ServiceName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#ServiceID').val(data);
+            }
+        });
+
+    }
 </script>
 
 <!-- Alerts -->
