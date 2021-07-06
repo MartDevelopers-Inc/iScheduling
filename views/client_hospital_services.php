@@ -112,7 +112,7 @@ require_once('../partials/head.php');
         </div>
     </div>
     <!-- Footer Nav-->
-    <?php require_once('../partials/footer_nav.php'); ?>
+    <?php require_once('../partials/client_footer_nav.php'); ?>
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
 </body>

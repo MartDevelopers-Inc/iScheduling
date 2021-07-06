@@ -161,7 +161,7 @@ while ($booking = $res->fetch_object()) {
             </div>
             <!-- Footer Nav-->
             <!-- Footer Nav-->
-            <?php require_once('../partials/footer_nav.php'); ?>
+            <?php require_once('../partials/client_footer_nav.php'); ?>
             <!-- All JavaScript Files-->
             <?php require_once('../partials/scripts.php'); ?>
         </body>
