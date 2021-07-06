@@ -31,10 +31,10 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
-public class WebViewActivity extends AppCompatActivity {
+public class DoctorLogin extends AppCompatActivity {
     private WebView web;
     //Replace This URL With Your Web Based Application URL
-    String webUrl = "http://your_app_address/";
+    String webUrl = "http://127.0.0.1/iScheduling";
 
     public Context context;
 
@@ -52,9 +52,9 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_view);
+        setContentView(R.layout.activity_doctor_login);
 
-        web = (WebView) findViewById(R.id.WebView);
+        web = (WebView) findViewById(R.id.doctor_login);
         web.loadUrl(webUrl);
 
         WebSettings mywebsettings = web.getSettings();
@@ -107,7 +107,7 @@ public class WebViewActivity extends AppCompatActivity {
         else {
             //When Internet Connectivity Is Active
             //Load Url In WebView also replace with your own url
-            web.loadUrl("http://your_app_address/");
+            web.loadUrl("http://127.0.0.1/iScheduling");
         }
 
 

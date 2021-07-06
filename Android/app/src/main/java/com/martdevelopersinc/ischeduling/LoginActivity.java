@@ -48,12 +48,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //Login As admin
-        AdminLoginIn =(Button)
-
-        findViewById(R.id.admin_login);
-                AdminLoginIn.setOnClickListener(new View.OnClickListener()
-
-        {
+        AdminLoginIn =(Button) findViewById(R.id.admin_login);
+                AdminLoginIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v){
             logInAdmin();

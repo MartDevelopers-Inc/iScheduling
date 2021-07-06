@@ -16,10 +16,10 @@
         android:roundIcon="@drawable/spalsh"
         android:supportsRtl="true"
         android:theme="@style/Theme.IScheduling">
-        <activity android:name=".AdminLogin"></activity>
+        <activity android:name=".DoctorLogin"></activity>
+        <activity android:name=".AdminLogin" />
         <activity android:name=".StaffLogin" />
         <activity android:name=".ClientLogin" />
-        <activity android:name=".WebViewActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
