@@ -79,23 +79,30 @@ require_once('../partials/head.php');
         <div class="top-products-area">
             <div class="container">
                 <div class="row g-3">
-                    <!-- Single Top Product Card-->
-                    <div class="col-6 col-sm-4 col-lg-3">
-                        <div class="card single-product-card">
-                            <div class="card-body p-3">
-                                <a class="product-thumbnail d-block" href="report_staffs"><img src="../public/img/bg-img/Clinic_staffs.svg" alt="">
-                                    <a class="product-title d-block text-truncate" href="report_staffs">Clinic Staffs</a>
+                    <?php
+                    if ($_SESSION['Login_rank'] == 'Administrator') {
+                        echo
+                        '
+                        <div class="col-6 col-sm-4 col-lg-3">
+                            <div class="card single-product-card">
+                                <div class="card-body p-3">
+                                    <a class="product-thumbnail d-block" href="report_staffs"><img src="../public/img/bg-img/Clinic_staffs.svg" alt="">
+                                        <a class="product-title d-block text-truncate" href="report_staffs">Clinic Staffs</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-3">
-                        <div class="card single-product-card">
-                            <div class="card-body p-3">
-                                <a class="product-thumbnail d-block" href="report_doctors"><img src="../public/img/bg-img/doctors.svg" alt="">
-                                    <a class="product-title d-block text-truncate" href="report_doctors">Doctors</a>
+                        <div class="col-6 col-sm-4 col-lg-3">
+                            <div class="card single-product-card">
+                                <div class="card-body p-3">
+                                    <a class="product-thumbnail d-block" href="report_doctors"><img src="../public/img/bg-img/doctors.svg" alt="">
+                                        <a class="product-title d-block text-truncate" href="report_doctors">Doctors</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        ';
+                    }
+                    ?>
+
                     <div class="col-6 col-sm-4 col-lg-3">
                         <div class="card single-product-card">
                             <div class="card-body p-3">

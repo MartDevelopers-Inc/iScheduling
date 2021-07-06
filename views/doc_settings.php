@@ -33,7 +33,7 @@ if (isset($_POST['UpdateProfile'])) {
     $Doctor_email  = $_POST['Doctor_email'];
     $Doctor_id = $_SESSION['Login_id'];
 
-    $query = "UPDATE Doctors SET Doctor_full_name =?, Doctor_specialization =?, Doctor_phone_no=?, Doctor_email =? WHERE Doctor_id = ? ";
+    $query = "UPDATE Doctors SET Doctor_full_name =?, Doctor_specialization =?, Doctor_phone_no=?, Doctor_email =? WHERE Doctor_login_id = ? ";
     $stmt = $mysqli->prepare($query);
     $rc = $stmt->bind_param('sssss', $Doctor_full_name, $Doctor_specialization, $Doctor_phone_no, $Doctor_email, $Doctor_id);
     $stmt->execute();
@@ -63,8 +63,8 @@ require_once('../partials/head.php');
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/side_nav.php');
-    $view = $_GET['view'];
-    $ret = "SELECT *  FROM Doctors WHERE Doctor_id = '$view' ";
+    $view = $_SESSION['Login_id'];
+    $ret = "SELECT *  FROM Doctors WHERE Doctor_login_id = '$view' ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();

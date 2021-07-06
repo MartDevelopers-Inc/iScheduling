@@ -4,7 +4,7 @@
         <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
             <!-- Logo Wrapper-->
             <div class="logo-wrapper">
-                <a href="home">
+                <a href="">
                     <h3 class="text-primary font-weight-bold">iScheduling</h3>
                 </a>
             </div>
