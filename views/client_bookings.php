@@ -175,11 +175,11 @@ require_once('../partials/head.php');
                 <!-- Chat User List-->
                 <ul class="ps-0 chat-user-list">
                     <?php
-                    $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Clients.Client Hospital_Services.Service_name, Bookings.Booking_Ref,
+                    $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
                         Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
                          FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
                          WHERE Clients.Client_login_id = '$Login_id' AND Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id
-                        ORDER BY Booking_Date ASC   ";
+                        ORDER BY Booking_Date ASC";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->execute(); //ok
                     $res = $stmt->get_result();
@@ -193,7 +193,6 @@ require_once('../partials/head.php');
                                     <h6 class="text-truncate mb-0">REF : <?php echo $booking->Booking_Ref; ?></h6>
                                     <h6 class="text-truncate mb-0">Client Name : <?php echo $booking->Client_full_name; ?></h6>
                                     <h6 class="text-truncate mb-0">Client Phone : <?php echo $booking->Client_phone_no; ?></h6>
-                                    <h6 class="text-truncate mb-0">Client Gender : <?php echo $booking->Client_gender; ?></h6>
                                     <h6 class="text-truncate mb-0">Date Booked : <?php echo $booking->Booking_Date; ?></h6>
                                     <h6 class="text-truncate mb-0">Booking Status : <?php echo $booking->Booking_Status; ?></h6>
                                 </div>
@@ -214,7 +213,7 @@ require_once('../partials/head.php');
         <!-- Footer Nav-->
     <?php
     }
-    require_once('../partials/cfooter_nav.php'); ?>
+    require_once('../partials/client_footer_nav.php'); ?>
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
 </body>
