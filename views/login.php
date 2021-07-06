@@ -39,10 +39,10 @@ if (isset($_POST['Login'])) {
     /* Decide Login User Dashboard Based On User Rank */
     if ($rs && $Login_rank == 'Administrator') {
         header("location:home");
-    } else if ($rs && $Login_rank == 'Staff') {
-        header("location:dashboard");
+    } else if ($rs && $Login_rank == 'Staff' || $rs && $Login_rank == 'Doctor' ) {
+        header("location:staff_home");
     } else if ($rs && $Login_rank == 'Client') {
-        header("location:client_dashboard");
+        header("location:client_home");
     } else {
         $err = "Login Failed, Please Check Your Credentials And Login Permission ";
     }
