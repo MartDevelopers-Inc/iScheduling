@@ -148,7 +148,7 @@ require_once('../partials/head.php');
                 while ($login = $res->fetch_object()) {
                 ?>
                     <div class="card user-data-card">
-                        <h5 class="text-center">Staff Authentication Details</h5>
+                        <h5 class="text-center">Client Authentication Details</h5>
                         <div class="card-body">
                             <form method="POST">
                                 <div class="form-group mb-3">
