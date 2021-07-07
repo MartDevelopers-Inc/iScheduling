@@ -54,7 +54,7 @@ public class DoctorLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_login);
 
-        web = (WebView) findViewById(R.id.doctor_login);
+        web = (WebView) findViewById(R.id.doc_login);
         web.loadUrl(webUrl);
 
         WebSettings mywebsettings = web.getSettings();
