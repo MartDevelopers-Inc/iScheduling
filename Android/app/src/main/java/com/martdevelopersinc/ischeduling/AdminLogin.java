@@ -54,6 +54,12 @@ public class AdminLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
+
         setContentView(R.layout.activity_admin_login);
 
         web = (WebView) findViewById(R.id.admin_login);
