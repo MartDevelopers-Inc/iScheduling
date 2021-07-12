@@ -35,7 +35,7 @@ public class ClientLogin extends AppCompatActivity {
 
     private WebView web;
     //Replace This URL With Your Web Based Application URL
-    String webUrl = "http://172.16.4.58/iScheduling";
+    String webUrl = "http://127.0.0.1/iScheduling";
 
     public Context context;
 

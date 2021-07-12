@@ -34,7 +34,7 @@ import java.io.IOException;
 public class DoctorLogin extends AppCompatActivity {
     private WebView web;
     //Replace This URL With Your Web Based Application URL
-    String webUrl = "http://172.16.4.58/iScheduling";
+    String webUrl = "http://127.0.0.1/iScheduling";
 
     public Context context;
 
@@ -113,7 +113,7 @@ public class DoctorLogin extends AppCompatActivity {
         else {
             //When Internet Connectivity Is Active
             //Load Url In WebView also replace with your own url
-            web.loadUrl("http://172.16.4.58/iScheduling");
+            web.loadUrl("http://127.0.0.1/iScheduling");
         }
 
 

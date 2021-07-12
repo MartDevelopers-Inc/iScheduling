@@ -10,13 +10,13 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/spalsh"
         android:label="@string/app_name"
         android:roundIcon="@drawable/spalsh"
         android:supportsRtl="true"
-        android:theme="@style/Theme.IScheduling">
+        android:theme="@style/Theme.IScheduling"
+        android:usesCleartextTraffic="true">
         <activity android:name=".DoctorLogin"></activity>
         <activity android:name=".AdminLogin" />
         <activity android:name=".StaffLogin" />
