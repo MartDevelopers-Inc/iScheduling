@@ -36,7 +36,7 @@ public class AdminLogin extends AppCompatActivity {
 
     private WebView web;
     //Replace This URL With Your Web Based Application URL
-    String webUrl = "http://127.0.0.1/iScheduling";
+    String webUrl = "http://172.16.4.58/iScheduling";
 
     public Context context;
 
@@ -109,7 +109,7 @@ public class AdminLogin extends AppCompatActivity {
         else {
             //When Internet Connectivity Is Active
             //Load Url In WebView also replace with your own url
-            web.loadUrl("http://127.0.0.1/iScheduling");
+            web.loadUrl("http://172.16.4.58/iScheduling");
         }
 
 
