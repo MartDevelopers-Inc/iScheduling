@@ -52,9 +52,15 @@ public class DoctorLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
+
         setContentView(R.layout.activity_doctor_login);
 
-        web = (WebView) findViewById(R.id.doctor_login);
+        web = (WebView) findViewById(R.id.doc_login);
         web.loadUrl(webUrl);
 
         WebSettings mywebsettings = web.getSettings();

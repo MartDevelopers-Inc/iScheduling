@@ -53,6 +53,12 @@ public class ClientLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
+
         setContentView(R.layout.activity_client_login);
 
         web = (WebView) findViewById(R.id.client_login);
@@ -108,7 +114,7 @@ public class ClientLogin extends AppCompatActivity {
         else {
             //When Internet Connectivity Is Active
             //Load Url In WebView also replace with your own url
-            web.loadUrl("http://127.0.0.1/iScheduling");
+            web.loadUrl("http://172.16.4.58/iScheduling");
         }
 
 
