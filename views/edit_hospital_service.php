@@ -29,19 +29,18 @@ if (isset($_POST['UpdateHospitalService'])) {
     $Service_name = $_POST['Service_name'];
     $Service_desc = $_POST['Service_desc'];
     $view  = $_GET['view'];
-    if (!$error) {
-        $query = 'UPDATE Hospital_Services  SET Service_name =?, Service_desc =? WHERE Service_id = ?';
-        $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('sss', $Service_name, $Service_desc, $view);
-        $stmt->execute();
+    $query = 'UPDATE Hospital_Services  SET Service_name =?, Service_desc =? WHERE Service_id = ?';
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('sss', $Service_name, $Service_desc, $view);
+    $stmt->execute();
 
-        if ($stmt) {
-            $success = "$Service_name Updated" && header("refresh:1, hospital_service?view=$view");
-        } else {
-            $info = 'Please Try Again Or Try Later';
-        }
+    if ($stmt) {
+        $success = "$Service_name Updated" && header("refresh:1, hospital_service?view=$view");
+    } else {
+        $info = 'Please Try Again Or Try Later';
     }
 }
+
 require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>

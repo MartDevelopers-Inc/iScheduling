@@ -33,19 +33,18 @@ if (isset($_POST['AddBooking'])) {
     $Booking_Service_Id = $_POST['Booking_Service_Id'];
     $Booking_Client_Id = $_POST['Booking_Client_Id'];
     $Booking_Status = $_POST['Booking_Status'];
-    if (!$error) {
-        $query = 'INSERT INTO Bookings  (Booking_date, Booking_Ref, Booking_Service_Date, Booking_Service_Id, Booking_Client_Id, Booking_Status) VALUES(?,?,?,?,?,?)';
-        $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssssss', $Booking_date, $Booking_Ref, $Booking_Service_Date, $Booking_Service_Id, $Booking_Client_Id, $Booking_Status);
-        $stmt->execute();
+    $query = 'INSERT INTO Bookings  (Booking_date, Booking_Ref, Booking_Service_Date, Booking_Service_Id, Booking_Client_Id, Booking_Status) VALUES(?,?,?,?,?,?)';
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('ssssss', $Booking_date, $Booking_Ref, $Booking_Service_Date, $Booking_Service_Id, $Booking_Client_Id, $Booking_Status);
+    $stmt->execute();
 
-        if ($stmt) {
-            $success = "Booking Submitted";
-        } else {
-            $info = 'Please Try Again Or Try Later';
-        }
+    if ($stmt) {
+        $success = "Booking Submitted";
+    } else {
+        $info = 'Please Try Again Or Try Later';
     }
 }
+
 
 /* Delete Bookings */
 if (isset($_GET['delete'])) {

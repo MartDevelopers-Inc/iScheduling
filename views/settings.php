@@ -52,7 +52,7 @@ if (isset($_POST['UpdateAuth'])) {
 
     $query = "UPDATE Login SET Login_user_name =?, Login_email =?, Login_password=? WHERE Login_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sss', $Login_user_name, $Login_email, $Login_password, $Staff_login_id);
+    $rc = $stmt->bind_param('ssss', $Login_user_name, $Login_email, $Login_password, $Staff_login_id);
     $stmt->execute();
     if ($stmt) {
         $success = "Auth Details Updated";

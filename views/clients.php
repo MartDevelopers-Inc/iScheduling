@@ -183,7 +183,7 @@ require_once('../partials/head.php');
                         </div>
 
                         <div class="form-group mb-3">
-                            <label class="form-label" for="email">Email Address</label>
+                            <label class="form-label" for="email">Location</label>
                             <textarea class="form-control" required name="Client_location"></textarea>
                         </div>
                         <div class="form-group mb-3" style="display: none;">
