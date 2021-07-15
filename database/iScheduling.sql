@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2021 at 11:11 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.1.26
+-- Generation Time: Jul 15, 2021 at 11:16 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -36,18 +35,9 @@ CREATE TABLE `Bookings` (
   `Booking_Service_Date` varchar(200) NOT NULL,
   `Booking_Client_Id` int(200) NOT NULL,
   `Booking_Status` varchar(200) NOT NULL,
-  `Booking_Review_Date` varchar(200) NOT NULL,
-  `Booking_Reviewd_By_Login_Id` varchar(200) NOT NULL
+  `Booking_Review_Date` varchar(200) DEFAULT NULL,
+  `Booking_Reviewd_By_Login_Id` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `Bookings`
---
-
-INSERT INTO `Bookings` (`Booking_id`, `Booking_Ref`, `Booking_Date`, `Booking_Service_Id`, `Booking_Service_Date`, `Booking_Client_Id`, `Booking_Status`, `Booking_Review_Date`, `Booking_Reviewd_By_Login_Id`) VALUES
-(2, 'KGPBO36270', '2021-07-06', 1, '2021-07-07', 7, 'Authorized', '2021-07-06', '066cae625a9a8236e6f8cc4d4fde17ab35d9478b7a'),
-(3, 'FNIWP40956', '2021-07-06', 2, '2021-07-20', 7, 'New', '', ''),
-(4, 'THNIV76801', '2021-07-06', 3, '2021-07-06', 7, 'Rejected', '2021-07-13', '066cae625a9a8236e6f8cc4d4fde17ab35d9478b7a');
 
 -- --------------------------------------------------------
 
@@ -64,15 +54,6 @@ CREATE TABLE `Clients` (
   `Client_email` varchar(200) NOT NULL,
   `Client_location` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `Clients`
---
-
-INSERT INTO `Clients` (`Client_id`, `Client_full_name`, `Client_login_id`, `Client_phone_no`, `Client_gender`, `Client_email`, `Client_location`) VALUES
-(6, 'Client 001', 'f25857fd337aae18274da795d45581b18a03c7c226', '0737228765', 'Male', 'client001@gmail.com', '127001 Localhost'),
-(7, 'Client 002', '0bd8807b619ef359e37f6f359ca5525d33690450ff', '09888765', 'Female', 'client002@mail.com', '127.0.0.1 Localhost'),
-(8, 'Janet Doe', '6b9b52a7b27a6643188389242f6f00eacd192c5130', '071009012873', 'Female', 'janetdoe@gmail.com', '90127 Localhost');
 
 -- --------------------------------------------------------
 
@@ -94,8 +75,7 @@ CREATE TABLE `Clinic_Staff` (
 --
 
 INSERT INTO `Clinic_Staff` (`Staff_id`, `Staff_full_name`, `Staff_id_no`, `Staff_login_id`, `Staff_phone_no`, `Staff_email`) VALUES
-(5, 'Clinic Administrator', '901009', 'c1cb7f7e55df665b34e6088ea4c6a470f28180ba8a', '0710080731', 'clinicadmin@ischeduling.org'),
-(6, 'James Doe', '12890765', '03ce0a1a903c6c374cf7346fd41d4c9babd74d51c5', '090019883', 'jamesdoe@gmail.com');
+(1, 'Clinic Administrator', '90100934', 'a87of334ae130217fea4505fd3c994f5683f', '07901399924', 'cadmin@ischeduling.com');
 
 -- --------------------------------------------------------
 
@@ -111,14 +91,6 @@ CREATE TABLE `Doctors` (
   `Doctor_phone_no` varchar(200) NOT NULL,
   `Doctor_email` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `Doctors`
---
-
-INSERT INTO `Doctors` (`Doctor_id`, `Doctor_login_id`, `Doctor_full_name`, `Doctor_specialization`, `Doctor_phone_no`, `Doctor_email`) VALUES
-(3, '5029cc1c4acc51d2967faf98051be46492b272379a', 'Doctor 001', 'Certified Cardio-Therapist.', '+254737229776', 'doc001@gmail.com'),
-(4, '066cae625a9a8236e6f8cc4d4fde17ab35d9478b7a', 'Doctor James Doe', 'Certified Dentist', '+2547896543', 'doc002@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -137,10 +109,9 @@ CREATE TABLE `Hospital_Services` (
 --
 
 INSERT INTO `Hospital_Services` (`Service_id`, `Service_name`, `Service_desc`) VALUES
-(1, 'Cardio-therapy', 'Already designed more than 35+ pages for your needs. Such as - Authentication, Chats, eCommerce, Blog & Miscellaneous pages.Already designed more than 35+ pages for your needs. Such as - Authentication, Chats, eCommerce, Blog & Miscellaneous pages.Already designed more than 35+ pages for your needs. Such as - Authentication, Chats, eCommerce, Blog & Miscellaneous pages.Already designed more than 35+ pages for your needs. Such as - Authentication, Chats, eCommerce, Blog & Miscellaneous pages.Already designed more than 35+ pages for your needs. Such as - Authentication, Chats, eCommerce, Blog & Miscellaneous pages.'),
-(2, 'Dental Care', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'),
-(3, 'Eye Care', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'),
-(4, 'Physio-Therapy', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc consequat interdum varius sit amet mattis vulputate enim. Volutpat lacus laoreet non curabitur gravida arcu ac tortor dignissim. Aliquam eleifend mi in nulla posuere sollicitudin. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin. Aliquet bibendum enim facilisis gravida. Morbi non arcu risus quis varius quam quisque id. Amet nulla facilisi morbi tempus iaculis. Tristique et egestas quis ipsum suspendisse ultrices gravida. Vitae justo eget magna fermentum iaculis eu non diam. Ut etiam sit amet nisl purus in mollis nunc.\r\n\r\nSuspendisse faucibus interdum posuere lorem ipsum dolor sit. Ac orci phasellus egestas tellus rutrum. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Congue nisi vitae suscipit tellus. Ac placerat vestibulum lectus mauris. Purus viverra accumsan in nisl. Purus gravida quis blandit turpis cursus in hac habitasse. Urna porttitor rhoncus dolor purus non enim. Enim praesent elementum facilisis leo vel. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium. Elit duis tristique sollicitudin nibh sit. Fermentum iaculis eu non diam phasellus. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam.');
+(1, 'Therapist', 'A therapist is a broad designation that refers to professionals who are trained to provide treatment and rehabilitation. The term is often applied to psychologists, but it can include others who provide a variety of services, including social workers, counselors, life coaches, and many others.'),
+(2, 'Cardio Therapy', 'A therapist is a broad designation that refers to professionals who are trained to provide treatment and rehabilitation. The term is often applied to psychologists, but it can include others who provide a variety of services, including social workers, counselors, life coaches, and many others.'),
+(3, 'Optician', 'cs-ischeduling@gmail.comcs-ischeduling@gmail.comcs-ischeduling@gmail.comcs-ischeduling@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -161,13 +132,7 @@ CREATE TABLE `Login` (
 --
 
 INSERT INTO `Login` (`Login_id`, `Login_user_name`, `Login_email`, `Login_password`, `Login_rank`) VALUES
-('03ce0a1a903c6c374cf7346fd41d4c9babd74d51c5', 'Staff 001', 'staff001@gmail.com', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Staff'),
-('066cae625a9a8236e6f8cc4d4fde17ab35d9478b7a', 'Doctor 002', 'doc002@gmail.com', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Doctor'),
-('0bd8807b619ef359e37f6f359ca5525d33690450ff', 'Client 002', 'client002@mail.com', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Client'),
-('5029cc1c4acc51d2967faf98051be46492b272379a', 'Doctor 001', 'doc001@gmail.com', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Doctor'),
-('6b9b52a7b27a6643188389242f6f00eacd192c5130', 'Janet Doe', 'janetdoe@gmail.com', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Client'),
-('c1cb7f7e55df665b34e6088ea4c6a470f28180ba8a', 'Clinic Administrator', 'clinicadmin@ischeduling.org', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Administrator'),
-('f25857fd337aae18274da795d45581b18a03c7c226', 'Client 001', 'client001@gmail.com', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Client');
+('a87of334ae130217fea4505fd3c994f5683f', 'Clinic Administrator', 'cadmin@ischeduling.com', 'a69681bcf334ae130217fea4505fd3c994f5683f', 'Administrator');
 
 --
 -- Indexes for dumped tables
@@ -223,31 +188,31 @@ ALTER TABLE `Login`
 -- AUTO_INCREMENT for table `Bookings`
 --
 ALTER TABLE `Bookings`
-  MODIFY `Booking_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Booking_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `Clients`
 --
 ALTER TABLE `Clients`
-  MODIFY `Client_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Client_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Clinic_Staff`
 --
 ALTER TABLE `Clinic_Staff`
-  MODIFY `Staff_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Staff_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Doctors`
 --
 ALTER TABLE `Doctors`
-  MODIFY `Doctor_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Doctor_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `Hospital_Services`
 --
 ALTER TABLE `Hospital_Services`
-  MODIFY `Service_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Service_id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -257,7 +222,8 @@ ALTER TABLE `Hospital_Services`
 -- Constraints for table `Bookings`
 --
 ALTER TABLE `Bookings`
-  ADD CONSTRAINT `ClientID` FOREIGN KEY (`Booking_Client_Id`) REFERENCES `Clients` (`Client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Client_Id` FOREIGN KEY (`Booking_Client_Id`) REFERENCES `Clients` (`Client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `LoginId` FOREIGN KEY (`Booking_Reviewd_By_Login_Id`) REFERENCES `Login` (`Login_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ServiceID` FOREIGN KEY (`Booking_Service_Id`) REFERENCES `Hospital_Services` (`Service_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
