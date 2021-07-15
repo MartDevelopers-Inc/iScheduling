@@ -1,0 +1,150 @@
+[
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable_no_internet.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/drawable/no_internet.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/font_obitron.ttf.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/font/obitron.ttf"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_launcher_background.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-xhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/layout_activity_no_internet.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/layout/activity_no_internet.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-anydpi-v21_ic_launcher_background.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/layout_activity_doctor_login.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/layout/activity_doctor_login.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-ldpi_ic_launcher_background.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-ldpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/layout_activity_staff_login.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/layout/activity_staff_login.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_launcher_background.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-mdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-xxxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/layout_activity_client_login.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/layout/activity_client_login.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/font_athena.ttf.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/font/athena.ttf"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/font_cardinal.ttf.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/font/cardinal.ttf"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/layout_activity_login.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/layout/activity_login.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/font_sportsjersey.ttf.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/font/sportsjersey.ttf"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/font_longshort.ttf.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/font/longshort.ttf"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher_background.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-hdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable_spalsh.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/drawable/spalsh.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/anim_splash_animation.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/anim/splash_animation.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_launcher_background.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/build/generated/res/pngs/debug/drawable-xxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/font_heartwarming.otf.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/font/heartwarming.otf"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/layout_activity_admin_login.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/layout/activity_admin_login.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/drawable_bg_round.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/drawable/bg_round.xml"
+    },
+    {
+        "merged": "/opt/lampp/htdocs/iScheduling/Android/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/opt/lampp/htdocs/iScheduling/Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+    }
+]

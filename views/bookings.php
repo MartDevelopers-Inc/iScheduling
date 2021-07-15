@@ -104,7 +104,7 @@ require_once('../partials/head.php');
             <!-- Chat User List-->
             <ul class="ps-0 chat-user-list">
                 <?php
-                $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
+                $ret = "SELECT Clients.Client_full_name, Clients.Client_gender, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
                         Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
                          FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
                          WHERE Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id

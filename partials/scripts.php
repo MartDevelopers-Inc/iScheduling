@@ -37,7 +37,7 @@
         $('#report').DataTable({
             dom: 'Bfrtip',
             buttons: [
-                'excel', 'pdf', 'print'
+                'excel', 'pdf'
             ]
         });
     });

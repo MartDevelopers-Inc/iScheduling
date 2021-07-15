@@ -35,40 +35,39 @@ if (isset($_POST['AddStaff'])) {
     $Staff_email = $_POST['Staff_email'];
     $Login_password = sha1(md5($_POST['Login_password']));
     $Login_rank = $_POST['Login_rank'];
-    if (!$error) {
-        /* Prevent Double Entries */
-        $sql = "SELECT * FROM  Clinic_Staff WHERE  Staff_phone_no = '$Staff_phone_no' || Staff_login_id = $Staff_login_id || Staff_email  = $Staff_email  ";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($Staff_phone_no == $row['Staff_phone_no']) {
-                $err = 'Phone Number Already Exists';
-            } else if ($Staff_login_id == $row['Staff_login_id']) {
-                $err = 'Login ID Already Exists';
-            } else {
-                $err = 'Email Address Already Exists';
-            }
+    /* Prevent Double Entries */
+    $sql = "SELECT * FROM  Clinic_Staff WHERE  Staff_phone_no = '$Staff_phone_no'  ";
+    $res = mysqli_query($mysqli, $sql);
+    if (mysqli_num_rows($res) > 0) {
+        $row = mysqli_fetch_assoc($res);
+        if ($Staff_phone_no == $row['Staff_phone_no']) {
+            $err = 'Phone Number Already Exists';
+        } else if ($Staff_login_id == $row['Staff_login_id']) {
+            $err = 'Login ID Already Exists';
         } else {
-            $auth_querry = 'INSERT INTO Login (Login_id, Login_user_name, Login_email, Login_password, Login_Rank) VALUES(?,?,?,?,?)';
-            $query = 'INSERT INTO Clinic_Staff  (Staff_full_name, Staff_id_no,  Staff_login_id, Staff_phone_no, Staff_email) VALUES(?,?,?,?,?)';
+            $err = 'Email Address Already Exists';
+        }
+    } else {
+        $auth_querry = 'INSERT INTO Login (Login_id, Login_user_name, Login_email, Login_password, Login_Rank) VALUES(?,?,?,?,?)';
+        $query = 'INSERT INTO Clinic_Staff  (Staff_full_name, Staff_id_no,  Staff_login_id, Staff_phone_no, Staff_email) VALUES(?,?,?,?,?)';
 
-            $auth_qry_stmt = $mysqli->prepare($auth_querry);
-            $stmt = $mysqli->prepare($query);
+        $auth_qry_stmt = $mysqli->prepare($auth_querry);
+        $stmt = $mysqli->prepare($query);
 
-            $rc = $auth_qry_stmt->bind_param('sssss', $Staff_login_id, $Staff_full_name, $Staff_email, $Login_password, $Login_rank);
-            $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_login_id, $Staff_phone_no, $Staff_email);
+        $rc = $auth_qry_stmt->bind_param('sssss', $Staff_login_id, $Staff_full_name, $Staff_email, $Login_password, $Login_rank);
+        $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_login_id, $Staff_phone_no, $Staff_email);
 
-            $auth_qry_stmt->execute();
-            $stmt->execute();
+        $auth_qry_stmt->execute();
+        $stmt->execute();
 
-            if ($auth_qry_stmt &&  $stmt) {
-                $success = "$Staff_full_name Account Created";
-            } else {
-                $info = 'Please Try Again Or Try Later';
-            }
+        if ($auth_qry_stmt &&  $stmt) {
+            $success = "$Staff_full_name Account Created";
+        } else {
+            $info = 'Please Try Again Or Try Later';
         }
     }
 }
+
 
 /* Delete Staff */
 if (isset($_GET['delete'])) {

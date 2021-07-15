@@ -1,0 +1,82 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.martdevelopersinc.ischeduling"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+8-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:5:5-67
+11-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+12-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:6:5-80
+12-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:6:22-77
+13    <uses-permission android:name="android.permission.WAKE_LOCK" />
+13-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:7:5-68
+13-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:7:22-65
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:8:5-81
+14-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:8:22-78
+15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:9:5-79
+15-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:9:22-76
+16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+16-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:10:5-76
+16-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:10:22-73
+17
+18    <application
+18-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:12:5-32:19
+19        android:allowBackup="true"
+19-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:14:9-35
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.5.0] /root/.gradle/caches/transforms-2/files-2.1/ec322e19e59be0ee44ce6650da9ba191/core-1.5.0/AndroidManifest.xml:24:18-86
+21        android:debuggable="true"
+22        android:icon="@mipmap/ic_launcher"
+22-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:15:9-43
+23        android:label="@string/app_name"
+23-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:16:9-41
+24        android:roundIcon="@drawable/spalsh"
+24-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:17:9-45
+25        android:supportsRtl="true"
+25-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:18:9-35
+26        android:theme="@style/Theme.IScheduling"
+26-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:19:9-49
+27        android:usesCleartextTraffic="true" >
+27-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:13:9-44
+28        <activity android:name="com.martdevelopersinc.ischeduling.DoctorLogin" />
+28-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:20:9-58
+28-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:20:19-46
+29        <activity android:name="com.martdevelopersinc.ischeduling.AdminLogin" />
+29-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:21:9-48
+29-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:21:19-45
+30        <activity android:name="com.martdevelopersinc.ischeduling.StaffLogin" />
+30-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:22:9-48
+30-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:22:19-45
+31        <activity android:name="com.martdevelopersinc.ischeduling.ClientLogin" />
+31-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:23:9-49
+31-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:23:19-46
+32        <activity android:name="com.martdevelopersinc.ischeduling.LoginActivity" />
+32-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:24:9-51
+32-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:24:19-48
+33        <activity android:name="com.martdevelopersinc.ischeduling.MainActivity" >
+33-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:25:9-31:20
+33-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:25:19-47
+34            <intent-filter>
+34-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:26:13-30:29
+35                <action android:name="android.intent.action.MAIN" />
+35-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:27:17-69
+35-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:27:25-66
+36
+37                <category android:name="android.intent.category.LAUNCHER" />
+37-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:29:17-77
+37-->/opt/lampp/htdocs/iScheduling/Android/app/src/main/AndroidManifest.xml:29:27-74
+38            </intent-filter>
+39        </activity>
+40    </application>
+41
+42</manifest>

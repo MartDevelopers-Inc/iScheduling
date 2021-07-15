@@ -31,18 +31,17 @@ if (isset($_POST['SubmitReview'])) {
     $Booking_id = $_POST['Booking_id'];
     $Booking_Reviewd_By_Login_Id = $_POST['Booking_Reviewd_By_Login_Id'];
     $Booking_Status = $_POST['Booking_Status'];
-    if (!$error) {
-        $query = 'UPDATE Bookings SET Booking_Review_Date=?, Booking_Reviewd_By_Login_Id=?, Booking_Status=? WHERE  Booking_id =? ';
-        $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssss', $Booking_Review_Date, $Booking_Reviewd_By_Login_Id, $Booking_Status, $Booking_id);
-        $stmt->execute();
-        if ($stmt) {
-            $success = "Booking Review Submitted";
-        } else {
-            $info = 'Please Try Again Or Try Later';
-        }
+    $query = 'UPDATE Bookings SET Booking_Review_Date=?, Booking_Reviewd_By_Login_Id=?, Booking_Status=? WHERE  Booking_id =? ';
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('ssss', $Booking_Review_Date, $Booking_Reviewd_By_Login_Id, $Booking_Status, $Booking_id);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "Booking Review Submitted";
+    } else {
+        $info = 'Please Try Again Or Try Later';
     }
 }
+
 
 require_once('../partials/analytics.php');
 require_once('../partials/head.php');
