@@ -31,29 +31,28 @@ check_login();
 if (isset($_POST['AddHospitalService'])) {
     $Service_name = $_POST['Service_name'];
     $Service_desc = $_POST['Service_desc'];
-    if (!$error) {
-        /* Prevent Double Entries */
-        $sql = "SELECT * FROM  Hospital_Services WHERE  Service_name = '$Service_name'";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($Service_name == $row['Service_name']) {
-                $err = 'Service  Already Exists';
-            }
-        } else {
-            $query = 'INSERT INTO Hospital_Services  (Service_name, Service_desc) VALUES(?,?)';
-            $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('ss', $Service_name, $Service_desc);
-            $stmt->execute();
+    /* Prevent Double Entries */
+    $sql = "SELECT * FROM  Hospital_Services WHERE  Service_name = '$Service_name'";
+    $res = mysqli_query($mysqli, $sql);
+    if (mysqli_num_rows($res) > 0) {
+        $row = mysqli_fetch_assoc($res);
+        if ($Service_name == $row['Service_name']) {
+            $err = 'Service  Already Exists';
+        }
+    } else {
+        $query = 'INSERT INTO Hospital_Services  (Service_name, Service_desc) VALUES(?,?)';
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ss', $Service_name, $Service_desc);
+        $stmt->execute();
 
-            if ($stmt) {
-                $success = "$Service_name Added";
-            } else {
-                $info = 'Please Try Again Or Try Later';
-            }
+        if ($stmt) {
+            $success = "$Service_name Added";
+        } else {
+            $info = 'Please Try Again Or Try Later';
         }
     }
 }
+
 
 
 /* Delete Service */
