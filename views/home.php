@@ -153,7 +153,6 @@ require_once('../partials/head.php');
                                 </div>
                             </a>
                         <?php } ?>
-
                     </div>
                 </div>
             </div>
