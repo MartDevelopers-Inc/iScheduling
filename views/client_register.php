@@ -32,7 +32,6 @@ if (isset($_POST['Sign_Up'])) {
     $client_email = $_POST['client_email'];
     $client_location = $_POST['client_location'];
     /* Client Auth Details */
-    $login_user_name = $_POST['login_user_name'];
     $login_rank = 'Client';
     $login_password = sha1(md5($_POST['login_password']));
 
@@ -45,7 +44,7 @@ if (isset($_POST['Sign_Up'])) {
             $err =  "A Client Account With This Email  Already Exists";
         }
     } else {
-        $query = "INSERT INTO Clients (client_full_name, client_login_id, client_phone_no, client_gender, client_email, client_location) VALUES(?,?,?,?,?,?,?)";
+        $query = "INSERT INTO Clients (client_full_name, client_login_id, client_phone_no, client_gender, client_email, client_location) VALUES(?,?,?,?,?,?)";
         $auth = "INSERT INTO Login (login_id, login_user_name, login_email, login_password, login_rank) VALUES(?,?,?,?,?)";
 
         $stmt = $mysqli->prepare($query);
@@ -88,12 +87,33 @@ require_once('../partials/head.php');
                         <h6 class="mb-3 text-center">Sign Up To iScheduling.</h6>
                         <form method="POST">
                             <div class="form-group">
-                                <input class="form-control" required name="login_email" type="email" placeholder="Enter Email">
+                                <label class="form-label">Full Name</label>
+                                <input class="form-control" required name="client_full_name" type="text">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="password" name="login_password" placeholder="Enter Password">
+                                <label class="form-label">Phone Number</label>
+                                <input class="form-control" required name="client_phone_no" type="text">
                             </div>
-                            <button class="btn btn-primary w-100" name="Login" type="submit">Sign In</button>
+                            <div class="form-group">
+                                <label class="form-label">Gender</label>
+                                <select class="form-control" required name="client_gender" type="text">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location</label>
+                                <input class="form-control" required name="client_location" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input class="form-control" required name="client_email" type="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Login Password</label>
+                                <input class="form-control" type="password" name="login_password">
+                            </div>
+                            <button class="btn btn-primary w-100" name="Sign_Up" type="submit">Sign Up</button>
                         </form>
                     </div>
                     <!-- Login Meta-->
