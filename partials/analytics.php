@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Sat Jul 03 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,6 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 
 
 /* Staffs */
@@ -53,11 +54,18 @@ $stmt->bind_result($Bookings);
 $stmt->fetch();
 $stmt->close();
 
-
-/* Hospital Services */
-$query = "SELECT COUNT(*)  FROM Hospital_Services ";
+/* Hospitals */
+$query = "SELECT COUNT(*)  FROM Hospital ";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
-$stmt->bind_result($Hospital_Services);
+$stmt->bind_result($Hospital);
+$stmt->fetch();
+$stmt->close();
+
+/* Hospital Services */
+$query = "SELECT COUNT(*)  FROM Hospital_Service ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($Hospital_Service);
 $stmt->fetch();
 $stmt->close();
