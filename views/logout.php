@@ -21,8 +21,8 @@
  */
 
 session_start();
-unset($_SESSION['Login_id']);
-unset($_SESSION['Login_rank']);
+unset($_SESSION['login_id']);
+unset($_SESSION['login_rank']);
 session_destroy();
 header("Location: login");
 exit;

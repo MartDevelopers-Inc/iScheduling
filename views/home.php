@@ -74,7 +74,7 @@ require_once('../partials/head.php');
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Hospital Services</h4>
-                        <a class="btn btn-creative btn-warning" href="hospital_services" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Services; ?></a>
+                        <a class="btn btn-creative btn-warning" href="hospital_services" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Service; ?></a>
                     </div>
                 </div>
             </div>
