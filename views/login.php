@@ -38,7 +38,7 @@ if (isset($_POST['Login'])) {
     /* Decide Login User Dashboard Based On User Rank */
     if ($rs && $login_rank == 'Administrator') {
         header("location:home");
-    } else if ($rs && $login_rank == 'Staff' || $rs && $login_rank == 'Doctor' ) {
+    } else if ($rs && $login_rank == 'Staff' || $rs && $login_rank == 'Doctor') {
         header("location:staff_home");
     } else if ($rs && $login_rank == 'Client') {
         header("location:client_home");
@@ -79,7 +79,7 @@ require_once('../partials/head.php');
                     </div>
                     <!-- Login Meta-->
                     <div class="login-meta-data text-center"><a class="stretched-link forgot-password d-block mt-3 mb-1" href="forget_password">Forgot Password?</a>
-                        <!-- <p class="mb-0">Didn't have an account? <a class="stretched-link" href="page-register.html">Register Now</a></p> -->
+                        <p class="mb-0">Didn't have an account? <br> <a class="stretched-link" href="client_register.php">Register A Client Account</a></p>
                     </div>
                 </div>
             </div>
