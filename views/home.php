@@ -106,7 +106,7 @@ require_once('../partials/head.php');
                         $ret = "SELECT * FROM Bookings b 
                         INNER JOIN Clients c ON b.booking_client_id = c.client_id 
                         INNER JOIN Hospital_Service s ON s.hos_serv_id = b.booking_hos_serv_id 
-                        INNER JOIN Services se ON se.service_id = s.hos_serv_service_id ORDER BY RAND() LIMIT 10; 
+                        INNER JOIN Services se ON se.service_id = s.hos_serv_service_id ORDER BY RAND() LIMIT 10
                         ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
@@ -115,7 +115,7 @@ require_once('../partials/head.php');
                         ?>
 
                             <div class="single-testimonial-slide">
-                                <a href="booking?view=<?php echo $booking->Booking_id; ?>">
+                                <a href="booking?view=<?php echo $booking->booking_id; ?>">
                                     <div class="text-content">
                                         <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->booking_ref; ?></span>
                                         <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-bookmark-star"></i> Booking Status: <?php echo $booking->booking_status; ?></span>
