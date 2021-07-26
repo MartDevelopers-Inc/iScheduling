@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -20,11 +20,9 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
 check_login();
 require_once('../partials/head.php');
 ?>
@@ -101,20 +99,20 @@ require_once('../partials/head.php');
                 $min_length = 0;
                 if (strlen($search_query) >= $min_length) {
                     $search_query = mysqli_real_escape_string($mysqli, $search_query);
-                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Doctors WHERE (`Doctor_full_name` LIKE '%" . $search_query . "%') || `Doctor_specialization`  LIKE '%" . $search_query . "%' ");
+                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Doctors WHERE (`doctor_full_name` LIKE '%" . $search_query . "%') || `doctor_specialization`  LIKE '%" . $search_query . "%' ");
                     if (mysqli_num_rows($raw_results) > 0) {
                         while ($results = mysqli_fetch_array($raw_results)) {
                 ?>
-                            <li class="p-3 chat-unread"><a class="d-flex" href="doctor?view=<?php echo $results['Doctor_id']; ?>">
+                            <li class="p-3 chat-unread"><a class="d-flex" href="doctor?view=<?php echo $results['doctor_id']; ?>">
                                     <!-- Thumbnail-->
                                     <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/doctor.svg" alt=""><span class="active-status"></span></div>
                                     <!-- Info-->
                                     <div class="chat-user-info">
-                                        <h6 class="text-truncate mb-0"><?php echo $results['Doctor_full_name']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['Doctor_email']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['Doctor_phone_no']; ?></h6>
+                                        <h6 class="text-truncate mb-0"><?php echo $results['doctor_full_name']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['doctor_email']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['doctor_phone_no']; ?></h6>
                                         <div class="last-chat">
-                                            <p class="text-truncate mb-0"><?php echo $results['Doctor_specialization']; ?></p>
+                                            <p class="text-truncate mb-0"><?php echo $results['doctor_specialization']; ?></p>
                                         </div>
                                     </div>
                                 </a>
@@ -122,7 +120,7 @@ require_once('../partials/head.php');
                                 <div class="dropstart chat-options-btn">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="doctors?delete=<?php echo $results['Doctor_id']; ?>&login=<?php echo $results['Doctor_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
+                                        <li><a href="doctors?delete=<?php echo $results['doctor_id']; ?>&login=<?php echo $results['doctor_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
                                     </ul>
                                 </div>
                             </li>

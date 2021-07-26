@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -27,19 +27,19 @@ check_login();
 /* Update Profile */
 if (isset($_POST['UpdateProfile'])) {
 
-    $Client_full_name = $_POST['Client_full_name'];
-    $Client_phone_no = $_POST['Client_phone_no'];
-    $Client_gender = $_POST['Client_gender'];
-    $Client_email = $_POST['Client_email'];
-    $Client_location = $_POST['Client_location'];
-    $Client_id = $_GET['view'];
+    $client_full_name = $_POST['client_full_name'];
+    $client_phone_no = $_POST['client_phone_no'];
+    $client_gender = $_POST['client_gender'];
+    $client_email = $_POST['client_email'];
+    $client_location = $_POST['client_location'];
+    $client_id = $_GET['view'];
 
-    $query = "UPDATE Clients SET Client_full_name =?,  Client_phone_no =?, Client_gender =?, Client_email =?, Client_location=? WHERE Client_id = ? ";
+    $query = "UPDATE Clients SET client_full_name =?,  client_phone_no =?, client_gender =?, client_email =?, client_location=? WHERE client_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssssss', $Client_full_name, $Client_phone_no, $Client_gender, $Client_email, $Client_location, $Client_id);
+    $rc = $stmt->bind_param('ssssss', $client_full_name, $client_phone_no, $client_gender, $client_email, $client_location, $client_id);
     $stmt->execute();
     if ($stmt) {
-        $success = "$Client_full_name Profile Updated";
+        $success = "$client_full_name Profile Updated";
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -48,23 +48,22 @@ if (isset($_POST['UpdateProfile'])) {
 /* Update Login Details */
 if (isset($_POST['UpdateAuth'])) {
 
-    $Login_user_name = $_POST['Login_user_name'];
-    $Login_email = $_POST['Login_email'];
-    $Login_password = sha1(md5($_POST['Login_password']));
-    $Login_id = $_POST['Login_id'];
+    $login_user_name = $_POST['login_user_name'];
+    $login_email = $_POST['login_email'];
+    $login_password = sha1(md5($_POST['login_password']));
+    $login_id = $_POST['login_id'];
 
-    $query = "UPDATE Login SET Login_user_name =?, Login_email =?, Login_password=? WHERE Login_id = ? ";
+    $query = "UPDATE Login SET login_user_name =?, login_email =?, login_password=? WHERE login_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssss', $Login_user_name, $Login_email, $Login_password, $Login_id);
+    $rc = $stmt->bind_param('ssss', $login_user_name, $login_email, $login_password, $login_id);
     $stmt->execute();
     if ($stmt) {
-        $success = "$Login_user_name Login  Details Updated";
+        $success = "$login_user_name Login  Details Updated";
     } else {
         $info = "Please Try Again Or Try Later";
     }
 }
 
-require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -85,7 +84,7 @@ require_once('../partials/head.php');
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/side_nav.php');
     $view = $_GET['view'];
-    $ret = "SELECT *  FROM Clients WHERE Client_id = '$view' ";
+    $ret = "SELECT *  FROM Clients WHERE client_id = '$view' ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
@@ -101,7 +100,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="user-info">
                             <div class="d-flex align-items-center">
-                                <h5 class="mb-1"><?php echo $user->Client_full_name; ?> Profile</h5></span>
+                                <h5 class="mb-1"><?php echo $user->client_full_name; ?> Profile</h5></span>
                             </div>
                         </div>
                     </div>
@@ -113,26 +112,26 @@ require_once('../partials/head.php');
                         <form method="POST">
                             <div class="form-group mb-3">
                                 <label class="form-label" for="fullname">Full Name</label>
-                                <input class="form-control" required name="Client_full_name" type="text" value="<?php echo $user->Client_full_name; ?>">
+                                <input class="form-control" required name="client_full_name" type="text" value="<?php echo $user->client_full_name; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="email">Email Address</label>
-                                <input class="form-control" required name="Client_email" type="email" value="<?php echo $user->Client_email; ?>">
+                                <input class="form-control" required name="client_email" type="email" value="<?php echo $user->client_email; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">Phone Number</label>
-                                <input class="form-control" required name="Client_phone_no" type="text" value="<?php echo $user->Client_phone_no; ?>">
+                                <input class="form-control" required name="client_phone_no" type="text" value="<?php echo $user->client_phone_no; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">Gender</label>
-                                <select class="form-control" required name="Client_gender" type="text">
+                                <select class="form-control" required name="client_gender" type="text">
                                     <option>Male</option>
                                     <option>Female</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">Client Address</label>
-                                <textarea rows="4" class="form-control" required name="Client_location" type="text" value=""><?php echo $user->Client_location; ?></textarea>
+                                <textarea rows="4" class="form-control" required name="client_location" type="text" value=""><?php echo $user->client_location; ?></textarea>
                             </div>
 
                             <button class="btn btn-success w-100" name="UpdateProfile" type="submit">Update Now</button>
@@ -141,7 +140,7 @@ require_once('../partials/head.php');
                 </div>
                 <br>
                 <?php
-                $ret = "SELECT *  FROM Login WHERE Login_id = '$user->Client_login_id' ";
+                $ret = "SELECT *  FROM Login WHERE login_id = '$user->client_login_id' ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
@@ -153,17 +152,17 @@ require_once('../partials/head.php');
                             <form method="POST">
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Username</label>
-                                    <input class="form-control" required value="<?php echo $login->Login_user_name; ?>" name="Login_user_name">
-                                    <input class="form-control" required value="<?php echo $user->Client_login_id; ?>" type="hidden" name="Login_id">
+                                    <input class="form-control" required value="<?php echo $login->login_user_name; ?>" name="login_user_name">
+                                    <input class="form-control" required value="<?php echo $user->client_login_id; ?>" type="hidden" name="login_id">
 
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Email</label>
-                                    <input class="form-control" required name="Login_email" value="<?php echo $login->Login_email; ?>" type="email">
+                                    <input class="form-control" required name="login_email" value="<?php echo $login->login_email; ?>" type="email">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="fullname">Login Password</label>
-                                    <input class="form-control" required name="Login_password" type="password">
+                                    <input class="form-control" required name="login_password" type="password">
                                 </div>
                                 <button class="btn btn-success w-100" name="UpdateAuth" type="submit">Update Login Details</button>
                             </form>

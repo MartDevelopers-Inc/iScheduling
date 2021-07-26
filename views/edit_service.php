@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Tue Jul 06 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -24,26 +24,23 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
-/* Update Profile */
-if (isset($_POST['UpdateProfile'])) {
-
-    $Doctor_full_name = $_POST['Doctor_full_name'];
-    $Doctor_specialization = $_POST['Doctor_specialization'];
-    $Doctor_phone_no = $_POST['Doctor_phone_no'];
-    $Doctor_email  = $_POST['Doctor_email'];
-    $Doctor_id = $_SESSION['Login_id'];
-
-    $query = "UPDATE Doctors SET Doctor_full_name =?, Doctor_specialization =?, Doctor_phone_no=?, Doctor_email =? WHERE Doctor_login_id = ? ";
+/* Update Service */
+if (isset($_POST['UpdateHospitalService'])) {
+    $service_name = $_POST['service_name'];
+    $service_desc = $_POST['service_desc'];
+    $view  = $_GET['view'];
+    $query = 'UPDATE Services SET service_name =?, service_desc =? WHERE service_id = ?';
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sssss', $Doctor_full_name, $Doctor_specialization, $Doctor_phone_no, $Doctor_email, $Doctor_id);
+    $rc = $stmt->bind_param('sss', $service_name, $service_desc, $view);
     $stmt->execute();
+
     if ($stmt) {
-        $success = "$Doctor_full_name Profile Updated";
+        $success = "$service_name Updated" && header("refresh:1, service?view=$view");
     } else {
-        $info = "Please Try Again Or Try Later";
+        $info = 'Please Try Again Or Try Later';
     }
 }
-require_once('../partials/analytics.php');
+
 require_once('../partials/head.php');
 ?>
 
@@ -63,12 +60,12 @@ require_once('../partials/head.php');
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/side_nav.php');
-    $view = $_SESSION['Login_id'];
-    $ret = "SELECT *  FROM Doctors WHERE Doctor_login_id = '$view' ";
+    $view = $_GET['view'];
+    $ret = "SELECT * FROM `Services`  WHERE service_id = '$view'  ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
-    while ($user = $res->fetch_object()) {
+    while ($service = $res->fetch_object()) {
     ?>
 
         <div class="page-content-wrapper py-3">
@@ -76,45 +73,34 @@ require_once('../partials/head.php');
                 <!-- User Information-->
                 <div class="card user-info-card mb-3">
                     <div class="card-body d-flex align-items-center">
-                        <div class="user-profile me-3"><img src="../public/img/bg-img/profile.svg" alt="">
+                        <div class="user-profile me-3"><img src="../public/img/bg-img/healthcare.svg" alt="">
                         </div>
                         <div class="user-info">
                             <div class="d-flex align-items-center">
-                                <h5 class="mb-1"><?php echo $user->Doctor_full_name; ?> Profile</h5></span>
+                                <h5 class="mb-1">Update <?php echo $service->service_name; ?> </h5></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- User Meta Data-->
                 <div class="card user-data-card">
-                    <h5 class="text-center">User Profile Details</h5>
                     <div class="card-body">
                         <form method="POST">
                             <div class="form-group mb-3">
-                                <label class="form-label" for="fullname">Full Name</label>
-                                <input class="form-control" required name="Doctor_full_name" type="text" value="<?php echo $user->Doctor_full_name; ?>">
+                                <label class="form-label" for="fullname">Service Name</label>
+                                <input class="form-control" required name="service_name" type="text" value="<?php echo $service->service_name; ?>">
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label" for="email">Email Address</label>
-                                <input class="form-control" required name="Doctor_email" type="email" value="<?php echo $user->Doctor_email; ?>">
+                                <label class="form-label" for="email">Service Details</label>
+                                <textarea class="form-control" required name="service_desc"><?php echo $service->service_desc; ?></textarea>
                             </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="job">Phone Number</label>
-                                <input class="form-control" required name="Doctor_phone_no" type="text" value="<?php echo $user->Doctor_phone_no; ?>">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="job">Doctor Specialization</label>
-                                <textarea rows="5" class="form-control" required name="Doctor_specialization" type="text" value=""><?php echo $user->Doctor_specialization; ?></textarea>
-                            </div>
-
-                            <button class="btn btn-success w-100" name="UpdateProfile" type="submit">Update Now</button>
+                            <button class="btn btn-success w-100" name="UpdateHospitalService" type="submit">Submit</button>
                         </form>
+
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Footer Nav-->
-        <!-- Footer Nav-->
     <?php
     }
     require_once('../partials/footer_nav.php'); ?>

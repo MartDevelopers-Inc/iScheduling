@@ -24,5 +24,5 @@
 $dbuser = "root";
 $dbpass = "";
 $host = "localhost";
-$db = "iScheduling";
+$db = "ischeduling";
 $mysqli = new mysqli($host, $dbuser, $dbpass, $db);

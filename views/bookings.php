@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -23,14 +23,13 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
 require_once('../config/codeGen.php');
 check_login();
 
 /* Delete Bookings */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $adn = "DELETE FROM Bookings WHERE Booking_id=?";
+    $adn = "DELETE FROM Bookings WHERE booking_id=?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $delete);
     $stmt->execute();
@@ -104,34 +103,44 @@ require_once('../partials/head.php');
             <!-- Chat User List-->
             <ul class="ps-0 chat-user-list">
                 <?php
-                $ret = "SELECT Clients.Client_full_name, Clients.Client_gender, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
-                        Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
-                         FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
-                         WHERE Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id
-                        ORDER BY Booking_Date ASC  ";
+                $ret = "SELECT * FROM Bookings b 
+                INNER JOIN Clients c ON b.booking_client_id = c.client_id 
+                INNER JOIN Hospital_Service s ON s.hos_serv_id = b.booking_hos_serv_id 
+                INNER JOIN Services se ON se.service_id = s.hos_serv_service_id 
+                ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
                 while ($booking = $res->fetch_object()) {
                 ?>
-                    <li class="p-3 chat-unread"><a class="d-flex" href="booking?view=<?php echo $booking->Booking_id; ?>">
+                    <li class="p-3 chat-unread"><a class="d-flex" href="booking?view=<?php echo $booking->booking_id; ?>">
                             <!-- Thumbnail-->
                             <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/calendar.svg" alt=""><span class="active-status"></span></div>
                             <!-- Info-->
                             <div class="chat-user-info">
-                                <h6 class="text-truncate mb-0">REF : <?php echo $booking->Booking_Ref; ?></h6>
-                                <h6 class="text-truncate mb-0">Client Name : <?php echo $booking->Client_full_name; ?></h6>
-                                <h6 class="text-truncate mb-0">Client Phone : <?php echo $booking->Client_phone_no; ?></h6>
-                                <h6 class="text-truncate mb-0">Client Gender : <?php echo $booking->Client_gender; ?></h6>
-                                <h6 class="text-truncate mb-0">Date Booked : <?php echo $booking->Booking_Date; ?></h6>
-                                <h6 class="text-truncate mb-0">Booking Status : <?php echo $booking->Booking_Status; ?></h6>
+                                <h6 class="text-truncate mb-0">REF : <?php echo $booking->booking_ref; ?></h6>
+                                <h6 class="text-truncate mb-0">Client Name : <?php echo $booking->client_full_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Client Phone : <?php echo $booking->client_phone_no; ?></h6>
+                                <h6 class="text-truncate mb-0">Client Gender : <?php echo $booking->client_gender; ?></h6>
+                                <h6 class="text-truncate mb-0">Date Booked : <?php echo date('d-M-Y', strtotime($booking->booking_date)); ?></h6>
+                                <h6 class="text-truncate mb-0">Booking Status :
+                                    <?php
+                                    if ($booking->booking_status == 'New') {
+                                        echo "<span class='badge bg-primary'>$booking->booking_status</span>";
+                                    } else if ($booking->booking_status == 'Rejected') {
+                                        echo "<span class='badge bg-danger'>$booking->booking_status</span>";
+                                    } else {
+                                        echo "<span class='badge bg-success'>$booking->booking_status</span>";
+                                    }
+                                    ?>
+                                </h6>
                             </div>
                         </a>
                         <!-- Options-->
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu">
-                                <li><a href="bookings?delete=<?php echo $booking->Booking_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
+                                <li><a href="bookings?delete=<?php echo $booking->booking_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
                             </ul>
                         </div>
                     </li>

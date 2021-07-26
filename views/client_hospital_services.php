@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Tue Jul 06 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -20,10 +20,10 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
+require_once('../config/codeGen.php');
 check_login();
 require_once('../partials/head.php');
 ?>
@@ -78,8 +78,8 @@ require_once('../partials/head.php');
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/client_side_nav.php'); ?>
-    
     <div class="page-content-wrapper py-3">
+        <!-- Add New Staff-->
         <div class="container">
             <!-- Element Heading-->
             <div class="element-heading">
@@ -87,21 +87,30 @@ require_once('../partials/head.php');
             <!-- Chat User List-->
             <ul class="ps-0 chat-user-list">
                 <?php
-                $ret = "SELECT * FROM `Hospital_Services`";
+                $ret = "SELECT * FROM Hospital_Service hs
+                INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+                INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id
+                ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
                 while ($service = $res->fetch_object()) {
                 ?>
                     <li class="p-3 chat-unread">
-                        <a class="d-flex" href="client_hospital_service?view=<?php echo $service->Service_id; ?>">
+                        <a class="d-flex" href="client_hospital_service?view=<?php echo $service->hos_serv_id; ?>">
                             <!-- Thumbnail-->
                             <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/healthcare.svg" alt=""><span class="active-status"></span></div>
                             <!-- Info-->
                             <div class="chat-user-info">
-                                <h6 class="text-truncate mb-0"><?php echo $service->Service_name; ?></h6>
+                                <h6 class="text-truncate mb-0"><?php echo $service->service_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Name: <?php echo $service->hospital_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Email: <?php echo $service->hospital_email; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Mobile: <?php echo $service->hospital_mobile; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Contacts: <?php echo $service->hospital_contact; ?></h6>
+                                <h6 class="text-truncate mb-0">Service Cost: <?php echo $service->hos_serv_cost; ?></h6>
                                 <div class="last-chat">
-                                    <p class="text-truncate mb-0"><?php echo $service->Service_desc; ?></p>
+                                    <h6 class="text-truncate text-center mb-0">Service Description</h6>
+                                    <p class="text-truncate mb-0"><?php echo $service->service_desc; ?></p>
                                 </div>
                             </div>
                         </a>

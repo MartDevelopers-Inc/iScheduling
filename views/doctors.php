@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -23,46 +23,41 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
 require_once('../config/codeGen.php');
 check_login();
 
 /* Add Doc */
 if (isset($_POST['AddDoctor'])) {
-    $Doctor_full_name = $_POST['Doctor_full_name'];
-    $Doctor_specialization = $_POST['Doctor_specialization'];
-    $Doctor_login_id = $_POST['Login_id'];
-    $Doctor_phone_no = $_POST['Doctor_phone_no'];
-    $Doctor_email = $_POST['Doctor_email'];
-    $Login_password = sha1(md5($_POST['Login_password']));
-    $Login_rank = $_POST['Login_rank'];
+    $doctor_full_name = $_POST['doctor_full_name'];
+    $doctor_specialization = $_POST['doctor_specialization'];
+    $doctor_login_id = $_POST['login_id'];
+    $doctor_phone_no = $_POST['doctor_phone_no'];
+    $doctor_email = $_POST['doctor_email'];
+    $login_password = sha1(md5($_POST['login_password']));
+    $login_rank = $_POST['login_rank'];
     /* Prevent Double Entries */
-    $sql = "SELECT * FROM  Doctors WHERE  Doctor_phone_no = '$Doctor_phone_no'";
+    $sql = "SELECT * FROM  Doctors WHERE  doctor_phone_no = '$doctor_phone_no' || doctor_email = '$doctor_email'";
     $res = mysqli_query($mysqli, $sql);
     if (mysqli_num_rows($res) > 0) {
         $row = mysqli_fetch_assoc($res);
-        if ($Doctor_phone_no == $row['Doctor_phone_no']) {
-            $err = 'Phone Number Already Exists';
-        } else if ($Doctor_login_id == $row['Doctor_login_id']) {
-            $err = 'Login ID Already Exists';
-        } else {
-            $err = 'Email Address Already Exists';
+        if ($doctor_phone_no == $row['doctor_phone_no'] || $doctor_email = $row['doctor_email']) {
+            $err = 'Phone Number Or Email Already Exists';
         }
     } else {
-        $auth_querry = 'INSERT INTO Login (Login_id, Login_user_name, Login_email, Login_password, Login_Rank) VALUES(?,?,?,?,?)';
-        $query = 'INSERT INTO Doctors  (Doctor_full_name, Doctor_specialization,  Doctor_login_id, Doctor_phone_no, Doctor_email) VALUES(?,?,?,?,?)';
+        $auth_querry = 'INSERT INTO Login (login_id, login_user_name, login_email, login_password, login_rank) VALUES(?,?,?,?,?)';
+        $query = 'INSERT INTO Doctors  (doctor_full_name, doctor_specialization,  doctor_login_id, doctor_phone_no, doctor_email) VALUES(?,?,?,?,?)';
 
         $auth_qry_stmt = $mysqli->prepare($auth_querry);
         $stmt = $mysqli->prepare($query);
 
-        $rc = $auth_qry_stmt->bind_param('sssss', $Doctor_login_id, $Doctor_full_name, $Doctor_email, $Login_password, $Login_rank);
-        $rc = $stmt->bind_param('sssss', $Doctor_full_name, $Doctor_specialization, $Doctor_login_id, $Doctor_phone_no, $Doctor_email);
+        $rc = $auth_qry_stmt->bind_param('sssss', $doctor_login_id, $doctor_full_name, $doctor_email, $login_password, $login_rank);
+        $rc = $stmt->bind_param('sssss', $doctor_full_name, $doctor_specialization, $doctor_login_id, $doctor_phone_no, $doctor_email);
 
         $auth_qry_stmt->execute();
         $stmt->execute();
 
         if ($auth_qry_stmt &&  $stmt) {
-            $success = "$Doctor_full_name Account Created";
+            $success = "$doctor_full_name Account Created";
         } else {
             $info = 'Please Try Again Or Try Later';
         }
@@ -74,8 +69,8 @@ if (isset($_POST['AddDoctor'])) {
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
     $login = $_GET['login'];
-    $adn = "DELETE FROM Doctors WHERE Doctor_id=?";
-    $delete_auth = "DELETE FROM Login WHERE Login_id = ?";
+    $adn = "DELETE FROM Doctors WHERE doctor_id=?";
+    $delete_auth = "DELETE FROM Login WHERE login_id = ?";
     $stmt = $mysqli->prepare($adn);
     $auth_stmt = $mysqli->prepare($delete_auth);
     $stmt->bind_param('s', $delete);
@@ -157,30 +152,30 @@ require_once('../partials/head.php');
                     <form method="POST">
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Full Name</label>
-                            <input class="form-control" required name="Doctor_full_name" type="text">
-                            <input class="form-control" value="<?php echo $ID; ?>" required name="Login_id" type="hidden">
+                            <input class="form-control" required name="doctor_full_name" type="text">
+                            <input class="form-control" value="<?php echo $sys_gen_id; ?>" required name="login_id" type="hidden">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="email">Email Address</label>
-                            <input class="form-control" required name="Doctor_email" type="email">
+                            <input class="form-control" required name="doctor_email" type="email">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="job">Phone Number</label>
-                            <input class="form-control" required name="Doctor_phone_no" type="text">
+                            <input class="form-control" required name="doctor_phone_no" type="text">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Login Password</label>
-                            <input class="form-control" required name="Login_password" type="password">
+                            <input class="form-control" required name="login_password" type="password">
                         </div>
                         <div class="form-group mb-3" style="display:none">
                             <label class="form-label" for="fullname">Login Rank</label>
-                            <select class="form-control" required name="Login_rank">
+                            <select class="form-control" required name="login_rank">
                                 <option>Doctor</option>
                             </select>
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="job">Doctor Specialization</label>
-                            <textarea rows="4" class="form-control" required type="text" name="Doctor_specialization"></textarea>
+                            <textarea rows="4" class="form-control" required type="text" name="doctor_specialization"></textarea>
                         </div>
                         <button class="btn btn-success w-100" name="AddDoctor" type="submit">Submit</button>
                     </form>
@@ -215,16 +210,16 @@ require_once('../partials/head.php');
                 $res = $stmt->get_result();
                 while ($doc = $res->fetch_object()) {
                 ?>
-                    <li class="p-3 chat-unread"><a class="d-flex" href="doctor?view=<?php echo $doc->Doctor_id; ?>">
+                    <li class="p-3 chat-unread"><a class="d-flex" href="doctor?view=<?php echo $doc->doctor_id; ?>">
                             <!-- Thumbnail-->
                             <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/doctor.svg" alt=""><span class="active-status"></span></div>
                             <!-- Info-->
                             <div class="chat-user-info">
-                                <h6 class="text-truncate mb-0"><?php echo $doc->Doctor_full_name; ?></h6>
-                                <h6 class="text-truncate mb-0">Email: <?php echo $doc->Doctor_email; ?></h6>
-                                <h6 class="text-truncate mb-0">Phone: <?php echo $doc->Doctor_phone_no; ?></h6>
+                                <h6 class="text-truncate mb-0"><?php echo $doc->doctor_full_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Email: <?php echo $doc->doctor_email; ?></h6>
+                                <h6 class="text-truncate mb-0">Phone: <?php echo $doc->doctor_phone_no; ?></h6>
                                 <div class="last-chat">
-                                    <p class="text-truncate mb-0"><?php echo $doc->Doctor_specialization; ?></p>
+                                    <p class="text-truncate mb-0"><?php echo $doc->doctor_specialization; ?></p>
                                 </div>
                             </div>
 
@@ -233,7 +228,7 @@ require_once('../partials/head.php');
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu">
-                                <li><a href="doctors?delete=<?php echo $doc->Doctor_id; ?>&login=<?php echo $doc->Doctor_login_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
+                                <li><a href="doctors?delete=<?php echo $doc->doctor_id; ?>&login=<?php echo $doc->doctor_login_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
                             </ul>
                         </div>
                     </li>

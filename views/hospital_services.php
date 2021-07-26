@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -23,30 +23,30 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
 require_once('../config/codeGen.php');
 check_login();
 
 /* Add Hospital Service */
 if (isset($_POST['AddHospitalService'])) {
-    $Service_name = $_POST['Service_name'];
-    $Service_desc = $_POST['Service_desc'];
+    $hos_serv_hospital_id = $_POST['hos_serv_hospital_id'];
+    $hos_serv_service_id = $_POST['hos_serv_service_id'];
+    $hos_serv_cost = $_POST['hos_serv_cost'];
     /* Prevent Double Entries */
-    $sql = "SELECT * FROM  Hospital_Services WHERE  Service_name = '$Service_name'";
+    $sql = "SELECT * FROM  Hospital_Service WHERE  hos_serv_hospital_id = '$hos_serv_hospital_id' AND hos_serv_service_id = '$hos_serv_service_id' ";
     $res = mysqli_query($mysqli, $sql);
     if (mysqli_num_rows($res) > 0) {
         $row = mysqli_fetch_assoc($res);
-        if ($Service_name == $row['Service_name']) {
-            $err = 'Service  Already Exists';
+        if ($hos_serv_service_id == $row['hos_serv_service_id'] && $hos_serv_hospital_id == $row['hos_serv_hospital_id']) {
+            $err = 'Service Already Available In The Hospital';
         }
     } else {
-        $query = 'INSERT INTO Hospital_Services  (Service_name, Service_desc) VALUES(?,?)';
+        $query = 'INSERT INTO Hospital_Service  (hos_serv_hospital_id, hos_serv_service_id, hos_serv_cost ) VALUES(?,?,?)';
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ss', $Service_name, $Service_desc);
+        $rc = $stmt->bind_param('sss', $hos_serv_hospital_id, $hos_serv_service_id, $hos_serv_cost);
         $stmt->execute();
 
         if ($stmt) {
-            $success = "$Service_name Added";
+            $success = "Service Added";
         } else {
             $info = 'Please Try Again Or Try Later';
         }
@@ -58,7 +58,7 @@ if (isset($_POST['AddHospitalService'])) {
 /* Delete Service */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $adn = "DELETE FROM Clients WHERE Client_login_id=?";
+    $adn = "DELETE FROM Hospital_Service WHERE hos_serv_id =?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $delete);
     $stmt->execute();
@@ -130,18 +130,45 @@ require_once('../partials/head.php');
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="modal-title" id="addnewcontactlabel">New Service</h6>
+                        <h6 class="modal-title" id="addnewcontactlabel">New Hospital Service</h6>
                         <button class="btn btn-close p-1 ms-auto me-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="POST">
                         <div class="form-group mb-3">
-                            <label class="form-label" for="fullname">Service Name</label>
-                            <input class="form-control" required name="Service_name" type="text">
+                            <label class="form-label" for="fullname">Select Hospital Name</label>
+                            <select class="form-control" required name="hos_serv_hospital_id" type="text">
+                                <?php
+                                $ret = "SELECT * FROM `Hospital`";
+                                $stmt = $mysqli->prepare($ret);
+                                $stmt->execute(); //ok
+                                $res = $stmt->get_result();
+                                while ($hospital = $res->fetch_object()) {
+                                ?>
+                                    <option value="<?php echo $hospital->hospital_id; ?>"><?php echo $hospital->hospital_name; ?></option>
+                                <?php
+                                } ?>
+                            </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label class="form-label" for="email">Service Details</label>
-                            <textarea class="form-control" required name="Service_desc"></textarea>
+                            <label class="form-label" for="fullname">Select Service Name</label>
+                            <select class="form-control" required name="hos_serv_service_id" type="text">
+                                <?php
+                                $ret = "SELECT * FROM `Services`";
+                                $stmt = $mysqli->prepare($ret);
+                                $stmt->execute(); //ok
+                                $res = $stmt->get_result();
+                                while ($service = $res->fetch_object()) {
+                                ?>
+                                    <option value="<?php echo $service->service_id; ?>"><?php echo $service->service_name; ?></option>
+                                <?php
+                                } ?>
+                            </select>
                         </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="fullname">Service Cost</label>
+                            <input class="form-control" required name="hos_serv_cost" type="text">
+                        </div>
+
                         <button class="btn btn-success w-100" name="AddHospitalService" type="submit">Submit</button>
                     </form>
                 </div>
@@ -158,21 +185,30 @@ require_once('../partials/head.php');
             <!-- Chat User List-->
             <ul class="ps-0 chat-user-list">
                 <?php
-                $ret = "SELECT * FROM `Hospital_Services`";
+                $ret = "SELECT * FROM Hospital_Service hs
+                INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+                INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id
+                ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
                 while ($service = $res->fetch_object()) {
                 ?>
                     <li class="p-3 chat-unread">
-                        <a class="d-flex" href="hospital_service?view=<?php echo $service->Service_id; ?>">
+                        <a class="d-flex" href="hospital_service?view=<?php echo $service->hos_serv_id; ?>">
                             <!-- Thumbnail-->
                             <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/healthcare.svg" alt=""><span class="active-status"></span></div>
                             <!-- Info-->
                             <div class="chat-user-info">
-                                <h6 class="text-truncate mb-0"><?php echo $service->Service_name; ?></h6>
+                                <h6 class="text-truncate mb-0"><?php echo $service->service_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Name: <?php echo $service->hospital_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Email: <?php echo $service->hospital_email; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Mobile: <?php echo $service->hospital_mobile; ?></h6>
+                                <h6 class="text-truncate mb-0">Hospital Contacts: <?php echo $service->hospital_contact; ?></h6>
+                                <h6 class="text-truncate mb-0">Service Cost: <?php echo $service->hos_serv_cost; ?></h6>
                                 <div class="last-chat">
-                                    <p class="text-truncate mb-0"><?php echo $service->Service_desc; ?></p>
+                                    <h6 class="text-truncate text-center mb-0">Service Description</h6>
+                                    <p class="text-truncate mb-0"><?php echo $service->service_desc; ?></p>
                                 </div>
                             </div>
                         </a>
@@ -180,7 +216,7 @@ require_once('../partials/head.php');
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu">
-                                <li><a href="hospital_services?delete=<?php echo $service->Service_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
+                                <li><a href="hospital_services?delete=<?php echo $service->hos_serv_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
                             </ul>
                         </div>
                     </li>

@@ -23,24 +23,24 @@ session_start();
 require_once('../config/config.php');
 
 if (isset($_POST['Login'])) {
-    $Login_email = $_POST['Login_email'];
-    $Login_password = sha1(md5($_POST['Login_password']));
+    $login_email = $_POST['login_email'];
+    $login_password = sha1(md5($_POST['login_password']));
 
-    $stmt = $mysqli->prepare("SELECT Login_email, Login_password, Login_rank, Login_id  FROM Login  WHERE Login_email =? AND Login_password =?");
-    $stmt->bind_param('ss', $Login_email, $Login_password);
+    $stmt = $mysqli->prepare("SELECT login_email, login_password, login_rank, login_id  FROM Login  WHERE login_email =? AND login_password =?");
+    $stmt->bind_param('ss', $login_email, $login_password);
     $stmt->execute(); //execute bind
 
-    $stmt->bind_result($Login_email, $Login_password, $Login_rank, $Login_id);
+    $stmt->bind_result($login_email, $login_password, $login_rank, $login_id);
     $rs = $stmt->fetch();
-    $_SESSION['Login_id'] = $Login_id;
-    $_SESSION['Login_rank'] = $Login_rank;
+    $_SESSION['login_id'] = $login_id;
+    $_SESSION['login_rank'] = $login_rank;
 
     /* Decide Login User Dashboard Based On User Rank */
-    if ($rs && $Login_rank == 'Administrator') {
+    if ($rs && $login_rank == 'Administrator') {
         header("location:home");
-    } else if ($rs && $Login_rank == 'Staff' || $rs && $Login_rank == 'Doctor' ) {
+    } else if ($rs && $login_rank == 'Staff' || $rs && $login_rank == 'Doctor') {
         header("location:staff_home");
-    } else if ($rs && $Login_rank == 'Client') {
+    } else if ($rs && $login_rank == 'Client') {
         header("location:client_home");
     } else {
         $err = "Login Failed, Please Check Your Credentials And Login Permission ";
@@ -69,17 +69,28 @@ require_once('../partials/head.php');
                         <h6 class="mb-3 text-center">Log In To Continue To iScheduling.</h6>
                         <form method="POST">
                             <div class="form-group">
-                                <input class="form-control" required name="Login_email" type="email" placeholder="Enter Email">
+                                <label class="form-label">Email</label>
+                                <input class="form-control" required name="login_email" type="email" placeholder="Enter Email">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="password" name="Login_password" placeholder="Enter Password">
+                                <label class="form-label">Password</label>
+                                <input class="form-control" type="password" name="login_password" placeholder="Enter Password">
                             </div>
+                            <!-- <div class="form-group">
+                                <label class="form-label">Sign In As</label>
+                                <select class="form-control" type="text" name="login_rank">
+                                    <option>Administrator</option>
+                                    <option>Staff</option>
+                                    <option>Doctor</option>
+                                    <option>Client</option>
+                                </select>
+                            </div> -->
                             <button class="btn btn-primary w-100" name="Login" type="submit">Sign In</button>
                         </form>
                     </div>
                     <!-- Login Meta-->
                     <div class="login-meta-data text-center"><a class="stretched-link forgot-password d-block mt-3 mb-1" href="forget_password">Forgot Password?</a>
-                        <!-- <p class="mb-0">Didn't have an account? <a class="stretched-link" href="page-register.html">Register Now</a></p> -->
+                        <p class="mb-0">Didn't have an account? <br> <a class="stretched-link" href="client_register.php">Register A Client Account</a></p>
                     </div>
                 </div>
             </div>

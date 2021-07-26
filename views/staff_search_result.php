@@ -22,7 +22,6 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
 check_login();
 require_once('../partials/head.php');
 ?>
@@ -99,26 +98,26 @@ require_once('../partials/head.php');
                 $min_length = 0;
                 if (strlen($search_query) >= $min_length) {
                     $search_query = mysqli_real_escape_string($mysqli, $search_query);
-                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Clinic_Staff WHERE (`Staff_full_name` LIKE '%" . $search_query . "%')  ");
+                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Clinic_Staff WHERE (`staff_full_name` LIKE '%" . $search_query . "%')  ");
                     if (mysqli_num_rows($raw_results) > 0) {
                         while ($results = mysqli_fetch_array($raw_results)) {
                 ?>
-                            <li class="p-3 chat-unread"><a class="d-flex" href="staff?view=<?php echo $results['Staff_id']; ?>">
+                            <li class="p-3 chat-unread"><a class="d-flex" href="staff?view=<?php echo $results['staff_id']; ?>">
                                     <!-- Thumbnail-->
                                     <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/profile.svg" alt=""><span class="active-status"></span></div>
                                     <!-- Info-->
                                     <div class="chat-user-info">
-                                        <h6 class="text-truncate mb-0"><?php echo $results['Staff_full_name']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['Staff_email']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['Staff_phone_no']; ?></h6>
-                                        <h6 class="text-truncate mb-0">ID NO: <?php echo $results['Staff_id_no']; ?></h6>
+                                        <h6 class="text-truncate mb-0"><?php echo $results['staff_full_name']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['staff_email']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['staff_phone_no']; ?></h6>
+                                        <h6 class="text-truncate mb-0">ID NO: <?php echo $results['staff_id_no']; ?></h6>
                                     </div>
                                 </a>
                                 <!-- Options-->
                                 <div class="dropstart chat-options-btn">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="staffs?delete=<?php echo $results['Staff_id']; ?>&login=<?php echo $results['Staff_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
+                                        <li><a href="staffs?delete=<?php echo $results['staff_id']; ?>&login=<?php echo $results['staff_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
                                     </ul>
                                 </div>
                             </li>

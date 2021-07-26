@@ -95,11 +95,11 @@ require_once('../partials/head.php');
                 </thead>
                 <tbody>
                     <?php
-                    $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
-                        Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
-                         FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
-                         WHERE Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id
-                        ORDER BY Booking_Date ASC LIMIT 10   ";
+                    $ret = "SELECT * FROM Bookings b 
+                    INNER JOIN Clients c ON b.booking_client_id = c.client_id 
+                    INNER JOIN Hospital_Service s ON s.hos_serv_id = b.booking_hos_serv_id 
+                    INNER JOIN Services se ON se.service_id = s.hos_serv_service_id 
+                    ";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->execute(); //ok
                     $res = $stmt->get_result();
@@ -107,16 +107,16 @@ require_once('../partials/head.php');
                     ?>
                         <tr>
                             <td>
-                                Name: <?php echo $booking->Client_full_name; ?>
-                                Phone: <?php echo $booking->Client_phone_no; ?>
-                                Email : <?php echo $booking->Client_email; ?>
+                                Name: <?php echo $booking->client_full_name; ?><br>
+                                Phone: <?php echo $booking->client_phone_no; ?><br>
+                                Email : <?php echo $booking->client_email; ?>
                             </td>
 
                             <td>
-                                REF: <?php echo $booking->Booking_Ref; ?>
-                                Status: <?php echo $booking->Booking_Status; ?>
-                                Date Booked: <?php echo $booking->Booking_Date; ?>
-                                Booked Service: <?php echo $booking->Service_name; ?>
+                                REF: <?php echo $booking->booking_ref; ?><br>
+                                Status: <?php echo $booking->booking_status; ?><br>
+                                Date Booked: <?php echo date('d-M-Y', strtotime($booking->booking_date)); ?><br>
+                                Booked Service: <?php echo $booking->service_name; ?>
                             </td>
                         </tr>
                     <?php

@@ -24,7 +24,6 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
-require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -80,7 +79,7 @@ require_once('../partials/head.php');
             <div class="container">
                 <div class="row g-3">
                     <?php
-                    if ($_SESSION['Login_rank'] == 'Administrator') {
+                    if ($_SESSION['login_rank'] == 'Administrator') {
                         echo
                         '
                         <div class="col-6 col-sm-4 col-lg-3">
@@ -116,6 +115,30 @@ require_once('../partials/head.php');
                             <div class="card-body p-3">
                                 <a class="product-thumbnail d-block" href="reports_bookings"><img src="../public/img/bg-img/bookings.svg" alt="">
                                     <a class="product-title d-block text-truncate" href="reports_bookings">Bookings</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-lg-3">
+                        <div class="card single-product-card">
+                            <div class="card-body p-3">
+                                <a class="product-thumbnail d-block" href="reports_accepted_bookings"><img src="../public/img/bg-img/appointments.svg" alt="">
+                                    <a class="product-title d-block text-truncate" href="reports_accepted_bookings">Accepted Bookings</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-lg-3">
+                        <div class="card single-product-card">
+                            <div class="card-body p-3">
+                                <a class="product-thumbnail d-block" href="reports_hospital_services"><img src="../public/img/bg-img/insurance.svg" alt="">
+                                    <a class="product-title d-block text-truncate" href="reports_hospital_services">Hospital Services</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-lg-3">
+                        <div class="card single-product-card">
+                            <div class="card-body p-3">
+                                <a class="product-thumbnail d-block" href="reports_hospitals"><img src="../public/img/bg-img/hospital.svg" alt="">
+                                    <a class="product-title d-block text-truncate" href="reports_hospitals">Hospitals</a>
                             </div>
                         </div>
                     </div>

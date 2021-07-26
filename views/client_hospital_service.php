@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Tue Jul 06 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -26,8 +26,11 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
 require_once('../partials/head.php');
+
 $view = $_GET['view'];
-$ret = "SELECT * FROM `Hospital_Services`  WHERE Service_id = '$view'  ";
+$ret = "SELECT * FROM Hospital_Service hs
+INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id WHERE hs.hos_serv_id = '$view'   ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
@@ -58,7 +61,7 @@ while ($service = $res->fetch_object()) {
                     </div>
                     <!-- Page Title-->
                     <div class="page-heading">
-                        <h6 class="mb-0"><?php echo $service->Service_name; ?> Details</h6>
+                        <h6 class="mb-0"><?php echo $service->hospital_name . " " . $service->service_name; ?> Details</h6>
                     </div>
                     <!-- Navbar Toggler-->
                     <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
@@ -88,16 +91,44 @@ while ($service = $res->fetch_object()) {
         <div class="page-content-wrapper py-3">
             <div class="container">
                 <div class="card product-details-card mb-3 direction-rtl">
-                    <div class="card-body">
-                        <h3><?php echo $service->Service_name; ?></h3>
+                    <div class="row">
+                        <div class="card-body col-6 text-center">
+                            <h6>Hospital Name </h6>
+                            <p>
+                                <?php echo $service->hospital_name; ?>
+                            </p>
+                            <h6>Hospital Contacts</h6>
+                            <p>
+                                Email: <?php echo $service->hospital_email; ?> <br>
+                                Contact: <?php echo $service->hospital_contact; ?> <br>
+                                Mobile: <?php echo $service->hospital_mobile; ?>
+                            </p>
+                        </div>
+                        <div class="card-body col-6 text-center">
+                            <h6>Service Name</h6>
+                            <p>
+                                <?php echo $service->service_name; ?>
+                            </p>
+                            <h6>Service Cost</h6>
+                            <p>
+                                <?php echo $service->hos_serv_cost; ?>
+                            </p>
+                        </div>
                     </div>
                 </div>
-
                 <div class="card product-details-card mb-3 direction-rtl">
                     <div class="card-body">
-                        <h5>Description</h5>
+                        <h6>Service Description</h6>
                         <p>
-                            <?php echo $service->Service_desc; ?>
+                            <?php echo $service->service_desc; ?>
+                        </p>
+                    </div>
+                </div>
+                <div class="card product-details-card mb-3 direction-rtl">
+                    <div class="card-body">
+                        <h6>Hospital Details</h6>
+                        <p>
+                            <?php echo $service->hospital_desc; ?>
                         </p>
                     </div>
                 </div>

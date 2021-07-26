@@ -105,11 +105,11 @@ require_once('../partials/head.php');
                     while ($client = $res->fetch_object()) {
                     ?>
                         <tr>
-                            <td><?php echo $client->Client_full_name; ?></td>
-                            <td><?php echo $client->Client_phone_no; ?></td>
-                            <td><?php echo $client->Client_email; ?></td>
-                            <td><?php echo $client->Client_gender; ?></td>
-                            <td><?php echo $client->Client_location; ?></td>
+                            <td><?php echo $client->client_full_name; ?></td>
+                            <td><?php echo $client->client_phone_no; ?></td>
+                            <td><?php echo $client->client_email; ?></td>
+                            <td><?php echo $client->client_gender; ?></td>
+                            <td><?php echo $client->client_location; ?></td>
                         </tr>
                     <?php
                     } ?>

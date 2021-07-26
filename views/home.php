@@ -70,11 +70,19 @@ require_once('../partials/head.php');
                     </div>
                 </div>
             </div>
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital.jpg')">
+                <div class="slide-content h-100 d-flex align-items-center text-center">
+                    <div class="container">
+                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Registered Hospitals</h4>
+                        <a class="btn btn-creative btn-warning" href="hospitals" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital; ?></a>
+                    </div>
+                </div>
+            </div>
             <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital_services.webp')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Hospital Services</h4>
-                        <a class="btn btn-creative btn-warning" href="hospital_services" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Services; ?></a>
+                        <a class="btn btn-creative btn-warning" href="hospital_services" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Service; ?></a>
                     </div>
                 </div>
             </div>
@@ -86,6 +94,7 @@ require_once('../partials/head.php');
                     </div>
                 </div>
             </div>
+
         </div>
         <br>
         <div class="container">
@@ -94,11 +103,11 @@ require_once('../partials/head.php');
                     <h2>Recent Clients Bookings</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <?php
-                        $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
-                        Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
-                         FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
-                         WHERE Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id
-                        ORDER BY Booking_Date ASC LIMIT 10   ";
+                        $ret = "SELECT * FROM Bookings b 
+                        INNER JOIN Clients c ON b.booking_client_id = c.client_id 
+                        INNER JOIN Hospital_Service s ON s.hos_serv_id = b.booking_hos_serv_id 
+                        INNER JOIN Services se ON se.service_id = s.hos_serv_service_id ORDER BY RAND() LIMIT 10
+                        ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
                         $res = $stmt->get_result();
@@ -106,14 +115,23 @@ require_once('../partials/head.php');
                         ?>
 
                             <div class="single-testimonial-slide">
-                                <a href="booking?view=<?php echo $booking->Booking_id; ?>">
+                                <a href="booking?view=<?php echo $booking->booking_id; ?>">
                                     <div class="text-content">
-                                        <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->Booking_Ref; ?></span>
-                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-bookmark-star"></i> Booking Status: <?php echo $booking->Booking_Status; ?></span>
-                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-person-bounding-box"></i> Booked Hospital Service: <?php echo $booking->Service_name; ?></span>
-                                        <span class="d-block">Client Name : <?php echo $booking->Client_full_name; ?></span>
-                                        <span class="d-block">Client Phone : <?php echo $booking->Client_phone_no; ?></span>
-                                        <span class="d-block">Booking Date : <?php echo date('d-M-Y', strtotime($booking->Booking_Date)); ?></span>
+                                        <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->booking_ref; ?></span>
+                                        <?php
+                                        if ($booking->booking_status == 'New') {
+                                            echo "<span class='d-inline-block badge bg-primary mb-2'><i class='bi bi-bookmark-star'></i> Booking Status: $booking->booking_status </span>";
+                                        } else if ($booking->booking_status == 'Rejected') {
+                                            echo "<span class='d-inline-block badge bg-danger mb-2'><i class='bi bi-bookmark-star'></i> Booking Status: $booking->booking_status </span>";
+                                        } else {
+                                            echo "<span class='d-inline-block badge bg-success mb-2'><i class='bi bi-bookmark-star'></i> Booking Status: $booking->booking_status </span>";
+                                        }
+                                        ?>
+                                        </span>
+                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-person-bounding-box"></i> Booked Hospital Service: <?php echo $booking->service_name; ?></span>
+                                        <span class="d-block">Client Name : <?php echo $booking->client_full_name; ?></span>
+                                        <span class="d-block">Client Phone : <?php echo $booking->client_phone_no; ?></span>
+                                        <span class="d-block">Booking Date : <?php echo date('d-M-Y', strtotime($booking->booking_date)); ?></span>
                                     </div>
                                 </a>
                             </div>
@@ -130,22 +148,27 @@ require_once('../partials/head.php');
                     <h2>Avaiable Hospital Services</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <?php
-                        $ret = "SELECT * FROM `Hospital_Services`  ORDER BY RAND() ASC LIMIT 10   ";
+                        $ret = "SELECT * FROM Hospital_Service hs
+                        INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+                        INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id ORDER BY RAND() ASC LIMIT 10   ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
                         $res = $stmt->get_result();
                         while ($service = $res->fetch_object()) {
                         ?>
-                            <a href="hospital_service?view=<?php echo $service->Service_id; ?>">
+                            <a href="hospital_service?view=<?php echo $service->hos_serv_id; ?>">
                                 <div class="single-testimonial-slide">
                                     <div class="text-content">
-                                        <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-check"></i> <?php echo $service->Service_name; ?></span>
-                                        <h6 class="mb-2"><?php echo substr($service->Service_desc, 0, 50); ?>...</h6>
+                                        <span class="d-inline-block badge bg-warning mb-2"><?php echo $service->hospital_name; ?></span>
+                                        <h6 class="text-truncate mb-2"><?php echo $service->service_name; ?></h6>
+                                        <h6 class="text-truncate mb-2">Hospital Email: <?php echo $service->hospital_email; ?></h6>
+                                        <h6 class="text-truncate mb-2">Hospital Mobile: <?php echo $service->hospital_mobile; ?></h6>
+                                        <h6 class="text-truncate mb-2">Hospital Contacts: <?php echo $service->hospital_contact; ?></h6>
+                                        <h6 class="text-truncate mb-2">Service Cost: <?php echo $service->hos_serv_cost; ?></h6>
                                     </div>
                                 </div>
                             </a>
                         <?php } ?>
-
                     </div>
                 </div>
             </div>
@@ -164,7 +187,7 @@ require_once('../partials/head.php');
                         $res = $stmt->get_result();
                         while ($staff = $res->fetch_object()) {
                         ?>
-                            <a href="staff?view=<?php echo $staff->Staff_id; ?>">
+                            <a href="staff?view=<?php echo $staff->staff_id; ?>">
                                 <div class="single-testimonial-slide">
                                     <div class="text-content">
                                         <div class="col-12">
@@ -174,14 +197,14 @@ require_once('../partials/head.php');
                                                     <div class="team-member-img shadow-sm"><img src="../public/img/bg-img/profile.svg" alt=""></div>
                                                     <!-- Team Info-->
                                                     <div class="team-info">
-                                                        <h6 class="mb-0"><?php echo $staff->Staff_full_name; ?></h6>
-                                                        <p class="mb-0">Contacts: <?php echo $staff->Staff_phone_no; ?></p>
-                                                        <p class="mb-0">ID No: <?php echo $staff->Staff_id_no; ?></p>
+                                                        <h6 class="mb-0"><?php echo $staff->staff_full_name; ?></h6>
+                                                        <p class="mb-0">Contacts: <?php echo $staff->staff_phone_no; ?></p>
+                                                        <p class="mb-0">ID No: <?php echo $staff->staff_id_no; ?></p>
                                                     </div>
                                                 </div>
                                                 <!-- Contact Info-->
                                                 <div class="contact-info bg-info">
-                                                    <p class="mb-0 text-truncate"><?php echo $staff->Staff_email; ?></p>
+                                                    <p class="mb-0 text-truncate"><?php echo $staff->staff_email; ?></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -207,7 +230,7 @@ require_once('../partials/head.php');
                         $res = $stmt->get_result();
                         while ($staff = $res->fetch_object()) {
                         ?>
-                            <a href="doctor?view=<?php echo $staff->Doctor_id; ?>">
+                            <a href="doctor?view=<?php echo $staff->doctor_id; ?>">
                                 <div class="single-testimonial-slide">
                                     <div class="text-content">
                                         <div class="col-12">
@@ -217,17 +240,17 @@ require_once('../partials/head.php');
                                                     <div class="team-member-img shadow-sm"><img src="../public/img/bg-img/doctor.svg" alt=""></div>
                                                     <!-- Team Info-->
                                                     <div class="team-info">
-                                                        <h6 class="mb-0"><?php echo $staff->Doctor_full_name; ?></h6>
-                                                        <p class="mb-0">Contacts: <?php echo $staff->Doctor_phone_no; ?></p>
+                                                        <h6 class="mb-0"><?php echo $staff->doctor_full_name; ?></h6>
+                                                        <p class="mb-0">Contacts: <?php echo $staff->doctor_phone_no; ?></p>
                                                         <hr>
                                                         <small>
-                                                            <?php echo $staff->Doctor_specialization; ?>
+                                                            <?php echo $staff->doctor_specialization; ?>
                                                         </small>
                                                     </div>
                                                 </div>
                                                 <!-- Contact Info-->
                                                 <div class="contact-info bg-info">
-                                                    <p class="mb-0 text-truncate"><?php echo $staff->Doctor_email; ?></p>
+                                                    <p class="mb-0 text-truncate"><?php echo $staff->doctor_email; ?></p>
                                                 </div>
                                             </div>
                                         </div>

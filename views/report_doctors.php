@@ -104,10 +104,10 @@ require_once('../partials/head.php');
                     while ($doc = $res->fetch_object()) {
                     ?>
                         <tr>
-                            <td><?php echo $doc->Doctor_full_name; ?></td>
-                            <td><?php echo $doc->Doctor_phone_no; ?></td>
-                            <td><?php echo $doc->Doctor_email; ?></td>
-                            <td><?php echo $doc->Doctor_specialization; ?></td>
+                            <td><?php echo $doc->doctor_full_name; ?></td>
+                            <td><?php echo $doc->doctor_phone_no; ?></td>
+                            <td><?php echo $doc->doctor_email; ?></td>
+                            <td><?php echo $doc->doctor_specialization; ?></td>
                         </tr>
                     <?php
                     } ?>

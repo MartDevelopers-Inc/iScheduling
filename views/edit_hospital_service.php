@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -26,22 +26,20 @@ require_once('../config/checklogin.php');
 check_login();
 /* Update Service */
 if (isset($_POST['UpdateHospitalService'])) {
-    $Service_name = $_POST['Service_name'];
-    $Service_desc = $_POST['Service_desc'];
+    $hos_serv_cost = $_POST['hos_serv_cost'];
     $view  = $_GET['view'];
-    $query = 'UPDATE Hospital_Services  SET Service_name =?, Service_desc =? WHERE Service_id = ?';
+    $query = 'UPDATE Hospital_Service SET hos_serv_cost =? WHERE hos_serv_id = ?';
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sss', $Service_name, $Service_desc, $view);
+    $rc = $stmt->bind_param('ss', $hos_serv_cost, $view);
     $stmt->execute();
 
     if ($stmt) {
-        $success = "$Service_name Updated" && header("refresh:1, hospital_service?view=$view");
+        $success = "Hospital Service Cost Updated" && header("refresh:1, hospital_service?view=$view");
     } else {
         $info = 'Please Try Again Or Try Later';
     }
 }
 
-require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -62,7 +60,9 @@ require_once('../partials/head.php');
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/side_nav.php');
     $view = $_GET['view'];
-    $ret = "SELECT * FROM `Hospital_Services`  WHERE Service_id = '$view'  ";
+    $ret = "SELECT * FROM Hospital_Service hs
+    INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+    INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id WHERE hs.hos_serv_id = '$view'   ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
@@ -78,7 +78,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="user-info">
                             <div class="d-flex align-items-center">
-                                <h5 class="mb-1">Update <?php echo $service->Service_name; ?> </h5></span>
+                                <h5 class="mb-1">Update <?php echo $service->hospital_name . " " . $service->service_name; ?> Cost </h5></span>
                             </div>
                         </div>
                     </div>
@@ -88,12 +88,8 @@ require_once('../partials/head.php');
                     <div class="card-body">
                         <form method="POST">
                             <div class="form-group mb-3">
-                                <label class="form-label" for="fullname">Service Name</label>
-                                <input class="form-control" required name="Service_name" type="text" value="<?php echo $service->Service_name; ?>">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="email">Service Details</label>
-                                <textarea class="form-control" required name="Service_desc"><?php echo $service->Service_desc; ?></textarea>
+                                <label class="form-label" for="fullname">Service Cost</label>
+                                <input class="form-control" required name="hos_serv_cost" type="text" value="<?php echo $service->hos_serv_cost; ?>">
                             </div>
                             <button class="btn btn-success w-100" name="UpdateHospitalService" type="submit">Submit</button>
                         </form>

@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Sun Jul 04 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,6 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
@@ -26,15 +27,15 @@ check_login();
 /* Update Profile */
 if (isset($_POST['UpdateProfile'])) {
 
-    $Staff_full_name = $_POST['Staff_full_name'];
-    $Staff_id_no = $_POST['Staff_id_no'];
-    $Staff_phone_no = $_POST['Staff_phone_no'];
-    $Staff_email  = $_POST['Staff_email'];
-    $Staff_login_id = $_SESSION['Login_id'];
+    $staff_full_name = $_POST['staff_full_name'];
+    $staff_id_no = $_POST['staff_id_no'];
+    $staff_phone_no = $_POST['staff_phone_no'];
+    $staff_email  = $_POST['staff_email'];
+    $staff_login_id = $_SESSION['login_id'];
 
-    $query = "UPDATE Clinic_Staff SET Staff_full_name =?, Staff_id_no =?, Staff_phone_no=?, Staff_email =? WHERE Staff_login_id = ? ";
+    $query = "UPDATE Clinic_Staff SET staff_full_name =?, staff_id_no =?, staff_phone_no=?, staff_email =? WHERE staff_login_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_phone_no, $Staff_email, $Staff_login_id);
+    $rc = $stmt->bind_param('sssss', $staff_full_name, $staff_id_no, $staff_phone_no, $staff_email, $staff_login_id);
     $stmt->execute();
     if ($stmt) {
         $success = "Profile Updated";
@@ -46,13 +47,14 @@ if (isset($_POST['UpdateProfile'])) {
 /* Update Login Details */
 if (isset($_POST['UpdateAuth'])) {
 
-    $Login_user_name = $_POST['Login_user_name'];
-    $Login_email = $_POST['Login_email'];
-    $Login_password = sha1(md5($_POST['Login_password']));
+    $login_user_name = $_POST['login_user_name'];
+    $login_email = $_POST['login_email'];
+    $login_password = sha1(md5($_POST['login_password']));
+    $login_id = $_SESSION['login_id'];
 
-    $query = "UPDATE Login SET Login_user_name =?, Login_email =?, Login_password=? WHERE Login_id = ? ";
+    $query = "UPDATE Login SET login_user_name =?, login_email =?, login_password=? WHERE login_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssss', $Login_user_name, $Login_email, $Login_password, $Staff_login_id);
+    $rc = $stmt->bind_param('ssss', $login_user_name, $login_email, $login_password, $login_id);
     $stmt->execute();
     if ($stmt) {
         $success = "Auth Details Updated";
@@ -61,7 +63,6 @@ if (isset($_POST['UpdateAuth'])) {
     }
 }
 
-require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -81,8 +82,8 @@ require_once('../partials/head.php');
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/side_nav.php');
-    $Login_id = $_SESSION['Login_id'];
-    $ret = "SELECT *  FROM Clinic_Staff WHERE Staff_login_id = '$Login_id' ";
+    $Login_id = $_SESSION['login_id'];
+    $ret = "SELECT *  FROM Clinic_Staff WHERE staff_login_id = '$Login_id' ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
@@ -98,7 +99,7 @@ require_once('../partials/head.php');
                         </div>
                         <div class="user-info">
                             <div class="d-flex align-items-center">
-                                <h5 class="mb-1"><?php echo $user->Staff_full_name; ?></h5><span class="badge bg-warning ms-2 rounded-pill"><?php echo $_SESSION['Login_rank']; ?></span>
+                                <h5 class="mb-1"><?php echo $user->staff_full_name; ?></h5><span class="badge bg-warning ms-2 rounded-pill"><?php echo $_SESSION['login_rank']; ?></span>
                             </div>
                         </div>
                     </div>
@@ -110,19 +111,19 @@ require_once('../partials/head.php');
                         <form method="POST">
                             <div class="form-group mb-3">
                                 <label class="form-label" for="fullname">Full Name</label>
-                                <input class="form-control" required name="Staff_full_name" type="text" value="<?php echo $user->Staff_full_name; ?>">
+                                <input class="form-control" required name="staff_full_name" type="text" value="<?php echo $user->staff_full_name; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="email">Email Address</label>
-                                <input class="form-control" required name="Staff_email" type="email" value="<?php echo $user->Staff_email; ?>">
+                                <input class="form-control" required name="staff_email" type="email" value="<?php echo $user->staff_email; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">ID Number</label>
-                                <input class="form-control" required type="text" value="<?php echo $user->Staff_id_no; ?>" name="Staff_id_no">
+                                <input class="form-control" required type="text" value="<?php echo $user->staff_id_no; ?>" name="staff_id_no">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">Phone Number</label>
-                                <input class="form-control"  required name="Staff_phone_no" type="text" value="<?php echo $user->Staff_phone_no; ?>">
+                                <input class="form-control" required name="staff_phone_no" type="text" value="<?php echo $user->staff_phone_no; ?>">
                             </div>
 
                             <button class="btn btn-success w-100" name="UpdateProfile" type="submit">Update Now</button>
@@ -131,7 +132,7 @@ require_once('../partials/head.php');
                 </div>
                 <br>
                 <?php
-                $ret = "SELECT *  FROM Login WHERE Login_id = '$Login_id' ";
+                $ret = "SELECT *  FROM Login WHERE login_id = '$Login_id' ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
@@ -143,15 +144,15 @@ require_once('../partials/head.php');
                             <form method="POST">
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Username</label>
-                                    <input class="form-control" required value="<?php echo $login->Login_user_name; ?>" name="Login_user_name">
+                                    <input class="form-control" required value="<?php echo $login->login_user_name; ?>" name="login_user_name">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Email</label>
-                                    <input class="form-control" required name="Login_email" value="<?php echo $login->Login_email; ?>" type="email">
+                                    <input class="form-control" required name="login_email" value="<?php echo $login->login_email; ?>" type="email">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="fullname">Login Password</label>
-                                    <input class="form-control" required name="Login_password" type="password">
+                                    <input class="form-control" required name="login_password" type="password">
                                 </div>
                                 <button class="btn btn-success w-100" name="UpdateAuth" type="submit">Update Login Details</button>
                             </form>

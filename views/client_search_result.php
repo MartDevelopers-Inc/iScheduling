@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -20,11 +20,9 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
 check_login();
 require_once('../partials/head.php');
 ?>
@@ -101,21 +99,21 @@ require_once('../partials/head.php');
                 $min_length = 0;
                 if (strlen($search_query) >= $min_length) {
                     $search_query = mysqli_real_escape_string($mysqli, $search_query);
-                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Clients WHERE (`Client_full_name` LIKE '%" . $search_query . "%')");
+                    $raw_results = mysqli_query($mysqli, "SELECT * FROM Clients WHERE (`client_full_name` LIKE '%" . $search_query . "%')");
                     if (mysqli_num_rows($raw_results) > 0) {
                         while ($results = mysqli_fetch_array($raw_results)) {
                 ?>
-                            <li class="p-3 chat-unread"><a class="d-flex" href="client?view=<?php echo $results['Client_id']; ?>">
+                            <li class="p-3 chat-unread"><a class="d-flex" href="client?view=<?php echo $results['client_id']; ?>">
                                     <!-- Thumbnail-->
                                     <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/patient.svg" alt=""><span class="active-status"></span></div>
                                     <!-- Info-->
                                     <div class="chat-user-info">
-                                        <h6 class="text-truncate mb-0"><?php echo $results['Client_full_name']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['Client_email']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['Client_phone_no']; ?></h6>
-                                        <h6 class="text-truncate mb-0">Gender: <?php echo $results['Client_gender']; ?></h6>
+                                        <h6 class="text-truncate mb-0"><?php echo $results['client_full_name']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Email: <?php echo $results['client_email']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Phone: <?php echo $results['client_phone_no']; ?></h6>
+                                        <h6 class="text-truncate mb-0">Gender: <?php echo $results['client_gender']; ?></h6>
                                         <div class="last-chat">
-                                            <p class="text-truncate mb-0"><?php echo $results['Client_location']; ?></p>
+                                            <p class="text-truncate mb-0"><?php echo $results['client_location']; ?></p>
                                         </div>
                                     </div>
                                 </a>
@@ -123,7 +121,7 @@ require_once('../partials/head.php');
                                 <div class="dropstart chat-options-btn">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="clients?delete=<?php echo $results['Client_id']; ?>&login=<?php echo $results['Client_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
+                                        <li><a href="clients?delete=<?php echo $results['client_id']; ?>&login=<?php echo $results['client_login_id']; ?>"><i class="bi bi-trash"></i>Remove</a></li>
                                     </ul>
                                 </div>
                             </li>

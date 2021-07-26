@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Mon Jul 05 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,49 +19,45 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
 require_once('../config/codeGen.php');
 check_login();
 
 /* Add Staff */
 if (isset($_POST['AddStaff'])) {
-    $Staff_full_name = $_POST['Staff_full_name'];
-    $Staff_id_no = $_POST['Staff_id_no'];
-    $Staff_login_id = $_POST['Login_id'];
-    $Staff_phone_no = $_POST['Staff_phone_no'];
-    $Staff_email = $_POST['Staff_email'];
-    $Login_password = sha1(md5($_POST['Login_password']));
-    $Login_rank = $_POST['Login_rank'];
+    $staff_full_name = $_POST['staff_full_name'];
+    $staff_id_no = $_POST['staff_id_no'];
+    $staff_login_id = $_POST['login_id'];
+    $staff_phone_no = $_POST['staff_phone_no'];
+    $staff_email = $_POST['staff_email'];
+    $login_password = sha1(md5($_POST['login_password']));
+    $login_rank = $_POST['login_rank'];
     /* Prevent Double Entries */
-    $sql = "SELECT * FROM  Clinic_Staff WHERE  Staff_phone_no = '$Staff_phone_no'  ";
+    $sql = "SELECT * FROM  Clinic_Staff WHERE  staff_phone_no = '$staff_phone_no' || staff_email = '$staff_email'  ";
     $res = mysqli_query($mysqli, $sql);
     if (mysqli_num_rows($res) > 0) {
         $row = mysqli_fetch_assoc($res);
-        if ($Staff_phone_no == $row['Staff_phone_no']) {
-            $err = 'Phone Number Already Exists';
-        } else if ($Staff_login_id == $row['Staff_login_id']) {
-            $err = 'Login ID Already Exists';
-        } else {
-            $err = 'Email Address Already Exists';
+        if ($staff_phone_no == $row['staff_phone_no'] || $staff_email == $row['staff_email']) {
+            $err = 'Phone Number Or Email Already Exists';
         }
     } else {
-        $auth_querry = 'INSERT INTO Login (Login_id, Login_user_name, Login_email, Login_password, Login_Rank) VALUES(?,?,?,?,?)';
-        $query = 'INSERT INTO Clinic_Staff  (Staff_full_name, Staff_id_no,  Staff_login_id, Staff_phone_no, Staff_email) VALUES(?,?,?,?,?)';
+        $auth_querry = 'INSERT INTO Login (login_id, login_user_name, login_email, login_password, login_rank) VALUES(?,?,?,?,?)';
+        $query = 'INSERT INTO Clinic_Staff  (staff_full_name, staff_id_no,  staff_login_id, staff_phone_no, staff_email) VALUES(?,?,?,?,?)';
 
         $auth_qry_stmt = $mysqli->prepare($auth_querry);
         $stmt = $mysqli->prepare($query);
 
-        $rc = $auth_qry_stmt->bind_param('sssss', $Staff_login_id, $Staff_full_name, $Staff_email, $Login_password, $Login_rank);
-        $rc = $stmt->bind_param('sssss', $Staff_full_name, $Staff_id_no, $Staff_login_id, $Staff_phone_no, $Staff_email);
+        $rc = $auth_qry_stmt->bind_param('sssss', $staff_login_id, $staff_full_name, $staff_email, $login_password, $login_rank);
+        $rc = $stmt->bind_param('sssss', $staff_full_name, $staff_id_no, $staff_login_id, $staff_phone_no, $staff_email);
 
         $auth_qry_stmt->execute();
         $stmt->execute();
 
         if ($auth_qry_stmt &&  $stmt) {
-            $success = "$Staff_full_name Account Created";
+            $success = "$staff_full_name Account Created";
         } else {
             $info = 'Please Try Again Or Try Later';
         }
@@ -73,8 +69,8 @@ if (isset($_POST['AddStaff'])) {
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
     $login = $_GET['login'];
-    $adn = "DELETE FROM Clinic_Staff WHERE Staff_id=?";
-    $delete_auth = "DELETE FROM Login WHERE Login_id = ?";
+    $adn = "DELETE FROM Clinic_Staff WHERE staff_id=?";
+    $delete_auth = "DELETE FROM Login WHERE login_id = ?";
     $stmt = $mysqli->prepare($adn);
     $auth_stmt = $mysqli->prepare($delete_auth);
     $stmt->bind_param('s', $delete);
@@ -156,28 +152,28 @@ require_once('../partials/head.php');
                     <form method="POST">
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Full Name</label>
-                            <input class="form-control" required name="Staff_full_name" type="text">
-                            <input class="form-control" value="<?php echo $ID; ?>" required name="Login_id" type="hidden">
+                            <input class="form-control" required name="staff_full_name" type="text">
+                            <input class="form-control" value="<?php echo $sys_gen_id; ?>" required name="login_id" type="hidden">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="email">Email Address</label>
-                            <input class="form-control" required name="Staff_email" type="email">
+                            <input class="form-control" required name="staff_email" type="email">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="job">ID Number</label>
-                            <input class="form-control" required type="text" name="Staff_id_no">
+                            <input class="form-control" required type="text" name="staff_id_no">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="job">Phone Number</label>
-                            <input class="form-control" required name="Staff_phone_no" type="text">
+                            <input class="form-control" required name="staff_phone_no" type="text">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Login Password</label>
-                            <input class="form-control" required name="Login_password" type="password">
+                            <input class="form-control" required name="login_password" type="password">
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label" for="fullname">Login Rank</label>
-                            <select class="form-control" required name="Login_rank">
+                            <select class="form-control" required name="login_rank">
                                 <option>Administrator</option>
                                 <option>Staff</option>
                             </select>
@@ -215,15 +211,15 @@ require_once('../partials/head.php');
                 $res = $stmt->get_result();
                 while ($staff = $res->fetch_object()) {
                 ?>
-                    <li class="p-3 chat-unread"><a class="d-flex" href="staff?view=<?php echo $staff->Staff_id; ?>">
+                    <li class="p-3 chat-unread"><a class="d-flex" href="staff?view=<?php echo $staff->staff_id; ?>">
                             <!-- Thumbnail-->
                             <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/profile.svg" alt=""><span class="active-status"></span></div>
                             <!-- Info-->
                             <div class="chat-user-info">
-                                <h6 class="text-truncate mb-0"><?php echo $staff->Staff_full_name; ?></h6>
-                                <h6 class="text-truncate mb-0">Email: <?php echo $staff->Staff_email; ?></h6>
-                                <h6 class="text-truncate mb-0">Phone: <?php echo $staff->Staff_phone_no; ?></h6>
-                                <h6 class="text-truncate mb-0">ID NO: <?php echo $staff->Staff_id_no; ?></h6>
+                                <h6 class="text-truncate mb-0"><?php echo $staff->staff_full_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Email: <?php echo $staff->staff_email; ?></h6>
+                                <h6 class="text-truncate mb-0">Phone: <?php echo $staff->staff_phone_no; ?></h6>
+                                <h6 class="text-truncate mb-0">ID NO: <?php echo $staff->staff_id_no; ?></h6>
 
                             </div>
                         </a>
@@ -231,7 +227,7 @@ require_once('../partials/head.php');
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu">
-                                <li><a href="staffs?delete=<?php echo $staff->Staff_id; ?>&login=<?php echo $staff->Staff_login_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
+                                <li><a href="staffs?delete=<?php echo $staff->staff_id; ?>&login=<?php echo $staff->staff_login_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
                             </ul>
                         </div>
                     </li>

@@ -23,19 +23,19 @@ session_start();
 require_once('../config/config.php');
 if (isset($_POST['Reset_Password'])) {
 
-    $Login_email = $_POST['Login_email'];
-    $query = mysqli_query($mysqli, "SELECT * from `Login` WHERE Login_email = '" . $Login_email . "' ");
+    $login_email = $_POST['login_email'];
+    $query = mysqli_query($mysqli, "SELECT * from `Login` WHERE login_email = '" . $login_email . "' ");
     $num_rows = mysqli_num_rows($query);
 
     if ($num_rows > 0) {
-        $n = date('y');//Load Mumble Jumble
+        $n = date('y'); //Load Mumble Jumble
         $new_password = bin2hex(random_bytes($n));
-        $query = "UPDATE Login SET  Login_password=? WHERE  Login_email =? ";
+        $query = "UPDATE Login SET  login_password=? WHERE  login_email =? ";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ss', $new_password, $Login_email);
+        $rc = $stmt->bind_param('ss', $new_password, $login_email);
         $stmt->execute();
         if ($stmt) {
-            $_SESSION['Login_email'] = $Login_email;
+            $_SESSION['login_email'] = $login_email;
             $success = "Password Reset" && header("refresh:1; url=confirm_password");
         } else {
             $err = "Password reset failed";
@@ -67,12 +67,11 @@ require_once('../partials/head.php');
                     <div class="register-form mt-4 px-4">
                         <form method="Post">
                             <div class="form-group text-start mb-3">
-                                <input class="form-control" type="email" required name="Login_email" placeholder="Enter your email address">
+                                <input class="form-control" type="email" required name="login_email" placeholder="Enter your email address">
                             </div>
                             <button class="btn btn-primary w-100" name="Reset_Password" type="submit">Reset Password</button>
                         </form>
                         <div class="login-meta-data text-center"><a class="stretched-link forgot-password d-block mt-3 mb-1" href="login">Remembered Password?</a>
-                            <!-- <p class="mb-0">Didn't have an account? <a class="stretched-link" href="page-register.html">Register Now</a></p> -->
                         </div>
                     </div>
                 </div>

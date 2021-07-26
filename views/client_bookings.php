@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Tue Jul 06 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -25,31 +25,31 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 check_login();
+
 /* Add Booking */
 if (isset($_POST['AddBooking'])) {
-    $Booking_date = $_POST['Booking_date'];
-    $Booking_Ref = $_POST['Booking_Ref'];
-    $Booking_Service_Date = $_POST['Booking_Service_Date'];
-    $Booking_Service_Id = $_POST['Booking_Service_Id'];
-    $Booking_Client_Id = $_POST['Booking_Client_Id'];
-    $Booking_Status = $_POST['Booking_Status'];
-    $query = 'INSERT INTO Bookings (Booking_date, Booking_Ref, Booking_Service_Date, Booking_Service_Id, Booking_Client_Id, Booking_Status) VALUES(?,?,?,?,?,?)';
-    $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssssss', $Booking_date, $Booking_Ref, $Booking_Service_Date, $Booking_Service_Id, $Booking_Client_Id, $Booking_Status);
-    $stmt->execute();
+    $booking_ref = $a . $b;
+    $booking_date = $_POST['booking_date'];
+    $booking_hos_serv_id = $_POST['booking_hos_serv_id'];
+    $booking_service_date = $_POST['booking_service_date'];
+    $booking_client_id = $_POST['booking_client_id'];
+    $booking_status = 'New';
 
+    $query = 'INSERT INTO Bookings  (booking_ref, booking_date,  booking_hos_serv_id, booking_service_date, booking_client_id, booking_status) VALUES(?,?,?,?,?,?)';
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('ssssss', $booking_ref, $booking_date, $booking_hos_serv_id, $booking_service_date, $booking_client_id, $booking_status);
+    $stmt->execute();
     if ($stmt) {
-        $success = "Booking Submitted";
+        $success = "Booking Request Submitted";
     } else {
         $info = 'Please Try Again Or Try Later';
     }
 }
 
-
 /* Delete Bookings */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $adn = "DELETE FROM Bookings WHERE Booking_id=?";
+    $adn = "DELETE FROM Bookings WHERE booking_id=?";
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $delete);
     $stmt->execute();
@@ -88,7 +88,7 @@ require_once('../partials/head.php');
                 </div>
                 <!-- Page Title-->
                 <div class="page-heading">
-                    <h6 class="mb-0">Client Bookings</h6>
+                    <h6 class="mb-0">My Bookings</h6>
                 </div>
                 <!-- Navbar Toggler-->
                 <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
@@ -113,106 +113,120 @@ require_once('../partials/head.php');
     <!-- Sidenav Black Overlay-->
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
-    <?php require_once('../partials/client_side_nav.php');
-    $Login_id = $_SESSION['Login_id'];
-    $ret = "SELECT * FROM `Clients`  WHERE Client_login_id = '$Login_id'  ";
-    $stmt = $mysqli->prepare($ret);
-    $stmt->execute(); //ok
-    $res = $stmt->get_result();
-    while ($client = $res->fetch_object()) {
-    ?>
-        <div class="add-new-contact-modal modal fade px-0" id="addnewcontact" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addnewcontactlabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="modal-title" id="addnewcontactlabel">New Booking</h6>
-                            <button class="btn btn-close p-1 ms-auto me-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="POST">
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="fullname">Booking Date</label>
-                                <input class="form-control" required name="Booking_date" type="date">
-                                <input class="form-control" value="<?php echo $a . $b; ?>" required name="Booking_Ref" type="hidden">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="email">Booked Service Date</label>
-                                <input class="form-control" required name="Booking_Service_Date" type="date">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="job">Booking Hospital Service</label>
-                                <select class="form-control" id="ServiceName" onchange="GetServiceDetails(this.value);" required name="Booking_Service_Id">
-                                    <option>Select Hospital Service</option>
-                                    <?php
-                                    $ret = "SELECT * FROM `Hospital_Services` ";
-                                    $stmt = $mysqli->prepare($ret);
-                                    $stmt->execute(); //ok
-                                    $res = $stmt->get_result();
-                                    while ($service = $res->fetch_object()) {
-                                    ?>
-                                        <option><?php echo $service->Service_name; ?></option>
-                                    <?php
-                                    } ?>
-                                </select>
-                                <input class="form-control" id="ServiceID" required name="Booking_Service_Id" type="hidden">
-                                <input class="form-control" value="<?php echo $client->Client_id ?>" required name="Booking_Client_Id" type="hidden">
-                                <input class="form-control" value="New" required name="Booking_Status" type="hidden">
-                            </div>
-                            <button class="btn btn-success w-100" name="AddBooking" type="submit">Submit</button>
-                        </form>
+    <?php require_once('../partials/client_side_nav.php'); ?>
+    <div class="add-new-contact-modal modal fade px-0" id="addnewcontact" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addnewcontactlabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="modal-title" id="addnewcontactlabel">New Booking</h6>
+                        <button class="btn btn-close p-1 ms-auto me-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form method="POST">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="fullname">Booking Date</label>
+                            <input class="form-control" required name="booking_date" type="date">
+                            <?php
+                            $login = $_SESSION['login_id'];
+                            $ret = "SELECT * FROM Clients WHERE client_login_id = '$login' ";
+                            $stmt = $mysqli->prepare($ret);
+                            $stmt->execute(); //ok
+                            $res = $stmt->get_result();
+                            while ($client = $res->fetch_object()) {
+                            ?>
+                                <input class="form-control" required name="booking_client_id" value="<?php echo $client->client_id; ?>" type="hidden">
+                            <?php
+                            } ?>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="email">Booking Service Date</label>
+                            <input class="form-control" required name="booking_service_date" type="date">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="job">Select Hospital Service</label>
+                            <select class="form-control" required name="booking_hos_serv_id">
+                                <?php
+                                $ret = "SELECT * FROM Hospital_Service hs
+                                INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+                                INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id
+                                ";
+                                $stmt = $mysqli->prepare($ret);
+                                $stmt->execute(); //ok
+                                $res = $stmt->get_result();
+                                while ($service = $res->fetch_object()) {
+                                ?>
+                                    <option value="<?php echo $service->hos_serv_id; ?>"><?php echo $service->hospital_name . "-" . $service->service_name; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <button class="btn btn-success w-100" name="AddBooking" type="submit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="page-content-wrapper py-3">
+    </div>
+    <div class="page-content-wrapper py-3">
+        <div class="container">
             <div class="add-new-contact-wrap"><a class="shadow" href="#" data-bs-toggle="modal" data-bs-target="#addnewcontact"><i class="bi bi-plus"></i></a></div>
 
-            <div class="container">
-                <!-- Element Heading-->
-                <div class="element-heading">
-                </div>
-                <!-- Chat User List-->
-                <ul class="ps-0 chat-user-list">
-                    <?php
-                    $ret = "SELECT Clients.Client_full_name, Clients.Client_phone_no, Clients.Client_email, Hospital_Services.Service_name, Bookings.Booking_Ref,
-                        Bookings.Booking_Date, Bookings.Booking_Status, Bookings.Booking_id
-                         FROM Bookings LEFT JOIN Clients ON Bookings.Booking_Client_Id LEFT JOIN Hospital_Services ON Bookings.Booking_Service_Id
-                         WHERE Clients.Client_login_id = '$Login_id' AND Clients.Client_id = Bookings.Booking_Client_Id AND Hospital_Services.Service_id = Bookings.Booking_Service_Id
-                        ORDER BY Booking_Date ASC";
-                    $stmt = $mysqli->prepare($ret);
-                    $stmt->execute(); //ok
-                    $res = $stmt->get_result();
-                    while ($booking = $res->fetch_object()) {
-                    ?>
-                        <li class="p-3 chat-unread"><a class="d-flex" href="client_booking?view=<?php echo $booking->Booking_id; ?>">
-                                <!-- Thumbnail-->
-                                <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/calendar.svg" alt=""><span class="active-status"></span></div>
-                                <!-- Info-->
-                                <div class="chat-user-info">
-                                    <h6 class="text-truncate mb-0">REF : <?php echo $booking->Booking_Ref; ?></h6>
-                                    <h6 class="text-truncate mb-0">Client Name : <?php echo $booking->Client_full_name; ?></h6>
-                                    <h6 class="text-truncate mb-0">Client Phone : <?php echo $booking->Client_phone_no; ?></h6>
-                                    <h6 class="text-truncate mb-0">Date Booked : <?php echo $booking->Booking_Date; ?></h6>
-                                    <h6 class="text-truncate mb-0">Booking Status : <?php echo $booking->Booking_Status; ?></h6>
-                                </div>
-                            </a>
-                            <!-- Options-->
-                            <div class="dropstart chat-options-btn">
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="client_bookings?delete=<?php echo $booking->Booking_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    <?php
-                    } ?>
-                </ul>
+            <!-- Element Heading-->
+            <div class="element-heading">
             </div>
+            <!-- Chat User List-->
+            <ul class="ps-0 chat-user-list">
+                <?php
+                $login_id = $_SESSION['login_id'];
+                $ret = "SELECT * FROM Bookings b 
+                INNER JOIN Clients c ON b.booking_client_id = c.client_id 
+                INNER JOIN Hospital_Service s ON s.hos_serv_id = b.booking_hos_serv_id 
+                INNER JOIN Services se ON se.service_id = s.hos_serv_service_id 
+                WHERE c.client_login_id = '$login_id'
+                ";
+                $stmt = $mysqli->prepare($ret);
+                $stmt->execute(); //ok
+                $res = $stmt->get_result();
+                while ($booking = $res->fetch_object()) {
+                ?>
+                    <li class="p-3 chat-unread"><a class="d-flex" href="client_booking?view=<?php echo $booking->booking_id; ?>">
+                            <!-- Thumbnail-->
+                            <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/calendar.svg" alt=""><span class="active-status"></span></div>
+                            <!-- Info-->
+                            <div class="chat-user-info">
+                                <h6 class="text-truncate mb-0">REF : <?php echo $booking->booking_ref; ?></h6>
+                                <h6 class="text-truncate mb-0">Client Name : <?php echo $booking->client_full_name; ?></h6>
+                                <h6 class="text-truncate mb-0">Client Phone : <?php echo $booking->client_phone_no; ?></h6>
+                                <h6 class="text-truncate mb-0">Client Gender : <?php echo $booking->client_gender; ?></h6>
+                                <h6 class="text-truncate mb-0">Date Booked : <?php echo date('d-M-Y', strtotime($booking->booking_date)); ?></h6>
+                                <h6 class="text-truncate mb-0">Booking Status :
+                                    <?php
+                                    if ($booking->booking_status == 'New') {
+                                        echo "<span class='badge bg-primary'>$booking->booking_status</span>";
+                                    } else if ($booking->booking_status == 'Rejected') {
+                                        echo "<span class='badge bg-danger'>$booking->booking_status</span>";
+                                    } else {
+                                        echo "<span class='badge bg-success'>$booking->booking_status</span>";
+                                    }
+                                    ?>
+                                </h6>
+                            </div>
+                        </a>
+                        <!-- Options-->
+                        <div class="dropstart chat-options-btn">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="client_bookings?delete=<?php echo $booking->booking_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                <?php
+                } ?>
+
+            </ul>
         </div>
-        <!-- Footer Nav-->
-    <?php
-    }
-    require_once('../partials/client_footer_nav.php'); ?>
+    </div>
+    <!-- Footer Nav-->
+    <?php require_once('../partials/client_footer_nav.php'); ?>
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
 </body>

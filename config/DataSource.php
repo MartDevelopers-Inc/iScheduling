@@ -42,7 +42,7 @@ class DataSource
 
     const PASSWORD = '';
 
-    const DATABASENAME = 'iScheduling';
+    const DATABASENAME = 'ischeduling';
 
     private $conn;
 
