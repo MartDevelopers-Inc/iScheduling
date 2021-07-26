@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Sun Jul 04 2021
+ * Created on Mon Jul 26 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,6 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
@@ -26,18 +27,19 @@ check_login();
 /* Update Profile */
 if (isset($_POST['UpdateProfile'])) {
 
-    $staff_full_name = $_POST['staff_full_name'];
-    $staff_id_no = $_POST['staff_id_no'];
-    $staff_phone_no = $_POST['staff_phone_no'];
-    $staff_email  = $_POST['staff_email'];
-    $staff_id = $_GET['view'];
+    $client_full_name = $_POST['client_full_name'];
+    $client_phone_no = $_POST['client_phone_no'];
+    $client_gender = $_POST['client_gender'];
+    $client_email = $_POST['client_email'];
+    $client_location = $_POST['client_location'];
+    $client_id = $_GET['view'];
 
-    $query = "UPDATE Clinic_Staff SET staff_full_name =?, staff_id_no =?, staff_phone_no=?, staff_email =? WHERE staff_id = ? ";
+    $query = "UPDATE Clients SET client_full_name =?,  client_phone_no =?, client_gender =?, client_email =?, client_location=? WHERE client_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sssss', $staff_full_name, $staff_id_no, $staff_phone_no, $staff_email, $staff_id);
+    $rc = $stmt->bind_param('ssssss', $client_full_name, $client_phone_no, $client_gender, $client_email, $client_location, $client_id);
     $stmt->execute();
     if ($stmt) {
-        $success = "$staff_full_name Profile Updated";
+        $success = "$client_full_name Profile Updated";
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -62,7 +64,6 @@ if (isset($_POST['UpdateAuth'])) {
     }
 }
 
-require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -81,9 +82,9 @@ require_once('../partials/head.php');
     <!-- Sidenav Black Overlay-->
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
-    <?php require_once('../partials/side_nav.php');
+    <?php require_once('../partials/staff_side_nav.php');
     $view = $_GET['view'];
-    $ret = "SELECT *  FROM Clinic_Staff WHERE staff_id = '$view' ";
+    $ret = "SELECT *  FROM Clients WHERE Client_id = '$view' ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
@@ -95,11 +96,11 @@ require_once('../partials/head.php');
                 <!-- User Information-->
                 <div class="card user-info-card mb-3">
                     <div class="card-body d-flex align-items-center">
-                        <div class="user-profile me-3"><img src="../public/img/bg-img/profile.svg" alt="">
+                        <div class="user-profile me-3"><img src="../public/img/bg-img/patient.svg" alt="">
                         </div>
                         <div class="user-info">
                             <div class="d-flex align-items-center">
-                                <h5 class="mb-1"><?php echo $user->staff_full_name; ?> Profile</h5></span>
+                                <h5 class="mb-1"><?php echo $user->client_full_name; ?> Profile</h5></span>
                             </div>
                         </div>
                     </div>
@@ -111,19 +112,26 @@ require_once('../partials/head.php');
                         <form method="POST">
                             <div class="form-group mb-3">
                                 <label class="form-label" for="fullname">Full Name</label>
-                                <input class="form-control" required name="staff_full_name" type="text" value="<?php echo $user->staff_full_name; ?>">
+                                <input class="form-control" required name="client_full_name" type="text" value="<?php echo $user->client_full_name; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="email">Email Address</label>
-                                <input class="form-control" required name="staff_email" type="email" value="<?php echo $user->staff_email; ?>">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label" for="job">ID Number</label>
-                                <input class="form-control" required type="text" value="<?php echo $user->staff_id_no; ?>" name="staff_id_no">
+                                <input class="form-control" required name="client_email" type="email" value="<?php echo $user->client_email; ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="job">Phone Number</label>
-                                <input class="form-control" required name="staff_phone_no" type="text" value="<?php echo $user->staff_phone_no; ?>">
+                                <input class="form-control" required name="client_phone_no" type="text" value="<?php echo $user->client_phone_no; ?>">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="job">Gender</label>
+                                <select class="form-control" required name="client_gender" type="text">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="job">Client Address</label>
+                                <textarea rows="4" class="form-control" required name="client_location" type="text" value=""><?php echo $user->client_location; ?></textarea>
                             </div>
 
                             <button class="btn btn-success w-100" name="UpdateProfile" type="submit">Update Now</button>
@@ -132,20 +140,20 @@ require_once('../partials/head.php');
                 </div>
                 <br>
                 <?php
-                $ret = "SELECT *  FROM Login WHERE login_id = '$user->staff_login_id' ";
+                $ret = "SELECT *  FROM Login WHERE login_id = '$user->client_login_id' ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
                 while ($login = $res->fetch_object()) {
                 ?>
                     <div class="card user-data-card">
-                        <h5 class="text-center">Staff Authentication Details</h5>
+                        <h5 class="text-center">Client Authentication Details</h5>
                         <div class="card-body">
                             <form method="POST">
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="Username">Login Username</label>
                                     <input class="form-control" required value="<?php echo $login->login_user_name; ?>" name="login_user_name">
-                                    <input class="form-control" required value="<?php echo $user->staff_login_id; ?>" type="hidden" name="login_id">
+                                    <input class="form-control" required value="<?php echo $user->client_login_id; ?>" type="hidden" name="login_id">
 
                                 </div>
                                 <div class="form-group mb-3">
@@ -168,7 +176,7 @@ require_once('../partials/head.php');
         <!-- Footer Nav-->
     <?php
     }
-    require_once('../partials/footer_nav.php'); ?>
+    require_once('../partials/staff_footer_nav.php'); ?>
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
     <!-- All JavaScript Files-->

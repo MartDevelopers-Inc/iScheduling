@@ -140,7 +140,7 @@ require_once('../partials/head.php');
                 </div>
                 <br>
                 <?php
-                $ret = "SELECT *  FROM Login WHERE Login_id = '$user->client_login_id' ";
+                $ret = "SELECT *  FROM Login WHERE login_id = '$user->client_login_id' ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
