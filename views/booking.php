@@ -204,8 +204,8 @@ while ($booking = $res->fetch_object()) {
                                 <label class="form-label">Actual Date</label>
                                 <input name="accepted_booking_actual_date" class="form-control" type="date">
                             </div>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">No</button>
-                            <button type="submit" class="text-center btn btn-danger" name="Authorize">Authorize Booking </button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                            <button type="submit" class="text-center btn btn-success" name="Authorize">Authorize Booking </button>
                         </form>
                     </div>
                 </div>
@@ -225,7 +225,17 @@ while ($booking = $res->fetch_object()) {
                         <h5>Booking Details</h5>
                         <p>Ref # : <?php echo $booking->booking_ref; ?></p>
                         <p>Date Created: <?php echo date('d-M-Y', strtotime($booking->booking_date)); ?></p>
-                        <p>Booking Status: <?php echo $booking->booking_status; ?></p>
+                        <p>Booking Status:
+                            <?php
+                            if ($booking->booking_status == 'New') {
+                                echo "<span class='badge bg-rimary'>$booking->booking_status</span>";
+                            } else if ($booking->booking_status == 'Rejected') {
+                                echo "<span class='badge bg-danger'>$booking->booking_status</span>";
+                            } else {
+                                echo "<span class='badge bg-success'>$booking->booking_status</span>";
+                            }
+                            ?>
+                        </p>
                         <p>Service Date: <?php echo $booking->booking_service_date; ?></p>
                     </div>
                 </div>
