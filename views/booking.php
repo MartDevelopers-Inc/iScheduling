@@ -228,7 +228,7 @@ while ($booking = $res->fetch_object()) {
                         <p>Booking Status:
                             <?php
                             if ($booking->booking_status == 'New') {
-                                echo "<span class='badge bg-rimary'>$booking->booking_status</span>";
+                                echo "<span class='badge bg-primary'>$booking->booking_status</span>";
                             } else if ($booking->booking_status == 'Rejected') {
                                 echo "<span class='badge bg-danger'>$booking->booking_status</span>";
                             } else {

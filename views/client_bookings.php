@@ -26,6 +26,26 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 check_login();
 
+/* Add Booking */
+if (isset($_POST['AddBooking'])) {
+    $booking_ref = $a . $b;
+    $booking_date = $_POST['booking_date'];
+    $booking_hos_serv_id = $_POST['booking_hos_serv_id'];
+    $booking_service_date = $_POST['booking_service_date'];
+    $booking_client_id = $_POST['booking_client_id'];
+    $booking_status = 'New';
+
+    $query = 'INSERT INTO Bookings  (booking_ref, booking_date,  booking_hos_serv_id, booking_service_date, booking_client_id, booking_status) VALUES(?,?,?,?,?,?)';
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('ssssss', $booking_ref, $booking_date, $booking_hos_serv_id, $booking_service_date, $booking_client_id, $booking_status);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "Booking Request Submitted";
+    } else {
+        $info = 'Please Try Again Or Try Later';
+    }
+}
+
 /* Delete Bookings */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
@@ -35,7 +55,7 @@ if (isset($_GET['delete'])) {
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1; url=bookings");
+        $success = "Deleted" && header("refresh:1; url=client_bookings");
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -60,7 +80,7 @@ require_once('../partials/head.php');
             <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
                 <!-- Back Button-->
                 <div class="back-button">
-                    <a href="home">
+                    <a href="client_home">
                         <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                         </svg>
@@ -68,7 +88,7 @@ require_once('../partials/head.php');
                 </div>
                 <!-- Page Title-->
                 <div class="page-heading">
-                    <h6 class="mb-0">Client Bookings</h6>
+                    <h6 class="mb-0">My Bookings</h6>
                 </div>
                 <!-- Navbar Toggler-->
                 <div class="navbar--toggler" id="affanNavbarToggler"><span class="d-block"></span><span class="d-block"></span><span class="d-block"></span></div>
@@ -93,27 +113,82 @@ require_once('../partials/head.php');
     <!-- Sidenav Black Overlay-->
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
-    <?php require_once('../partials/side_nav.php'); ?>
+    <?php require_once('../partials/client_side_nav.php'); ?>
+    <div class="add-new-contact-modal modal fade px-0" id="addnewcontact" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addnewcontactlabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="modal-title" id="addnewcontactlabel">New Booking</h6>
+                        <button class="btn btn-close p-1 ms-auto me-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="fullname">Booking Date</label>
+                            <input class="form-control" required name="booking_date" type="date">
+                            <?php
+                            $login = $_SESSION['login_id'];
+                            $ret = "SELECT * FROM Clients WHERE client_login_id = '$login' ";
+                            $stmt = $mysqli->prepare($ret);
+                            $stmt->execute(); //ok
+                            $res = $stmt->get_result();
+                            while ($client = $res->fetch_object()) {
+                            ?>
+                                <input class="form-control" required name="booking_client_id" value="<?php echo $client->client_id; ?>" type="hidden">
+                            <?php
+                            } ?>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="email">Booking Service Date</label>
+                            <input class="form-control" required name="booking_service_date" type="date">
+                        </div>
 
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="job">Select Hospital Service</label>
+                            <select class="form-control" required name="booking_hos_serv_id">
+                                <?php
+                                $ret = "SELECT * FROM Hospital_Service hs
+                                INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+                                INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id
+                                ";
+                                $stmt = $mysqli->prepare($ret);
+                                $stmt->execute(); //ok
+                                $res = $stmt->get_result();
+                                while ($service = $res->fetch_object()) {
+                                ?>
+                                    <option value="<?php echo $service->hos_serv_id; ?>"><?php echo $service->hospital_name . "-" . $service->service_name; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <button class="btn btn-success w-100" name="AddBooking" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page-content-wrapper py-3">
         <div class="container">
+            <div class="add-new-contact-wrap"><a class="shadow" href="#" data-bs-toggle="modal" data-bs-target="#addnewcontact"><i class="bi bi-plus"></i></a></div>
+
             <!-- Element Heading-->
             <div class="element-heading">
             </div>
             <!-- Chat User List-->
             <ul class="ps-0 chat-user-list">
                 <?php
+                $login_id = $_SESSION['login_id'];
                 $ret = "SELECT * FROM Bookings b 
                 INNER JOIN Clients c ON b.booking_client_id = c.client_id 
                 INNER JOIN Hospital_Service s ON s.hos_serv_id = b.booking_hos_serv_id 
                 INNER JOIN Services se ON se.service_id = s.hos_serv_service_id 
+                WHERE c.client_login_id = '$login_id'
                 ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
                 while ($booking = $res->fetch_object()) {
                 ?>
-                    <li class="p-3 chat-unread"><a class="d-flex" href="booking?view=<?php echo $booking->booking_id; ?>">
+                    <li class="p-3 chat-unread"><a class="d-flex" href="client_booking?view=<?php echo $booking->booking_id; ?>">
                             <!-- Thumbnail-->
                             <div class="chat-user-thumbnail me-3 shadow"><img class="img-circle" src="../public/img/bg-img/calendar.svg" alt=""><span class="active-status"></span></div>
                             <!-- Info-->
@@ -140,7 +215,7 @@ require_once('../partials/head.php');
                         <div class="dropstart chat-options-btn">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu">
-                                <li><a href="bookings?delete=<?php echo $booking->booking_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
+                                <li><a href="client_bookings?delete=<?php echo $booking->booking_id; ?>"><i class="bi bi-trash"></i>Delete</a></li>
                             </ul>
                         </div>
                     </li>
@@ -151,7 +226,7 @@ require_once('../partials/head.php');
         </div>
     </div>
     <!-- Footer Nav-->
-    <?php require_once('../partials/footer_nav.php'); ?>
+    <?php require_once('../partials/client_footer_nav.php'); ?>
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
 </body>

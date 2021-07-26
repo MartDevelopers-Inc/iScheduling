@@ -24,54 +24,6 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
-
-/* Accept Booking */
-if (isset($_POST['Authorize'])) {
-    $accepted_booking_booking_id = $_POST['accepted_booking_booking_id'];
-    $accepted_booking_staff_id = $_POST['accepted_booking_staff_id'];
-    $accepted_booking_doctor_id = $_POST['accepted_booking_doctor_id'];
-    $accepted_booking_actual_date = $_POST['accepted_booking_actual_date'];
-
-    /* Booking Status */
-    $booking_status = 'Accepted';
-
-    $query = 'INSERT INTO Accepted_Booking (accepted_booking_booking_id, accepted_booking_staff_id, accepted_booking_doctor_id, accepted_booking_actual_date) VALUES(?,?,?,?)';
-    $status = "UPDATE Bookings SET booking_status = ? WHERE booking_id= ?";
-
-    $stmt = $mysqli->prepare($query);
-    $status_stmt = $mysqli->prepare($status);
-
-    $rc = $stmt->bind_param('ssss', $accepted_booking_booking_id, $accepted_booking_staff_id, $accepted_booking_doctor_id, $accepted_booking_actual_date);
-    $rc = $status_stmt->bind_param('ss', $booking_status, $accepted_booking_booking_id);
-
-    $stmt->execute();
-    $status_stmt->execute();
-
-    if ($stmt && $status_stmt) {
-        $success = "Booking Accepted";
-    } else {
-        $info = 'Please Try Again Or Try Later';
-    }
-}
-
-/* Reject Booking */
-if (isset($_POST['RejectBooking'])) {
-
-    $booking_status = 'Rejected';
-    $booking_id = $_POST['booking_id'];
-
-    $query = 'UPDATE Bookings SET booking_status = ? WHERE booking_id = ?';
-    $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ss', $booking_status, $booking_id);
-    $stmt->execute();
-    if ($stmt) {
-        $success = "Booking Rejected";
-    } else {
-        $info = 'Please Try Again Or Try Later';
-    }
-}
-
-
 require_once('../partials/head.php');
 $view = $_GET['view'];
 $ret = "SELECT * FROM Bookings b 
@@ -101,7 +53,7 @@ while ($booking = $res->fetch_object()) {
                 <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
                     <!-- Back Button-->
                     <div class="back-button">
-                        <a href="staff_bookings">
+                        <a href="client_bookings">
                             <svg width="32" height="32" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                             </svg>
@@ -134,84 +86,7 @@ while ($booking = $res->fetch_object()) {
         <!-- Sidenav Black Overlay-->
         <div class="sidenav-black-overlay"></div>
         <!-- Side Nav Wrapper-->
-        <?php require_once('../partials/staff_side_nav.php'); ?>
-
-        <!-- Reject Modal-->
-        <div class="modal fade" id="reject_booking" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">CONFIRM BOOKING REJECTION</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                    </div>
-                    <div class="modal-body text-center text-danger">
-                        <h4>Reject <?php echo $booking->client_full_name; ?> Booking ?</h4>
-                        <br>
-                        <p>Heads Up, You are about to reject <?php echo $booking->client_full_name . " Booking REF: " . $booking->booking_ref; ?>.<br> </p>
-                        <form method="POST">
-                            <input name="booking_id" value="<?php echo $booking->booking_id; ?>" type="hidden">
-                            <input name="booking_status" value="Rejected" type="hidden">
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">No</button>
-                            <button type="submit" class="text-center btn btn-danger" name="RejectBooking">Reject Booking</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Modal -->
-        <!-- Accept Modal -->
-        <div class="modal fade" id="accept_booking" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Accept Booking Request</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                    </div>
-                    <div class="modal-body text-center text-danger">
-                        <form method="POST">
-                            <input name="accepted_booking_booking_id" value="<?php echo $booking->booking_id; ?>" type="hidden">
-                            <input name="booking_status" value="Authorized" type="hidden">
-                            <?php
-                            $login_id = $_SESSION['login_id'];
-                            $ret = "SELECT *  FROM Clinic_Staff WHERE staff_login_id = '$login_id' ";
-                            $stmt = $mysqli->prepare($ret);
-                            $stmt->execute(); //ok
-                            $res = $stmt->get_result();
-                            while ($user = $res->fetch_object()) {
-                            ?>
-                                <input name="accepted_booking_staff_id" value="<?php echo $user->staff_id; ?>" type="hidden">
-                            <?php
-                            } ?>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Doctor Authorized</label>
-                                <select name="accepted_booking_doctor_id" required class="form-control" type="text">
-                                    <?php
-                                    /* Load All Doctors */
-                                    $ret = "SELECT * FROM `Doctors`";
-                                    $stmt = $mysqli->prepare($ret);
-                                    $stmt->execute(); //ok
-                                    $res = $stmt->get_result();
-                                    while ($doctor = $res->fetch_object()) {
-                                    ?>
-                                        <option value="<?php echo $doctor->doctor_id; ?>"><?php echo $doctor->doctor_full_name; ?></option>
-                                    <?php
-                                    } ?>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label">Actual Date</label>
-                                <input name="accepted_booking_actual_date" required class="form-control" type="date">
-                            </div>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
-                            <button type="submit" class="text-center btn btn-success" name="Authorize">Authorize Booking </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Modal -->
+        <?php require_once('../partials/client_side_nav.php'); ?>
         <div class="page-content-wrapper py-3">
             <div class="container">
                 <div class="card product-details-card mb-3 direction-rtl">
@@ -278,19 +153,6 @@ while ($booking = $res->fetch_object()) {
                     </div>
                 </div>
                 <?php
-                if ($booking->booking_status != 'Accepted') {
-                ?>
-                    <div class="card product-details-card mb-3 direction-rtl">
-                        <div class="card-body">
-                            <h5 class="text-center">Booking Status</h5>
-                            <div class="text-center">
-                                <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#reject_booking" class="btn btn-danger">Reject Booking</button>
-                                <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#accept_booking" class="btn btn-success">Accept Booking</button>
-                            </div>
-                        </div>
-                    </div>
-                <?php
-                }
                 $ret = "SELECT * FROM Accepted_Booking ab 
                 INNER JOIN Clinic_Staff s ON ab.accepted_booking_staff_id = s.staff_id
                 INNER JOIN Doctors d ON ab.accepted_booking_doctor_id = d.doctor_id
@@ -311,7 +173,6 @@ while ($booking = $res->fetch_object()) {
                             <p>Doctor Email : <?php echo $accepted_booking->doctor_email; ?></p>
                             <hr>
                             <p>Booking Actual Date : <?php echo date('d-M-Y', strtotime($accepted_booking->accepted_booking_actual_date)); ?></p>
-
                         </div>
                     </div>
                 <?php
@@ -320,7 +181,7 @@ while ($booking = $res->fetch_object()) {
             </div>
         </div>
         <!-- Footer Nav-->
-        <?php require_once('../partials/staff_footer_nav.php'); ?>
+        <?php require_once('../partials/client_footer_nav.php'); ?>
         <!-- All JavaScript Files-->
         <?php require_once('../partials/scripts.php'); ?>
     </body>
