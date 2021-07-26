@@ -148,7 +148,7 @@ while ($user = $res->fetch_object()) {
             </li>
         </ul>
         <!-- Social Info-->
-        <div class="social-info-wrap"><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-dribbble"></i></a></div>
+        <div class="social-info-wrap"><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-github"></i></a></div>
         <!-- Copyright Info-->
         <div class="copyright-info">
             <p>&copy; 2021 - <?php echo date('Y'); ?>. iScheduling. A <a href="https://martdev.info">MartDevelopers Inc</a> Production</p>
