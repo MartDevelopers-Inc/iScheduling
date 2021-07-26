@@ -23,7 +23,7 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 check_login();
-require_once('../partials/analytics.php');
+require_once('../partials/client_analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -41,40 +41,32 @@ require_once('../partials/head.php');
     <!-- Sidenav Black Overlay-->
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
-    <?php require_once('../partials/staff_side_nav.php'); ?>
+    <?php require_once('../partials/client_side_nav.php'); ?>
 
     <div class="page-content-wrapper">
         <!-- Hero Slides-->
         <div class="owl-carousel-one owl-carousel">
-            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/clients.jpeg')">
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/doctors.png')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
-                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Registered Clients</h4>
-                        <a class="btn btn-creative btn-warning" href="staff_clients" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $client; ?></a>
-                    </div>
-                </div>
-            </div>
-            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital.jpg')">
-                <div class="slide-content h-100 d-flex align-items-center text-center">
-                    <div class="container">
-                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Registered Hospitals</h4>
-                        <a class="btn btn-creative btn-warning" href="staff_hospitals" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital; ?></a>
+                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Qualified Doctors</h4>
+                        <a class="btn btn-creative btn-warning" href="" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $doc; ?></a>
                     </div>
                 </div>
             </div>
             <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital_services.webp')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
-                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Hospital Services</h4>
-                        <a class="btn btn-creative btn-warning" href="staff_hospital_services" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Service; ?></a>
+                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Available Hospital Services</h4>
+                        <a class="btn btn-creative btn-warning" href="client_hospital_services" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital_Service; ?></a>
                     </div>
                 </div>
             </div>
             <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/booking.jpg')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
-                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Client Bookings</h4>
-                        <a class="btn btn-creative btn-warning" href="staff_bookings" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Bookings; ?></a>
+                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">My Bookings</h4>
+                        <a class="btn btn-creative btn-warning" href="client_bookings" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Bookings; ?></a>
                     </div>
                 </div>
             </div>
@@ -87,10 +79,13 @@ require_once('../partials/head.php');
                     <h2>Recent Clients Bookings</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <?php
+                        $login_id = $_SESSION['login_id'];
                         $ret = "SELECT * FROM Bookings b 
                         INNER JOIN Clients c ON b.booking_client_id = c.client_id 
                         INNER JOIN Hospital_Service s ON s.hos_serv_id = b.booking_hos_serv_id 
-                        INNER JOIN Services se ON se.service_id = s.hos_serv_service_id ORDER BY RAND() LIMIT 10
+                        INNER JOIN Services se ON se.service_id = s.hos_serv_service_id 
+                        WHERE c.client_login_id = '$login_id'
+                        ORDER BY RAND() LIMIT 10
                         ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
@@ -99,7 +94,7 @@ require_once('../partials/head.php');
                         ?>
 
                             <div class="single-testimonial-slide">
-                                <a href="staff_booking?view=<?php echo $booking->booking_id; ?>">
+                                <a href="client_booking?view=<?php echo $booking->booking_id; ?>">
                                     <div class="text-content">
                                         <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->booking_ref; ?></span>
                                         <?php
@@ -140,7 +135,7 @@ require_once('../partials/head.php');
                         $res = $stmt->get_result();
                         while ($service = $res->fetch_object()) {
                         ?>
-                            <a href="staff_hospital_service?view=<?php echo $service->hos_serv_id; ?>">
+                            <a href="client_hospital_service?view=<?php echo $service->hos_serv_id; ?>">
                                 <div class="single-testimonial-slide">
                                     <div class="text-content">
                                         <span class="d-inline-block badge bg-warning mb-2"><?php echo $service->hospital_name; ?></span>
@@ -160,7 +155,7 @@ require_once('../partials/head.php');
         <div class="pb-3"></div>
     </div>
     <!-- Footer Nav-->
-    <?php require_once('../partials/staff_footer_nav.php'); ?>
+    <?php require_once('../partials/client_footer_nav.php'); ?>
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
 </body>

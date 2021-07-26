@@ -26,7 +26,7 @@ $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($user = $res->fetch_object()) {
-    require_once('../partials/analytics.php');
+    require_once('../partials/client_analytics.php');
 ?>
     <div class="sidenav-wrapper" id="sidenavWrapper">
         <!-- Go Back Button-->
