@@ -89,33 +89,26 @@ require_once('../partials/head.php');
             <table id="report" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Hospital Details</th>
-                        <th>Service Offered </th>
+                        <th>Hospital Name</th>
+                        <th>Hospital Contact Details </th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $ret = "SELECT * FROM Hospital_Service hs
-                    INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
-                    INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id
-                    ";
+                    $ret = "SELECT * FROM `Hospital`";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->execute(); //ok
                     $res = $stmt->get_result();
-                    while ($service = $res->fetch_object()) {
+                    while ($hospital = $res->fetch_object()) {
                     ?>
 
                         <tr>
                             <td>
-                                Name : <?php echo $service->hospital_name; ?><br>
-                                Mobile : <?php echo $service->hospital_mobile; ?><br>
-                                Email : <?php echo $service->hospital_email; ?><br>
-                                Contacts : <?php echo $service->hospital_contact; ?>
-                            </td>
-
+                                <?php echo $hospital->hospital_name; ?>
                             <td>
-                                Name: <?php echo $service->service_name; ?><br>
-                                Cost : <?php echo $service->hos_serv_cost; ?>
+                                Contact : <?php echo $hospital->hospital_contact; ?><br>
+                                Email : <?php echo $hospital->hospital_email; ?> <br>
+                                Mobile : <?php echo $hospital->hospital_mobile; ?>
                             </td>
                         </tr>
                     <?php
