@@ -44,7 +44,7 @@ if (isset($_POST['AddStaff'])) {
             $err = 'Phone Number Or Email Already Exists';
         }
     } else {
-        $auth_querry = 'INSERT INTO Login (login_id, login_user_name, login_email, login_password, login_Rank) VALUES(?,?,?,?,?)';
+        $auth_querry = 'INSERT INTO Login (login_id, login_user_name, login_email, login_password, login_rank) VALUES(?,?,?,?,?)';
         $query = 'INSERT INTO Clinic_Staff  (staff_full_name, staff_id_no,  staff_login_id, staff_phone_no, staff_email) VALUES(?,?,?,?,?)';
 
         $auth_qry_stmt = $mysqli->prepare($auth_querry);
