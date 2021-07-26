@@ -222,7 +222,7 @@ while ($booking = $res->fetch_object()) {
 
                 <div class="card product-details-card mb-3 direction-rtl">
                     <div class="card-body">
-                        <h5>Booking Details</h5>
+                        <h5>Booking Details</h5><br>
                         <p>Ref # : <?php echo $booking->booking_ref; ?></p>
                         <p>Date Created: <?php echo date('d-M-Y', strtotime($booking->booking_date)); ?></p>
                         <p>Booking Status:
@@ -259,7 +259,7 @@ while ($booking = $res->fetch_object()) {
 
                 <div class="card product-details-card mb-3 direction-rtl">
                     <div class="card-body">
-                        <h5>Hospital Offering Booked Service Details</h5>
+                        <h5>Hospital Offering Booked Service Details</h5><br>
                         <p>Hospital Name: <?php echo $booking->hospital_name; ?></p>
                         <p>Hospital Email: <?php echo $booking->hospital_email; ?></p>
                         <p>Hospital Mobile: <?php echo $booking->hospital_mobile; ?></p>
@@ -271,21 +271,51 @@ while ($booking = $res->fetch_object()) {
 
                 <div class="card product-details-card mb-3 direction-rtl">
                     <div class="card-body">
-                        <h5>Booked Hospital Service Details</h5>
+                        <h5>Booked Hospital Service Details</h5><br>
                         <p><?php echo $booking->service_name; ?></p>
                         <hr>
                         <p><?php echo $booking->service_desc; ?></p>
                     </div>
                 </div>
-                <div class="card product-details-card mb-3 direction-rtl">
-                    <div class="card-body">
-                        <h5 class="text-center">Booking Status</h5>
-                        <div class="text-center">
-                            <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#reject_booking" class="btn btn-danger">Reject Booking</button>
-                            <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#accept_booking" class="btn btn-success">Accept Booking</button>
+                <?php
+                if ($booking->booking_status != 'Accepted') {
+                ?>
+                    <div class="card product-details-card mb-3 direction-rtl">
+                        <div class="card-body">
+                            <h5 class="text-center">Booking Status</h5>
+                            <div class="text-center">
+                                <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#reject_booking" class="btn btn-danger">Reject Booking</button>
+                                <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#accept_booking" class="btn btn-success">Accept Booking</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php
+                }
+                $ret = "SELECT * FROM Accepted_Booking ab 
+                INNER JOIN Clinic_Staff s ON ab.accepted_booking_staff_id = s.staff_id
+                INNER JOIN Doctors d ON ab.accepted_booking_doctor_id = d.doctor_id
+                WHERE ab.accepted_booking_booking_id = '$view' ";
+                $stmt = $mysqli->prepare($ret);
+                $stmt->execute(); //ok
+                $res = $stmt->get_result();
+                while ($accepted_booking = $res->fetch_object()) {
+                ?>
+                    <div class="card product-details-card mb-3 direction-rtl">
+                        <div class="card-body">
+                            <h5>Accepted Booking Details</h5> <br>
+                            <p>Clinic Staff Name : <?php echo $accepted_booking->staff_full_name; ?></p>
+                            <p>Clinic Staff Email : <?php echo $accepted_booking->staff_email; ?></p>
+                            <p>Clinic Staff Phone : <?php echo $accepted_booking->staff_phone_no; ?></p>
+                            <hr>
+                            <p>Doctor Name : <?php echo $accepted_booking->doctor_full_name; ?></p>
+                            <p>Doctor Email : <?php echo $accepted_booking->doctor_email; ?></p>
+                            <hr>
+                            <p>Booking Actual Date : <?php echo date('d-M-Y', strtotime($accepted_booking->accepted_booking_actual_date)); ?></p>
+
+                        </div>
+                    </div>
+                <?php
+                } ?>
 
             </div>
         </div>
