@@ -84,7 +84,7 @@ require_once('../partials/head.php');
     <!-- Side Nav Wrapper-->
     <?php require_once('../partials/staff_side_nav.php');
     $view = $_GET['view'];
-    $ret = "SELECT *  FROM Clients WHERE Client_id = '$view' ";
+    $ret = "SELECT *  FROM Clients WHERE client_id = '$view' ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();

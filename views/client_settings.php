@@ -32,11 +32,11 @@ if (isset($_POST['UpdateProfile'])) {
     $client_gender = $_POST['client_gender'];
     $client_email = $_POST['client_email'];
     $client_location = $_POST['client_location'];
-    $client_id = $_GET['view'];
+    $client_login_id = $_SESSION['login_id'];
 
-    $query = "UPDATE Clients SET client_full_name =?,  client_phone_no =?, client_gender =?, client_email =?, client_location=? WHERE client_id = ? ";
+    $query = "UPDATE Clients SET client_full_name =?,  client_phone_no =?, client_gender =?, client_email =?, client_location=? WHERE client_login_id = ? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssssss', $client_full_name, $client_phone_no, $client_gender, $client_email, $client_location, $client_id);
+    $rc = $stmt->bind_param('ssssss', $client_full_name, $client_phone_no, $client_gender, $client_email, $client_location, $client_login_id);
     $stmt->execute();
     if ($stmt) {
         $success = "$client_full_name Profile Updated";
@@ -82,9 +82,9 @@ require_once('../partials/head.php');
     <!-- Sidenav Black Overlay-->
     <div class="sidenav-black-overlay"></div>
     <!-- Side Nav Wrapper-->
-    <?php require_once('../partials/side_nav.php');
-    $view = $_GET['view'];
-    $ret = "SELECT *  FROM Clients WHERE client_id = '$view' ";
+    <?php require_once('../partials/client_side_nav.php');
+    $client_login_id = $_SESSION['login_id'];
+    $ret = "SELECT *  FROM Clients WHERE client_login_id = '$client_login_id' ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
@@ -176,7 +176,7 @@ require_once('../partials/head.php');
         <!-- Footer Nav-->
     <?php
     }
-    require_once('../partials/footer_nav.php'); ?>
+    require_once('../partials/client_footer_nav.php'); ?>
     <!-- All JavaScript Files-->
     <?php require_once('../partials/scripts.php'); ?>
     <!-- All JavaScript Files-->
