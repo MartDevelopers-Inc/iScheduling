@@ -118,7 +118,16 @@ require_once('../partials/head.php');
                                 <a href="booking?view=<?php echo $booking->booking_id; ?>">
                                     <div class="text-content">
                                         <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-tag-fill"></i> Ref: <?php echo $booking->booking_ref; ?></span>
-                                        <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-bookmark-star"></i> Booking Status: <?php echo $booking->booking_status; ?></span>
+                                        <?php
+                                        if ($booking->booking_status == 'New') {
+                                            echo "<span class='d-inline-block badge bg-primary mb-2'><i class='bi bi-bookmark-star'></i> Booking Status: $booking->booking_status </span>";
+                                        } else if ($booking->booking_status == 'Rejected') {
+                                            echo "<span class='d-inline-block badge bg-danger mb-2'><i class='bi bi-bookmark-star'></i> Booking Status: $booking->booking_status </span>";
+                                        } else {
+                                            echo "<span class='d-inline-block badge bg-success mb-2'><i class='bi bi-bookmark-star'></i> Booking Status: $booking->booking_status </span>";
+                                        }
+                                        ?>
+                                        </span>
                                         <span class="d-inline-block badge bg-success mb-2"><i class="bi bi-person-bounding-box"></i> Booked Hospital Service: <?php echo $booking->service_name; ?></span>
                                         <span class="d-block">Client Name : <?php echo $booking->client_full_name; ?></span>
                                         <span class="d-block">Client Phone : <?php echo $booking->client_phone_no; ?></span>

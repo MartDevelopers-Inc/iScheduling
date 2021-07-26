@@ -123,7 +123,17 @@ require_once('../partials/head.php');
                                 <h6 class="text-truncate mb-0">Client Phone : <?php echo $booking->client_phone_no; ?></h6>
                                 <h6 class="text-truncate mb-0">Client Gender : <?php echo $booking->client_gender; ?></h6>
                                 <h6 class="text-truncate mb-0">Date Booked : <?php echo date('d-M-Y', strtotime($booking->booking_date)); ?></h6>
-                                <h6 class="text-truncate mb-0">Booking Status : <?php echo $booking->booking_status; ?></h6>
+                                <h6 class="text-truncate mb-0">Booking Status :
+                                    <?php
+                                    if ($booking->booking_status == 'New') {
+                                        echo "<span class='badge bg-rimary'>$booking->booking_status</span>";
+                                    } else if ($booking->booking_status == 'Rejected') {
+                                        echo "<span class='badge bg-danger'>$booking->booking_status</span>";
+                                    } else {
+                                        echo "<span class='badge bg-success'>$booking->booking_status</span>";
+                                    }
+                                    ?>
+                                </h6>
                             </div>
                         </a>
                         <!-- Options-->

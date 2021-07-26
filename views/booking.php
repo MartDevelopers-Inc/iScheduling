@@ -186,7 +186,7 @@ while ($booking = $res->fetch_object()) {
                             } ?>
                             <div class="form-group mb-3">
                                 <label class="form-label">Doctor Authorized</label>
-                                <select name="accepted_booking_doctor_id" class="form-control" type="text">
+                                <select name="accepted_booking_doctor_id" required class="form-control" type="text">
                                     <?php
                                     /* Load All Doctors */
                                     $ret = "SELECT * FROM `Doctors`";
@@ -202,7 +202,7 @@ while ($booking = $res->fetch_object()) {
                             </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Actual Date</label>
-                                <input name="accepted_booking_actual_date" class="form-control" type="date">
+                                <input name="accepted_booking_actual_date" required class="form-control" type="date">
                             </div>
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
                             <button type="submit" class="text-center btn btn-success" name="Authorize">Authorize Booking </button>
