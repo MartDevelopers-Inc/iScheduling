@@ -139,17 +139,23 @@ require_once('../partials/head.php');
                     <h2>Avaiable Hospital Services</h2>
                     <div class="testimonial-slide owl-carousel testimonial-style3">
                         <?php
-                        $ret = "SELECT * FROM `Hospital_Service`  ORDER BY RAND() ASC LIMIT 10   ";
+                        $ret = "SELECT * FROM Hospital_Service hs
+                        INNER JOIN Hospital h ON hs.hos_serv_hospital_id = h.hospital_id
+                        INNER JOIN Services s ON hs.hos_serv_service_id = s.service_id ORDER BY RAND() ASC LIMIT 10   ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->execute(); //ok
                         $res = $stmt->get_result();
                         while ($service = $res->fetch_object()) {
                         ?>
-                            <a href="hospital_service?view=<?php echo $service->Service_id; ?>">
+                            <a href="hospital_service?view=<?php echo $service->hos_serv_id; ?>">
                                 <div class="single-testimonial-slide">
                                     <div class="text-content">
-                                        <span class="d-inline-block badge bg-warning mb-2"><i class="bi bi-check"></i> <?php echo $service->service_name; ?></span>
-                                        <h6 class="mb-2"><?php echo substr($service->service_desc, 0, 50); ?>...</h6>
+                                        <span class="d-inline-block badge bg-warning mb-2"><?php echo $service->hospital_name; ?></span>
+                                        <h6 class="text-truncate mb-2"><?php echo $service->service_name; ?></h6>
+                                        <h6 class="text-truncate mb-2">Hospital Email: <?php echo $service->hospital_email; ?></h6>
+                                        <h6 class="text-truncate mb-2">Hospital Mobile: <?php echo $service->hospital_mobile; ?></h6>
+                                        <h6 class="text-truncate mb-2">Hospital Contacts: <?php echo $service->hospital_contact; ?></h6>
+                                        <h6 class="text-truncate mb-2">Service Cost: <?php echo $service->hos_serv_cost; ?></h6>
                                     </div>
                                 </div>
                             </a>
