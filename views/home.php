@@ -70,6 +70,14 @@ require_once('../partials/head.php');
                     </div>
                 </div>
             </div>
+            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital.jpg')">
+                <div class="slide-content h-100 d-flex align-items-center text-center">
+                    <div class="container">
+                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Registered Hospitals</h4>
+                        <a class="btn btn-creative btn-warning" href="hospitals" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital; ?></a>
+                    </div>
+                </div>
+            </div>
             <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital_services.webp')">
                 <div class="slide-content h-100 d-flex align-items-center text-center">
                     <div class="container">
@@ -86,14 +94,7 @@ require_once('../partials/head.php');
                     </div>
                 </div>
             </div>
-            <div class="single-hero-slide bg-overlay" style="background-image: url('../public/img/bg-img/hospital.jpg')">
-                <div class="slide-content h-100 d-flex align-items-center text-center">
-                    <div class="container">
-                        <h4 class="text-white mb-1" data-animation="fadeInUp" data-delay="100ms" data-wow-duration="1000ms">Registered Hospitals</h4>
-                        <a class="btn btn-creative btn-warning" href="hospitals" data-animation="fadeInUp" data-delay="800ms" data-wow-duration="500ms"><?php echo $Hospital; ?></a>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <br>
         <div class="container">

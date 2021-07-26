@@ -120,7 +120,6 @@ require_once('../partials/head.php');
             </div>
         </div>
         <!-- Footer Nav-->
-        <!-- Footer Nav-->
     <?php
     }
     require_once('../partials/footer_nav.php'); ?>
