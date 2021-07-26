@@ -55,29 +55,6 @@ if (isset($_POST['AddHospital'])) {
     }
 }
 
-/* Update Hospital */
-if (isset($_POST['UpdateHospital'])) {
-    $hospital_name = $_POST['hospital_name'];
-    $hospital_desc = $_POST['hospital_desc'];
-    $hospital_email = $_POST['hospital_email'];
-    $hospital_contact  = $_POST['hospital_contact'];
-    $hospital_mobile = $_POST['hospital_mobile'];
-    $hospital_id = $_POST['hospital_id'];
-
-    /* Prevent Double Entries */
-
-    $query = 'UPDATE Hospital SET hospital_name =?, hospital_desc =?, hospital_email =?, hospital_contact =?, hospital_mobile=? WHERE hospital_id = ?';
-    $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssssss', $hospital_name, $hospital_desc, $hospital_email, $hospital_contact, $hospital_mobile, $hospital_id);
-    $stmt->execute();
-    if ($stmt) {
-        $success = "$hospital_name Updated";
-    } else {
-        $info = 'Please Try Again Or Try Later';
-    }
-}
-
-
 /* Delete Hospital */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
